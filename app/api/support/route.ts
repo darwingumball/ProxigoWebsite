@@ -1,9 +1,18 @@
 import { createClient } from "@/lib/supabase/server";
 import { sendSupportTicketEmail } from "@/lib/resend";
+import { rateLimit, getIp } from "@/lib/rate-limit";
 import { NextResponse } from "next/server";
 import { randomBytes } from "crypto";
 
 export async function POST(req: Request) {
+  // 5 tickets per IP per hour
+  const { success, retryAfter } = rateLimit(`support:${getIp(req)}`, 5, 60 * 60 * 1000);
+  if (!success) {
+    return NextResponse.json(
+      { error: "Too many requests. Please try again later." },
+      { status: 429, headers: { "Retry-After": String(retryAfter) } }
+    );
+  }
   const body = await req.json() as {
     name?: string;
     email?: string;

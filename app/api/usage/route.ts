@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import { rateLimit, getIp } from "@/lib/rate-limit";
 import { NextResponse } from "next/server";
 
 /**
@@ -7,6 +8,15 @@ import { NextResponse } from "next/server";
  * Body: { km2: number, module_serial: string, session_id?: string }
  */
 export async function POST(req: Request) {
+  // 60 usage reports per IP per minute (generous for desktop app batching)
+  const { success, retryAfter } = rateLimit(`usage:${getIp(req)}`, 60, 60 * 1000);
+  if (!success) {
+    return NextResponse.json(
+      { error: "Rate limit exceeded" },
+      { status: 429, headers: { "Retry-After": String(retryAfter) } }
+    );
+  }
+
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
