@@ -31,9 +31,24 @@ const nextConfig: NextConfig = {
   },
   async headers() {
     return [
+      // Security headers on everything
       {
         source: "/(.*)",
         headers: SECURITY_HEADERS,
+      },
+      // Immutable cache for hashed static assets (_next/static)
+      {
+        source: "/_next/static/(.*)",
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
+        ],
+      },
+      // CDN cache for public images/fonts
+      {
+        source: "/(.*)\\.(ico|svg|png|jpg|jpeg|webp|woff2|woff)",
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=86400, stale-while-revalidate=604800" },
+        ],
       },
     ];
   },

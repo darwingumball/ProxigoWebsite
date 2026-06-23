@@ -8,7 +8,7 @@ import { MessageSquare, Mail, FileText, CheckCircle2, ExternalLink } from "lucid
 const CATEGORIES = ["Hardware issue", "Desktop App", "Billing", "Account", "Maps / Downloads", "Other"];
 
 export default function SupportPage() {
-  const [form, setForm] = useState({ name: "", email: "", category: "", subject: "", message: "" });
+  const [form, setForm] = useState({ name: "", email: "", category: "", subject: "", message: "", website: "" });
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
@@ -152,6 +152,18 @@ export default function SupportPage() {
                     {error}
                   </div>
                 )}
+
+                {/* Honeypot — hidden from real users, filled by bots */}
+                <input
+                  type="text"
+                  name="website"
+                  value={form.website}
+                  onChange={handleChange}
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  style={{ display: "none" }}
+                />
 
                 <Button type="submit" disabled={loading} className="w-full" size="md">
                   {loading ? "Submitting…" : "Submit ticket"}

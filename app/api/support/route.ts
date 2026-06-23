@@ -21,7 +21,12 @@ export async function POST(req: Request) {
     message?: string;
   };
 
-  const { name, email, category, subject, message } = body;
+  const { name, email, category, subject, message, website } = body as typeof body & { website?: string };
+
+  // Honeypot — bots fill hidden fields, humans don't
+  if (website) {
+    return NextResponse.json({ ok: true, ticketId: "BOT" });
+  }
 
   if (!name || !email || !subject || !message || !category) {
     return NextResponse.json({ error: "All fields are required" }, { status: 400 });

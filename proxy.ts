@@ -3,7 +3,50 @@ import { NextResponse, type NextRequest } from "next/server";
 
 const PROTECTED_PATHS = ["/dashboard"];
 
+// Block AI scrapers and LLM crawlers at the edge
+const BLOCKED_UA_PATTERNS = [
+  /GPTBot/i,
+  /ChatGPT-User/i,
+  /anthropic-ai/i,
+  /ClaudeBot/i,
+  /Claude-Web/i,
+  /Bytespider/i,
+  /CCBot/i,
+  /cohere-ai/i,
+  /PerplexityBot/i,
+  /YouBot/i,
+  /Diffbot/i,
+  /ImagesiftBot/i,
+];
+
+// Block obviously malicious path patterns
+const BLOCKED_PATH_PATTERNS = [
+  /\.env/i,
+  /wp-admin/i,
+  /wp-login/i,
+  /phpMyAdmin/i,
+  /\.php$/i,
+  /\/etc\/passwd/i,
+  /\/proc\//i,
+  /\.\.\//,                  // path traversal
+  /<script/i,                // XSS probe
+  /union.*select/i,          // SQL injection probe
+];
+
 export async function proxy(request: NextRequest) {
+  const ua = request.headers.get("user-agent") ?? "";
+  const path = request.nextUrl.pathname;
+
+  // Block AI crawlers
+  if (BLOCKED_UA_PATTERNS.some((re) => re.test(ua))) {
+    return new NextResponse("Forbidden", { status: 403 });
+  }
+
+  // Block malicious path probes
+  if (BLOCKED_PATH_PATTERNS.some((re) => re.test(path))) {
+    return new NextResponse("Not Found", { status: 404 });
+  }
+
   let supabaseResponse = NextResponse.next({ request });
 
   const supabase = createServerClient(
