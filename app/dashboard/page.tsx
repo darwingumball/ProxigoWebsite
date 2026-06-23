@@ -2,7 +2,9 @@ import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
+import { CheckoutSuccessBanner } from "@/components/checkout-success-banner";
 import { BarChart3, Cpu, Map, Settings, CreditCard, ArrowRight, LogOut } from "lucide-react";
+import { Suspense } from "react";
 
 export default async function DashboardPage() {
   const supabase = await createClient();
@@ -35,6 +37,10 @@ export default async function DashboardPage() {
   return (
     <div className="min-h-screen pt-20 pb-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Suspense fallback={null}>
+          <CheckoutSuccessBanner />
+        </Suspense>
+
         {/* Header */}
         <div className="flex items-start justify-between mb-10 pt-8">
           <div>

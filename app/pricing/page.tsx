@@ -10,8 +10,7 @@ export const metadata: Metadata = {
 
 const HARDWARE = {
   name: "Macula VPS Module",
-  price: 349,
-  earlyPrice: 299,
+  price: 499,
   desc: "One-time purchase. Includes the module, universal mounting bracket, XT30 power cable, USB-C cable, and quick-start guide.",
   includes: [
     "Macula hardware module",
@@ -26,12 +25,31 @@ const HARDWARE = {
 
 const PLANS = [
   {
+    id: "usage",
+    name: "Usage",
+    desc: "Pay only for what you download. No monthly commitment.",
+    priceMonthly: null,
+    priceAnnual: null,
+    kmIncluded: null,
+    ratePerKm2: 0.12,
+    features: [
+      "No monthly fee",
+      "$0.12 / km² downloaded",
+      "Satellite map preloading",
+      "Usage dashboard",
+      "Email support",
+    ],
+    cta: "Start with Usage",
+    highlight: false,
+  },
+  {
     id: "starter",
     name: "Starter",
     desc: "For hobbyists and small operations.",
     priceMonthly: 29,
     priceAnnual: 290,
     kmIncluded: 500,
+    ratePerKm2: null,
     overage: "$0.08 / km²",
     features: [
       "500 km² / month included",
@@ -50,6 +68,7 @@ const PLANS = [
     priceMonthly: 79,
     priceAnnual: 790,
     kmIncluded: 2500,
+    ratePerKm2: null,
     overage: "$0.05 / km²",
     features: [
       "2,500 km² / month included",
@@ -69,6 +88,7 @@ const PLANS = [
     priceMonthly: null,
     priceAnnual: null,
     kmIncluded: null,
+    ratePerKm2: null,
     overage: "Custom",
     features: [
       "Unlimited km²",
@@ -106,13 +126,10 @@ export default function PricingPage() {
             <p className="text-zinc-400 text-sm mb-6 leading-relaxed">{HARDWARE.desc}</p>
 
             <div className="flex items-baseline gap-2 mb-2">
-              <span className="text-4xl font-bold text-white">${HARDWARE.earlyPrice}</span>
-              <span className="text-zinc-600 line-through text-lg">${HARDWARE.price}</span>
-              <span className="text-xs text-emerald-400 bg-emerald-950 border border-emerald-800 rounded-full px-2 py-0.5">
-                Early-backer
-              </span>
+              <span className="text-4xl font-bold text-white">${HARDWARE.price}</span>
+              <span className="text-zinc-500 text-sm">one-time</span>
             </div>
-            <p className="text-xs text-zinc-600 mb-8">Regular price ${HARDWARE.price} after launch</p>
+            <p className="text-xs text-zinc-600 mb-8">Ships August 2026. No subscription required to use the module.</p>
 
             <CheckoutButton
               type="hardware"
@@ -142,11 +159,11 @@ export default function PricingPage() {
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-white mb-3">Map download plans</h2>
           <p className="text-zinc-400 text-sm max-w-md mx-auto">
-            Billed monthly. Annual billing saves ~17%. Plans activate after module purchase.
+            Pay-as-you-go or subscribe for a lower per-km² rate. Plans activate after module purchase.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-4">
+        <div className="grid md:grid-cols-4 gap-4">
           {PLANS.map((plan) => (
             <div
               key={plan.id}
@@ -168,7 +185,15 @@ export default function PricingPage() {
               </div>
 
               <div className="mb-6">
-                {plan.priceMonthly ? (
+                {plan.ratePerKm2 ? (
+                  <>
+                    <div className="flex items-baseline gap-1.5">
+                      <span className="text-3xl font-bold text-white">${plan.ratePerKm2}</span>
+                      <span className="text-zinc-500 text-sm">/ km²</span>
+                    </div>
+                    <p className="text-xs text-zinc-600 mt-1">No monthly fee · billed on usage</p>
+                  </>
+                ) : plan.priceMonthly ? (
                   <>
                     <div className="flex items-baseline gap-1.5">
                       <span className="text-3xl font-bold text-white">${plan.priceMonthly}</span>
@@ -199,9 +224,9 @@ export default function PricingPage() {
                 ))}
               </ul>
 
-              {plan.id === "enterprise" ? (
+              {plan.id === "enterprise" || plan.id === "usage" ? (
                 <Link
-                  href="/support#contact"
+                  href={plan.id === "enterprise" ? "/support#contact" : "/signup"}
                   className="inline-flex items-center justify-center gap-2 font-medium px-4 py-2.5 rounded-lg text-sm transition-colors border border-zinc-700 text-zinc-300 hover:border-zinc-500 hover:text-white"
                 >
                   {plan.cta}
