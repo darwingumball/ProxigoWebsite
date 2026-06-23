@@ -24,7 +24,7 @@ export function CheckoutButton({ type, planId, billing = "monthly", label, class
     const { data: { user } } = await supabase.auth.getUser();
 
     if (!user) {
-      router.push("/signup?next=/pricing");
+      router.push("/login?next=/pricing");
       return;
     }
 
