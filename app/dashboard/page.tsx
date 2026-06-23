@@ -30,7 +30,7 @@ export default async function DashboardPage() {
   const kmLimit = profile?.plan === "pro" ? 2500 : profile?.plan === "starter" ? 500 : 0;
   const usagePct = kmLimit > 0 ? Math.min((kmThisMonth / kmLimit) * 100, 100) : 0;
 
-  const name = profile?.full_name ?? user.email?.split("@")[0] ?? "there";
+  const name = profile?.full_name?.split(" ")[0] ?? user.email?.split("@")[0] ?? "there";
 
   return (
     <div className="min-h-screen pt-20 pb-24">
