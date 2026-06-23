@@ -1,7 +1,5 @@
 import { Resend } from "resend";
 
-export const resend = new Resend(process.env.RESEND_API_KEY!);
-
 export async function sendSupportTicketEmail({
   name,
   email,
@@ -15,6 +13,7 @@ export async function sendSupportTicketEmail({
   message: string;
   ticketId: string;
 }) {
+  const resend = new Resend(process.env.RESEND_API_KEY!);
   await resend.emails.send({
     from: "Proxigo Support <support@proxigo.us>",
     to: "support@proxigo.us",
