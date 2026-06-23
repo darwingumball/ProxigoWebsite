@@ -39,6 +39,9 @@ export async function POST(req: Request) {
 
   // ── Hardware one-time purchase ──────────────────────────────────────────
   if (body.type === "hardware") {
+    if (!process.env.STRIPE_MODULE_PRICE_ID) {
+      return NextResponse.json({ error: "Hardware price not configured" }, { status: 503 });
+    }
     const session = await getStripe().checkout.sessions.create({
       customer: customerId,
       mode: "payment",

@@ -1,5 +1,5 @@
 -- Hardware orders (one-time Stripe payments)
-create table public.orders (
+create table if not exists public.orders (
   id                     uuid primary key default uuid_generate_v4(),
   user_id                uuid references public.profiles(id) on delete set null,
   stripe_session_id      text unique,
@@ -15,8 +15,15 @@ create table public.orders (
 
 alter table public.orders enable row level security;
 
-create policy "Users can view own orders"
-  on public.orders for select
-  using (auth.uid() = user_id);
+do $$ begin
+  if not exists (
+    select 1 from pg_policies
+    where tablename = 'orders' and policyname = 'Users can view own orders'
+  ) then
+    create policy "Users can view own orders"
+      on public.orders for select
+      using (auth.uid() = user_id);
+  end if;
+end $$;
 
-create index idx_orders_user on public.orders (user_id, created_at desc);
+create index if not exists idx_orders_user on public.orders (user_id, created_at desc);

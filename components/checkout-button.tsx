@@ -34,11 +34,17 @@ export function CheckoutButton({ type, planId, billing = "monthly", label, class
       body: JSON.stringify({ type, planId, billing }),
     });
 
-    const data = await res.json();
+    let data: { url?: string; error?: string } = {};
+    try {
+      data = await res.json();
+    } catch {
+      console.error("Checkout: non-JSON response", res.status);
+    }
+
     if (data.url) {
       window.location.href = data.url;
     } else {
-      console.error("Checkout error", data);
+      console.error("Checkout error", res.status, data.error ?? "(no message)");
       setLoading(false);
     }
   }
