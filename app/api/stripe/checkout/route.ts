@@ -25,6 +25,7 @@ async function getOrCreateCustomer(supabase: Awaited<ReturnType<typeof createCli
 }
 
 export async function POST(req: Request) {
+  try {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -77,4 +78,9 @@ export async function POST(req: Request) {
   });
 
   return NextResponse.json({ url: session.url });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "Internal error";
+    console.error("[checkout]", message);
+    return NextResponse.json({ error: message }, { status: 500 });
+  }
 }
