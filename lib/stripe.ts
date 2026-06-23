@@ -42,3 +42,9 @@ export const PLANS = {
 } as const;
 
 export type PlanId = keyof typeof PLANS;
+
+export const HARDWARE = {
+  name: "Macula VPS Module — Pre-order",
+  priceId: process.env.STRIPE_MODULE_PRICE_ID!,
+  amountCents: 29900,
+} as const;

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Check, ArrowRight, Zap } from "lucide-react";
+import { Check, Zap } from "lucide-react";
+import { CheckoutButton } from "@/components/checkout-button";
 
 export const metadata: Metadata = {
   title: "Pricing",
@@ -113,13 +114,11 @@ export default function PricingPage() {
             </div>
             <p className="text-xs text-zinc-600 mb-8">Regular price ${HARDWARE.price} after launch</p>
 
-            <Link
-              href="/signup"
-              className="inline-flex items-center gap-2 bg-white text-black font-medium px-6 py-3 rounded-lg hover:bg-zinc-100 transition-colors text-sm"
-            >
-              Pre-order now
-              <ArrowRight size={15} />
-            </Link>
+            <CheckoutButton
+              type="hardware"
+              label="Pre-order now"
+              className="inline-flex items-center gap-2 bg-white text-black font-medium px-6 py-3 rounded-lg hover:bg-zinc-100 transition-colors text-sm disabled:opacity-60"
+            />
           </div>
 
           <div>
@@ -200,16 +199,26 @@ export default function PricingPage() {
                 ))}
               </ul>
 
-              <Link
-                href={plan.id === "enterprise" ? "/support#contact" : "/signup"}
-                className={`inline-flex items-center justify-center gap-2 font-medium px-4 py-2.5 rounded-lg text-sm transition-colors ${
-                  plan.highlight
-                    ? "bg-white text-black hover:bg-zinc-100"
-                    : "border border-zinc-700 text-zinc-300 hover:border-zinc-500 hover:text-white"
-                }`}
-              >
-                {plan.cta}
-              </Link>
+              {plan.id === "enterprise" ? (
+                <Link
+                  href="/support#contact"
+                  className="inline-flex items-center justify-center gap-2 font-medium px-4 py-2.5 rounded-lg text-sm transition-colors border border-zinc-700 text-zinc-300 hover:border-zinc-500 hover:text-white"
+                >
+                  {plan.cta}
+                </Link>
+              ) : (
+                <CheckoutButton
+                  type="subscription"
+                  planId={plan.id}
+                  billing="monthly"
+                  label={plan.cta}
+                  className={`inline-flex items-center justify-center gap-2 font-medium px-4 py-2.5 rounded-lg text-sm transition-colors disabled:opacity-60 ${
+                    plan.highlight
+                      ? "bg-white text-black hover:bg-zinc-100"
+                      : "border border-zinc-700 text-zinc-300 hover:border-zinc-500 hover:text-white"
+                  }`}
+                />
+              )}
             </div>
           ))}
         </div>
