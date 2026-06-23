@@ -60,8 +60,8 @@ export default function SupportPage() {
           {
             icon: Mail,
             title: "Email",
-            desc: "Reach us directly at support@proxigo.io",
-            href: "mailto:support@proxigo.io",
+            desc: "Reach us directly at support@proxigo.us",
+            href: "mailto:support@proxigo.us",
             label: "Send email",
           },
           {

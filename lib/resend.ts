@@ -16,15 +16,15 @@ export async function sendSupportTicketEmail({
   ticketId: string;
 }) {
   await resend.emails.send({
-    from: "Proxigo Support <support@proxigo.io>",
-    to: "support@proxigo.io",
+    from: "Proxigo Support <support@proxigo.us>",
+    to: "support@proxigo.us",
     replyTo: email,
     subject: `[Ticket #${ticketId}] ${subject}`,
     text: `New support ticket from ${name} (${email})\n\nSubject: ${subject}\n\n${message}`,
   });
 
   await resend.emails.send({
-    from: "Proxigo Support <support@proxigo.io>",
+    from: "Proxigo Support <support@proxigo.us>",
     to: email,
     subject: `We received your request — Ticket #${ticketId}`,
     text: `Hi ${name},\n\nWe've received your support request and will get back to you within 1 business day.\n\nTicket ID: #${ticketId}\nSubject: ${subject}\n\nThanks,\nThe Proxigo Team`,
