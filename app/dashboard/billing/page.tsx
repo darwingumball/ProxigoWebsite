@@ -2,9 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, ExternalLink, Receipt, Package } from "lucide-react";
+import { ArrowLeft, ExternalLink, Receipt, Package, ArrowRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/client";
 
 interface Order {
@@ -19,13 +18,11 @@ interface Order {
 
 interface Profile {
   plan: string | null;
-  stripe_customer_id: string | null;
 }
 
 export default function BillingPage() {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [orders, setOrders] = useState<Order[]>([]);
-  const [portalLoading, setPortalLoading] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -34,7 +31,7 @@ export default function BillingPage() {
       if (!user) { window.location.href = "/login"; return; }
 
       const [{ data: p }, { data: o }] = await Promise.all([
-        supabase.from("profiles").select("plan, stripe_customer_id").eq("id", user.id).single(),
+        supabase.from("profiles").select("plan").eq("id", user.id).single(),
         supabase.from("orders").select("*").eq("user_id", user.id).order("created_at", { ascending: false }),
       ]);
 
@@ -43,14 +40,6 @@ export default function BillingPage() {
       setLoading(false);
     });
   }, []);
-
-  async function openPortal() {
-    setPortalLoading(true);
-    const res = await fetch("/api/stripe/portal", { method: "POST" });
-    const { url } = await res.json();
-    if (url) window.location.href = url;
-    else setPortalLoading(false);
-  }
 
   function formatAmount(cents: number, currency: string) {
     return new Intl.NumberFormat("en-US", { style: "currency", currency: currency.toUpperCase() }).format(cents / 100);
@@ -84,21 +73,16 @@ export default function BillingPage() {
                   {profile?.plan ? "Active" : "No plan"}
                 </Badge>
               </div>
-              {!profile?.plan && (
-                <p className="text-sm text-zinc-500 mt-2">
-                  <Link href="/pricing" className="text-zinc-300 hover:text-white transition-colors underline underline-offset-2">
-                    Choose a plan
-                  </Link>{" "}
-                  to start downloading satellite maps.
-                </p>
-              )}
+                <div className="flex flex-wrap gap-2 mt-3">
+                <Link
+                  href="/pricing"
+                  className="inline-flex items-center gap-1.5 text-xs border border-zinc-700 text-zinc-300 px-3 py-1.5 rounded-lg hover:border-zinc-500 hover:text-white transition-colors"
+                >
+                  {profile?.plan ? "Change plan" : "Choose a plan"}
+                  <ArrowRight size={11} />
+                </Link>
+              </div>
             </div>
-            {profile?.stripe_customer_id && (
-              <Button variant="secondary" size="sm" onClick={openPortal} disabled={portalLoading}>
-                {portalLoading ? "Loading…" : "Manage subscription"}
-                <ExternalLink size={12} />
-              </Button>
-            )}
           </div>
         </div>
 

@@ -3,7 +3,8 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { CheckoutSuccessBanner } from "@/components/checkout-success-banner";
-import { BarChart3, Cpu, Map, Settings, CreditCard, ArrowRight, LogOut } from "lucide-react";
+import { SignOutButton } from "@/components/sign-out-button";
+import { BarChart3, Cpu, Map, Settings, CreditCard, ArrowRight } from "lucide-react";
 import { Suspense } from "react";
 
 export default async function DashboardPage() {
@@ -35,7 +36,7 @@ export default async function DashboardPage() {
   const name = profile?.full_name?.split(" ")[0] ?? user.email?.split("@")[0] ?? "there";
 
   return (
-    <div className="min-h-screen pt-20 pb-24">
+    <div className="min-h-screen pt-20 pb-24 bg-zinc-950">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Suspense fallback={null}>
           <CheckoutSuccessBanner />
@@ -44,18 +45,11 @@ export default async function DashboardPage() {
         {/* Header */}
         <div className="flex items-start justify-between mb-10 pt-8">
           <div>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-orange-500 mb-1">Dashboard</p>
             <h1 className="text-2xl font-semibold text-white mb-1">Good to see you, {name}</h1>
             <p className="text-sm text-zinc-500">{user.email}</p>
           </div>
-          <form action="/api/auth/signout" method="POST">
-            <button
-              type="submit"
-              className="flex items-center gap-1.5 text-sm text-zinc-500 hover:text-white transition-colors py-2"
-            >
-              <LogOut size={14} />
-              Sign out
-            </button>
-          </form>
+          <SignOutButton />
         </div>
 
         {/* Stats row */}
@@ -78,7 +72,7 @@ export default async function DashboardPage() {
               <>
                 <div className="w-full h-1.5 bg-zinc-800 rounded-full mt-3 mb-1 overflow-hidden">
                   <div
-                    className="h-full bg-white rounded-full transition-all"
+                    className="h-full bg-orange-500 rounded-full transition-all"
                     style={{ width: `${usagePct}%` }}
                   />
                 </div>
@@ -88,7 +82,7 @@ export default async function DashboardPage() {
               </>
             )}
             {!profile?.plan && (
-              <Link href="/pricing" className="inline-flex items-center gap-1 text-xs text-zinc-400 hover:text-white mt-3 transition-colors">
+              <Link href="/pricing" className="inline-flex items-center gap-1 text-xs text-orange-500 hover:text-orange-400 mt-3 transition-colors">
                 Choose a plan <ArrowRight size={11} />
               </Link>
             )}
@@ -136,7 +130,7 @@ export default async function DashboardPage() {
               <Cpu size={15} className="text-zinc-500" />
               Modules
             </h2>
-            <Link href="/dashboard/modules/register" className="text-xs text-zinc-400 hover:text-white transition-colors">
+            <Link href="/dashboard/modules/register" className="text-xs text-orange-500 hover:text-orange-400 transition-colors">
               + Register module
             </Link>
           </div>
@@ -177,7 +171,7 @@ export default async function DashboardPage() {
             <Link
               key={href}
               href={href}
-              className="flex items-center gap-3 rounded-lg border border-zinc-800 bg-zinc-900/30 px-5 py-4 text-sm text-zinc-400 hover:border-zinc-700 hover:text-white transition-all"
+              className="flex items-center gap-3 rounded-lg border border-zinc-800 bg-zinc-900/30 px-5 py-4 text-sm text-zinc-400 hover:border-orange-500/30 hover:text-white transition-all"
             >
               <Icon size={15} />
               {label}

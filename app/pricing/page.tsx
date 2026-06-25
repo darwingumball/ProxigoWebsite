@@ -107,6 +107,7 @@ export default function PricingPage() {
   return (
     <>
       <section className="pt-32 pb-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-orange-500 mb-4">Pricing</p>
         <h1 className="text-5xl font-bold text-white tracking-tight mb-4">Simple pricing</h1>
         <p className="text-lg text-zinc-400 max-w-xl mx-auto">
           One hardware purchase. Then pick a map-download plan that matches your operation.
@@ -114,49 +115,10 @@ export default function PricingPage() {
         </p>
       </section>
 
-      {/* Hardware purchase */}
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
-        <div className="rounded-2xl border border-zinc-700 bg-zinc-900/50 p-8 sm:p-10 grid sm:grid-cols-2 gap-8">
-          <div>
-            <div className="inline-flex items-center gap-1.5 rounded-full bg-zinc-800 px-3 py-1 text-xs text-zinc-400 mb-4">
-              <Zap size={11} />
-              Hardware — One-time
-            </div>
-            <h2 className="text-3xl font-bold text-white mb-2">{HARDWARE.name}</h2>
-            <p className="text-zinc-400 text-sm mb-6 leading-relaxed">{HARDWARE.desc}</p>
-
-            <div className="flex items-baseline gap-2 mb-2">
-              <span className="text-4xl font-bold text-white">${HARDWARE.price}</span>
-              <span className="text-zinc-500 text-sm">one-time</span>
-            </div>
-            <p className="text-xs text-zinc-600 mb-8">Ships August 2026. No subscription required to use the module.</p>
-
-            <CheckoutButton
-              type="hardware"
-              label="Pre-order now"
-              className="inline-flex items-center gap-2 bg-white text-black font-medium px-6 py-3 rounded-lg hover:bg-zinc-100 transition-colors text-sm disabled:opacity-60"
-            />
-          </div>
-
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-widest text-zinc-600 mb-4">
-              What&apos;s included
-            </p>
-            <ul className="space-y-3">
-              {HARDWARE.includes.map((item) => (
-                <li key={item} className="flex items-center gap-2.5 text-sm text-zinc-300">
-                  <Check size={14} className="text-zinc-500 shrink-0" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </section>
-
       {/* Subscription plans */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-28">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
         <div className="text-center mb-12">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-orange-500 mb-4">Map plans</p>
           <h2 className="text-3xl font-bold text-white mb-3">Map download plans</h2>
           <p className="text-zinc-400 text-sm max-w-md mx-auto">
             Pay-as-you-go or subscribe for a lower per-km² rate. Plans activate after module purchase.
@@ -167,14 +129,14 @@ export default function PricingPage() {
           {PLANS.map((plan) => (
             <div
               key={plan.id}
-              className={`relative rounded-2xl border p-7 flex flex-col transition-colors ${
+              className={`relative rounded-2xl border p-7 flex flex-col transition-all ${
                 plan.highlight
-                  ? "border-white/20 bg-zinc-900/70 ring-1 ring-white/10"
+                  ? "border-orange-500/40 bg-zinc-900/70 ring-1 ring-orange-500/10"
                   : "border-zinc-800 bg-zinc-900/30 hover:border-zinc-700"
               }`}
             >
               {plan.highlight && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-white text-black text-xs font-semibold px-3 py-1 rounded-full">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-orange-600 text-white text-xs font-semibold px-3 py-1 rounded-full">
                   Most popular
                 </div>
               )}
@@ -209,8 +171,8 @@ export default function PricingPage() {
               </div>
 
               {plan.kmIncluded && (
-                <div className="rounded-lg bg-zinc-800/60 px-4 py-3 mb-6 text-sm">
-                  <span className="text-white font-medium">{plan.kmIncluded.toLocaleString()} km²</span>
+                <div className="rounded-lg bg-zinc-800/60 border border-zinc-700/50 px-4 py-3 mb-6 text-sm">
+                  <span className="text-orange-400 font-medium font-mono">{plan.kmIncluded.toLocaleString()} km²</span>
                   <span className="text-zinc-500"> / month · {plan.overage} after</span>
                 </div>
               )}
@@ -218,7 +180,7 @@ export default function PricingPage() {
               <ul className="space-y-3 mb-8 flex-1">
                 {plan.features.map((f) => (
                   <li key={f} className="flex items-start gap-2.5 text-sm text-zinc-300">
-                    <Check size={14} className="text-zinc-500 mt-0.5 shrink-0" />
+                    <Check size={14} className="text-orange-500 mt-0.5 shrink-0" />
                     {f}
                   </li>
                 ))}
@@ -239,7 +201,7 @@ export default function PricingPage() {
                   label={plan.cta}
                   className={`inline-flex items-center justify-center gap-2 font-medium px-4 py-2.5 rounded-lg text-sm transition-colors disabled:opacity-60 ${
                     plan.highlight
-                      ? "bg-white text-black hover:bg-zinc-100"
+                      ? "bg-orange-600 text-white hover:bg-orange-500"
                       : "border border-zinc-700 text-zinc-300 hover:border-zinc-500 hover:text-white"
                   }`}
                 />
@@ -254,10 +216,51 @@ export default function PricingPage() {
         </p>
       </section>
 
+      {/* Hardware purchase */}
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+        <div className="rounded-2xl border border-zinc-700 bg-zinc-900/50 p-8 sm:p-10 grid sm:grid-cols-2 gap-8">
+          <div>
+            <div className="inline-flex items-center gap-1.5 rounded-full bg-orange-500/10 border border-orange-500/25 px-3 py-1 text-xs text-orange-400 mb-4">
+              <Zap size={11} />
+              Hardware — One-time
+            </div>
+            <h2 className="text-3xl font-bold text-white mb-2">{HARDWARE.name}</h2>
+            <p className="text-zinc-400 text-sm mb-6 leading-relaxed">{HARDWARE.desc}</p>
+
+            <div className="flex items-baseline gap-2 mb-2">
+              <span className="text-4xl font-bold text-white">${HARDWARE.price}</span>
+              <span className="text-zinc-500 text-sm">one-time</span>
+            </div>
+            <p className="text-xs text-zinc-600 mb-8">Ships August 2026. No subscription required to use the module.</p>
+
+            <CheckoutButton
+              type="hardware"
+              label="Pre-order now"
+              className="inline-flex items-center gap-2 bg-orange-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-orange-500 transition-colors text-sm disabled:opacity-60"
+            />
+          </div>
+
+          <div>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-zinc-500 mb-4">
+              What&apos;s included
+            </p>
+            <ul className="space-y-3">
+              {HARDWARE.includes.map((item) => (
+                <li key={item} className="flex items-center gap-2.5 text-sm text-zinc-300">
+                  <Check size={14} className="text-orange-500 shrink-0" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
       {/* FAQ */}
       <section className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pb-28">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-orange-500 mb-4 text-center">FAQ</p>
         <h2 className="text-2xl font-bold text-white mb-10 text-center">Common questions</h2>
-        <div className="space-y-4">
+        <div className="space-y-3">
           {[
             {
               q: "Do I need a subscription to use the module?",
@@ -276,7 +279,7 @@ export default function PricingPage() {
               a: "Downloads continue at the overage rate listed for your plan. You will receive an email when you hit 80% and 100% of your included quota.",
             },
           ].map(({ q, a }) => (
-            <div key={q} className="rounded-xl border border-zinc-800 p-6">
+            <div key={q} className="rounded-xl border border-zinc-800 bg-zinc-900/30 p-6 hover:border-zinc-700 transition-colors">
               <h3 className="font-medium text-white mb-2">{q}</h3>
               <p className="text-sm text-zinc-400 leading-relaxed">{a}</p>
             </div>

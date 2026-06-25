@@ -19,14 +19,14 @@ const LINKS = {
 
 export function Footer() {
   return (
-    <footer className="border-t border-zinc-800 mt-24">
+    <footer className="border-t border-zinc-800 bg-zinc-950">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-10">
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
             <div className="flex items-center gap-2.5 mb-4">
-              <div className="w-7 h-7 rounded-md bg-white flex items-center justify-center">
-                <span className="text-black font-black text-sm leading-none">P</span>
+              <div className="w-7 h-7 rounded-md bg-orange-600 flex items-center justify-center">
+                <span className="text-white font-black text-sm leading-none">P</span>
               </div>
               <span className="font-semibold text-white tracking-tight">Proxigo</span>
             </div>
@@ -38,7 +38,7 @@ export function Footer() {
           {/* Link columns */}
           {Object.entries(LINKS).map(([group, links]) => (
             <div key={group}>
-              <p className="text-xs font-semibold text-zinc-400 uppercase tracking-widest mb-4">
+              <p className="text-[11px] font-semibold text-zinc-500 uppercase tracking-[0.15em] mb-4">
                 {group}
               </p>
               <ul className="space-y-3">

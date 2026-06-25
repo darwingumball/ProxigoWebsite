@@ -18,7 +18,6 @@ export function CheckoutSuccessBanner() {
     const key = params.get("checkout");
     if (key && MESSAGES[key]) {
       setMessage(MESSAGES[key]);
-      // Strip the query param from the URL without a full navigation
       const url = new URL(window.location.href);
       url.searchParams.delete("checkout");
       window.history.replaceState({}, "", url.toString());
@@ -28,10 +27,10 @@ export function CheckoutSuccessBanner() {
   if (!message) return null;
 
   return (
-    <div className="mb-6 flex items-start gap-3 rounded-xl border border-green-800/50 bg-green-950/40 px-4 py-3 text-sm text-green-300">
-      <CheckCircle size={16} className="mt-0.5 shrink-0 text-green-400" />
+    <div className="mb-6 flex items-start gap-3 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">
+      <CheckCircle size={16} className="mt-0.5 shrink-0 text-emerald-600" />
       <span className="flex-1">{message}</span>
-      <button onClick={() => setMessage(null)} className="shrink-0 text-green-600 hover:text-green-400 transition-colors">
+      <button onClick={() => setMessage(null)} className="shrink-0 text-emerald-600 hover:text-emerald-800 transition-colors">
         <X size={14} />
       </button>
     </div>

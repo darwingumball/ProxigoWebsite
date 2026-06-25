@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { createClient } from "@/lib/supabase/client";
@@ -44,15 +43,15 @@ export function Nav() {
       className={cn(
         "fixed top-0 inset-x-0 z-50 transition-all duration-300",
         scrolled
-          ? "bg-zinc-950/90 backdrop-blur-md border-b border-zinc-800/60"
+          ? "bg-zinc-950/95 backdrop-blur-md border-b border-zinc-800/80"
           : "bg-transparent"
       )}
     >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5 group">
-          <div className="w-7 h-7 rounded-md bg-white flex items-center justify-center">
-            <span className="text-black font-black text-sm leading-none">P</span>
+          <div className="w-7 h-7 rounded-md bg-orange-600 flex items-center justify-center">
+            <span className="text-white font-black text-sm leading-none">P</span>
           </div>
           <span className="font-semibold text-white tracking-tight">Proxigo</span>
         </Link>
@@ -93,10 +92,10 @@ export function Nav() {
                 Sign in
               </Link>
               <Link
-                href="/signup"
-                className="inline-flex items-center justify-center text-xs px-3 py-1.5 rounded-md gap-1.5 font-medium bg-white text-black hover:bg-zinc-200 transition-all duration-150"
+                href="/pricing"
+                className="inline-flex items-center justify-center text-xs px-3.5 py-1.5 rounded-md gap-1.5 font-semibold bg-orange-600 text-white hover:bg-orange-500 transition-all duration-150"
               >
-                Get started
+                Pre-order
               </Link>
             </>
           )}
@@ -104,7 +103,7 @@ export function Nav() {
 
         {/* Mobile toggle */}
         <button
-          className="md:hidden text-zinc-400 hover:text-white p-1.5"
+          className="md:hidden text-zinc-400 hover:text-white p-1.5 transition-colors"
           onClick={() => setOpen(!open)}
           aria-label="Toggle menu"
         >
@@ -119,14 +118,14 @@ export function Nav() {
             <Link
               key={href}
               href={href}
-              className="py-3 text-sm text-zinc-300 hover:text-white border-b border-zinc-800/50 last:border-0"
+              className="py-3 text-sm text-zinc-300 hover:text-white border-b border-zinc-800/50 last:border-0 transition-colors"
             >
               {label}
             </Link>
           ))}
           <div className="flex gap-2 mt-3">
             {user ? (
-              <Link href="/dashboard" className="flex-1 inline-flex items-center justify-center text-sm px-4 py-2 rounded-lg font-medium bg-white text-black hover:bg-zinc-200 transition-all">
+              <Link href="/dashboard" className="flex-1 inline-flex items-center justify-center text-sm px-4 py-2 rounded-lg font-medium border border-zinc-700 text-zinc-300 hover:border-zinc-500 hover:text-white transition-all">
                 Dashboard
               </Link>
             ) : (
@@ -134,8 +133,8 @@ export function Nav() {
                 <Link href="/login" className="flex-1 inline-flex items-center justify-center text-sm px-4 py-2 rounded-lg font-medium border border-zinc-700 text-zinc-300 hover:border-zinc-500 hover:text-white transition-all">
                   Sign in
                 </Link>
-                <Link href="/signup" className="flex-1 inline-flex items-center justify-center text-sm px-4 py-2 rounded-lg font-medium bg-white text-black hover:bg-zinc-200 transition-all">
-                  Get started
+                <Link href="/pricing" className="flex-1 inline-flex items-center justify-center text-sm px-4 py-2 rounded-lg font-semibold bg-orange-600 text-white hover:bg-orange-500 transition-all">
+                  Pre-order
                 </Link>
               </>
             )}
