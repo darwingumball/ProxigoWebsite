@@ -26,14 +26,13 @@ export async function POST(req: Request) {
     }
 
     const rows = serials.map((serial: string) => ({ serial }));
-    const { error, count } = await supabase
+    const { error } = await supabase
       .from("module_inventory")
-      .upsert(rows, { onConflict: "serial", ignoreDuplicates: true })
-      .select("*", { count: "exact", head: true });
+      .upsert(rows, { onConflict: "serial", ignoreDuplicates: true });
 
     if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 
-    return NextResponse.json({ ok: true, added: count ?? serials.length });
+    return NextResponse.json({ ok: true, added: serials.length });
   } catch (err) {
     return NextResponse.json({ error: err instanceof Error ? err.message : "Internal error" }, { status: 500 });
   }
