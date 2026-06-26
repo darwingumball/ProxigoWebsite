@@ -37,7 +37,7 @@ export function HeroVisual() {
     canvas.width  = W;
     canvas.height = H;
 
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
     if (!ctx) return;
 
     const DRONE_SPEED  = 35;
