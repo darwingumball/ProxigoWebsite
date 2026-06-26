@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { CheckoutSuccessBanner } from "@/components/checkout-success-banner";
 import { SignOutButton } from "@/components/sign-out-button";
-import { BarChart3, Cpu, Map, Settings, CreditCard, ArrowRight, Building2 } from "lucide-react";
+import { BarChart3, Cpu, Map, Settings, CreditCard, ArrowRight, Building2, ShieldCheck } from "lucide-react";
 import { Suspense } from "react";
 
 export default async function DashboardPage() {
@@ -14,7 +14,7 @@ export default async function DashboardPage() {
 
   const { data: profile } = await supabase
     .from("profiles")
-    .select("full_name, plan, stripe_customer_id")
+    .select("full_name, plan, stripe_customer_id, is_admin")
     .eq("id", user.id)
     .single();
 
@@ -180,6 +180,18 @@ export default async function DashboardPage() {
             </Link>
           ))}
         </div>
+
+        {/* Admin shortcut — only visible to admins */}
+        {profile?.is_admin && (
+          <Link
+            href="/admin"
+            className="mt-3 flex items-center gap-3 rounded-lg border border-orange-500/20 bg-orange-500/5 px-5 py-4 text-sm text-orange-400 hover:border-orange-500/40 hover:bg-orange-500/10 transition-all"
+          >
+            <ShieldCheck size={15} />
+            Admin dashboard
+            <ArrowRight size={13} className="ml-auto" />
+          </Link>
+        )}
       </div>
     </div>
   );
