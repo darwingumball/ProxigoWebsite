@@ -7,16 +7,16 @@ export async function requireAdmin() {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/login?next=/admin");
 
-  const { data: profile } = await supabase
+  // Use service client to bypass RLS — anon client doesn't reliably attach JWT to PostgREST queries
+  const adminClient = createServiceClient();
+
+  const { data: profile } = await adminClient
     .from("profiles")
-    .select("is_admin, full_name, email")
+    .select("is_admin, full_name")
     .eq("id", user.id)
     .single();
 
   if (!profile?.is_admin) redirect("/dashboard");
 
-  // Use service-role client for admin data queries (bypasses RLS)
-  const adminClient = createServiceClient();
-
-  return { supabase: adminClient, user, profile };
+  return { supabase: adminClient, user, profile: { ...profile, email: user.email } };
 }

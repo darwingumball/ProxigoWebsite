@@ -1,5 +1,5 @@
 import { requireAdmin } from "@/lib/admin";
-import { Users, Cpu, Map, TrendingUp, ArrowRight } from "lucide-react";
+import { Users, Cpu, Map, TrendingUp, ArrowRight, MessageSquare } from "lucide-react";
 import Link from "next/link";
 
 // Internal reference only — public pricing is unannounced
@@ -25,6 +25,8 @@ export default async function AdminOverviewPage() {
     { data: usageThisMonth },
     { data: usageLastMonth },
     { count: orgCount },
+    { count: openTickets },
+    { data: recentTickets },
   ] = await Promise.all([
     supabase.from("profiles").select("id, email, full_name, plan, created_at").order("created_at", { ascending: false }),
     supabase.from("modules").select("*", { count: "exact", head: true }),
@@ -33,6 +35,8 @@ export default async function AdminOverviewPage() {
     supabase.from("usage_events").select("km2").gte("created_at", startOfMonth),
     supabase.from("usage_events").select("km2").gte("created_at", startOfLastMonth).lt("created_at", startOfMonth),
     supabase.from("organizations").select("*", { count: "exact", head: true }),
+    supabase.from("support_tickets").select("*", { count: "exact", head: true }).eq("status", "open"),
+    supabase.from("support_tickets").select("id, ticket_id, name, category, subject, status, created_at").eq("status", "open").order("created_at", { ascending: false }).limit(5),
   ]);
 
   const allProfiles = profiles ?? [];
@@ -91,6 +95,14 @@ export default async function AdminOverviewPage() {
       icon: Map,
       href: "/admin/analytics",
     },
+    {
+      label: "Open tickets",
+      value: (openTickets ?? 0).toLocaleString(),
+      sub: "Awaiting response",
+      delta: null,
+      icon: MessageSquare,
+      href: "/admin/tickets",
+    },
   ];
 
   return (
@@ -105,7 +117,7 @@ export default async function AdminOverviewPage() {
       </div>
 
       {/* Metric cards */}
-      <div className="grid grid-cols-2 xl:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 xl:grid-cols-5 gap-4 mb-8">
         {METRICS.map(({ label, value, sub, delta, icon: Icon, href }) => (
           <Link key={label} href={href}
             className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-5 hover:border-zinc-700 transition-colors group">
@@ -211,6 +223,34 @@ export default async function AdminOverviewPage() {
           </div>
         </div>
       </div>
+      {/* Recent open tickets */}
+      {(recentTickets ?? []).length > 0 && (
+        <div className="mt-6 rounded-xl border border-zinc-800 overflow-hidden">
+          <div className="flex items-center justify-between px-5 py-3.5 border-b border-zinc-800">
+            <h2 className="text-sm font-medium text-white">Open tickets</h2>
+            <Link href="/admin/tickets?status=open" className="text-xs text-zinc-500 hover:text-orange-400 transition-colors flex items-center gap-1">
+              View all <ArrowRight size={11} />
+            </Link>
+          </div>
+          <div className="divide-y divide-zinc-800">
+            {(recentTickets ?? []).map((t) => (
+              <Link key={t.id} href={`/admin/tickets?status=open`}
+                className="flex items-center justify-between px-5 py-3 hover:bg-zinc-900/60 transition-colors">
+                <div className="min-w-0 flex-1">
+                  <p className="text-sm text-white truncate">{t.subject}</p>
+                  <p className="text-xs text-zinc-600">{t.name} · {t.category}</p>
+                </div>
+                <div className="flex items-center gap-3 shrink-0 ml-4">
+                  <span className="text-[10px] font-mono text-zinc-600">{t.ticket_id}</span>
+                  <span className="text-[10px] text-zinc-700 tabular-nums">
+                    {new Date(t.created_at).toLocaleDateString()}
+                  </span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
