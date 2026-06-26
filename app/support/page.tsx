@@ -1,20 +1,137 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { MessageSquare, Mail, FileText, CheckCircle2, ExternalLink } from "lucide-react";
+import { Mail, FileText, CheckCircle2, ExternalLink, Building2, Code2 } from "lucide-react";
 
-const CATEGORIES = ["Hardware issue", "Desktop App", "Billing", "Account", "Maps / Downloads", "Other"];
+const SUPPORT_CATEGORIES = ["Sales", "Development", "Account", "Billing", "Desktop App", "Maps / Downloads", "Hardware Issue", "Other"];
+
+const SALES_TYPES = ["Enterprise Plan Inquiry", "Volume Hardware Order"] as const;
+
+const COMPANY_SIZES = ["1–10 employees", "11–50 employees", "51–200 employees", "201–1,000 employees", "1,000+ employees"];
+
+const INDUSTRIES = [
+  "Surveying & Mapping",
+  "Infrastructure Inspection",
+  "Precision Agriculture",
+  "Defense / Public Safety",
+  "Construction",
+  "Mining & Extraction",
+  "Film & Media Production",
+  "Research & Academia",
+  "Other",
+];
+
+type FormState = {
+  name: string;
+  email: string;
+  category: string;
+  salesType: string;
+  subject: string;
+  message: string;
+  companyName: string;
+  companySize: string;
+  industry: string;
+  website: string;
+};
+
+const BLANK_FORM: FormState = {
+  name: "", email: "", category: "", salesType: "", subject: "", message: "",
+  companyName: "", companySize: "", industry: "", website: "",
+};
+
+const SALES_MESSAGES: Record<string, string> = {
+  "Enterprise Plan Inquiry": "Hi, I'm interested in learning more about Proxigo Enterprise pricing and deployment options for my team.",
+  "Volume Hardware Order": "Hi, I'm interested in placing a volume order for Macula VPS Modules. Please share pricing and lead times for bulk orders.",
+};
+
+const DEV_DEFAULTS = {
+  category: "Development",
+  subject: "Integration / Developer Inquiry",
+  message: "Hi, I'm integrating the Macula VPS Module into a custom platform and have some technical questions.",
+};
 
 export default function SupportPage() {
-  const [form, setForm] = useState({ name: "", email: "", category: "", subject: "", message: "", website: "" });
+  const [form, setForm] = useState<FormState>(BLANK_FORM);
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
 
+  const isSales = form.category === "Sales";
+  const isDev   = form.category === "Development";
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const type = params.get("type");
+
+    if (type === "sales") {
+      const defaultSalesType = "Enterprise Plan Inquiry";
+      setForm((f) => ({
+        ...f,
+        category: "Sales",
+        salesType: defaultSalesType,
+        subject: defaultSalesType,
+        message: SALES_MESSAGES[defaultSalesType],
+      }));
+    } else if (type === "dev") {
+      setForm((f) => ({ ...f, ...DEV_DEFAULTS }));
+    }
+
+    if (type === "sales" || type === "dev") {
+      // Re-scroll after the form expands from the extra fields rendering
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          document.getElementById("contact")?.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+      });
+    }
+  }, []);
+
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
-    setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
+    const { name, value } = e.target;
+
+    if (name === "category") {
+      if (value === "Sales") {
+        const defaultSalesType = "Enterprise Plan Inquiry";
+        setForm((f) => ({
+          ...f,
+          category: "Sales",
+          salesType: defaultSalesType,
+          subject: defaultSalesType,
+          message: SALES_MESSAGES[defaultSalesType],
+          companyName: "", companySize: "", industry: "",
+        }));
+      } else if (value === "Development") {
+        setForm((f) => ({
+          ...f,
+          ...DEV_DEFAULTS,
+          salesType: "", companyName: "", companySize: "", industry: "",
+        }));
+      } else {
+        // Clear any auto-filled sales/dev content when switching away
+        setForm((f) => ({
+          ...f,
+          category: value,
+          salesType: "", companyName: "", companySize: "", industry: "",
+          subject: (SALES_TYPES.includes(f.subject as typeof SALES_TYPES[number]) || f.subject === DEV_DEFAULTS.subject) ? "" : f.subject,
+          message: ([...Object.values(SALES_MESSAGES), DEV_DEFAULTS.message].includes(f.message)) ? "" : f.message,
+        }));
+      }
+      return;
+    }
+
+    if (name === "salesType") {
+      setForm((f) => ({
+        ...f,
+        salesType: value,
+        subject: value,
+        message: SALES_MESSAGES[value] ?? f.message,
+      }));
+      return;
+    }
+
+    setForm((f) => ({ ...f, [name]: value }));
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -48,7 +165,7 @@ export default function SupportPage() {
         </div>
       </section>
 
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 grid sm:grid-cols-3 gap-4">
+      <section className="max-w-[46rem] mx-auto px-4 sm:px-6 lg:px-8 pb-12 grid sm:grid-cols-2 gap-4">
         {[
           {
             icon: FileText,
@@ -63,13 +180,6 @@ export default function SupportPage() {
             desc: "Reach us directly at support@proxigo.us",
             href: "mailto:support@proxigo.us",
             label: "Send email",
-          },
-          {
-            icon: MessageSquare,
-            title: "Discord",
-            desc: "Join the Proxigo community for peer support and updates.",
-            href: "#",
-            label: "Join server",
           },
         ].map(({ icon: Icon, title, desc, href, label }) => (
           <a
@@ -92,30 +202,61 @@ export default function SupportPage() {
       </section>
 
       {/* Ticket form */}
-      <section id="contact" className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 pb-28">
-        <div className="rounded-2xl border border-zinc-800 bg-zinc-900/30 p-8">
+      <section id="contact" className="scroll-mt-24 max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 pb-28">
+        <div className={`rounded-2xl border bg-zinc-900/30 p-8 transition-colors duration-200 ${isSales ? "border-orange-500/30" : isDev ? "border-blue-500/30" : "border-zinc-800"}`}>
           {submitted ? (
             <div className="text-center py-8">
               <CheckCircle2 className="text-emerald-400 mx-auto mb-4" size={40} />
-              <h2 className="text-xl font-semibold text-white mb-2">Ticket submitted</h2>
+              <h2 className="text-xl font-semibold text-white mb-2">
+                {isSales ? "Sales inquiry received" : isDev ? "Developer inquiry received" : "Ticket submitted"}
+              </h2>
               <p className="text-sm text-zinc-400 leading-relaxed">
                 We&apos;ve sent a confirmation to <span className="text-white">{form.email}</span>.
-                Expect a reply within 1 business day.
+                {isSales
+                  ? " Our sales team will be in touch within 1–2 business days."
+                  : isDev
+                  ? " Our engineering team will be in touch within 1–2 business days."
+                  : " Expect a reply within 1 business day."}
               </p>
             </div>
           ) : (
             <>
-              <h2 className="text-xl font-semibold text-white mb-1.5">Open a support ticket</h2>
-              <p className="text-sm text-zinc-500 mb-7">
-                We&apos;ll email you a ticket ID and follow up as soon as possible.
-              </p>
+              {/* Header */}
+              <div className="flex items-start justify-between mb-6">
+                <div>
+                  <h2 className="text-xl font-semibold text-white mb-1">
+                    {isSales ? "Contact Enterprise Sales" : isDev ? "Developer Support" : "Open a support ticket"}
+                  </h2>
+                  <p className="text-sm text-zinc-500">
+                    {isSales
+                      ? "Tell us about your operation and we'll put together a custom quote."
+                      : isDev
+                      ? "Describe your integration or technical question and our engineering team will follow up."
+                      : "We'll email you a ticket ID and follow up as soon as possible."}
+                  </p>
+                </div>
+                {isSales && (
+                  <span className="shrink-0 inline-flex items-center gap-1.5 rounded-full bg-orange-500/10 border border-orange-500/25 px-3 py-1 text-xs text-orange-400 ml-4">
+                    <Building2 size={11} />
+                    Sales
+                  </span>
+                )}
+                {isDev && (
+                  <span className="shrink-0 inline-flex items-center gap-1.5 rounded-full bg-blue-500/10 border border-blue-500/25 px-3 py-1 text-xs text-blue-400 ml-4">
+                    <Code2 size={11} />
+                    Dev
+                  </span>
+                )}
+              </div>
 
               <form onSubmit={handleSubmit} className="space-y-4">
+                {/* Basic info */}
                 <div className="grid sm:grid-cols-2 gap-4">
                   <Input id="name" name="name" label="Your name" placeholder="Jane Smith" value={form.name} onChange={handleChange} required />
                   <Input id="email" name="email" label="Email" type="email" placeholder="you@example.com" value={form.email} onChange={handleChange} required />
                 </div>
 
+                {/* Category */}
                 <div className="flex flex-col gap-1.5">
                   <label htmlFor="category" className="text-sm text-zinc-400">Category</label>
                   <select
@@ -127,11 +268,90 @@ export default function SupportPage() {
                     className="w-full rounded-lg border border-zinc-700 bg-zinc-900 px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-zinc-500 focus:ring-1 focus:ring-zinc-500"
                   >
                     <option value="" disabled>Select a category…</option>
-                    {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
+                    {SUPPORT_CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
                   </select>
                 </div>
 
-                <Input id="subject" name="subject" label="Subject" placeholder="Briefly describe your issue" value={form.subject} onChange={handleChange} required />
+                {/* Sales-specific fields — expands when Sales is selected */}
+                {isSales && (
+                  <div className="rounded-xl border border-orange-500 bg-orange-500/5 px-6 py-5 space-y-5">
+                    <p className="text-xs font-semibold uppercase tracking-[0.15em] text-orange-400">Sales details</p>
+
+                    {/* Sales type */}
+                    <div className="flex flex-col gap-1.5">
+                      <label className="text-sm text-zinc-400">Inquiry type</label>
+                      <div className="grid grid-cols-2 gap-3">
+                        {SALES_TYPES.map((type) => (
+                          <button
+                            key={type}
+                            type="button"
+                            onClick={() => handleChange({ target: { name: "salesType", value: type } } as React.ChangeEvent<HTMLSelectElement>)}
+                            className={`rounded-lg border px-4 py-3 text-left text-sm transition-colors ${
+                              form.salesType === type
+                                ? "border-orange-500/50 bg-orange-500/10 text-orange-300"
+                                : "border-zinc-700 bg-zinc-900/60 text-zinc-400 hover:border-zinc-600 hover:text-zinc-200"
+                            }`}
+                          >
+                            {type}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Company fields */}
+                    <Input
+                      id="companyName"
+                      name="companyName"
+                      label="Company name"
+                      placeholder="Acme Survey Co."
+                      value={form.companyName}
+                      onChange={handleChange}
+                      required
+                    />
+
+                    <div className="grid sm:grid-cols-2 gap-4">
+                      <div className="flex flex-col gap-1.5">
+                        <label htmlFor="companySize" className="text-sm text-zinc-400">Company size</label>
+                        <select
+                          id="companySize"
+                          name="companySize"
+                          value={form.companySize}
+                          onChange={handleChange}
+                          required
+                          className="w-full rounded-lg border border-zinc-700 bg-zinc-900 px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-zinc-500 focus:ring-1 focus:ring-zinc-500"
+                        >
+                          <option value="" disabled>Select size…</option>
+                          {COMPANY_SIZES.map((s) => <option key={s} value={s}>{s}</option>)}
+                        </select>
+                      </div>
+
+                      <div className="flex flex-col gap-1.5">
+                        <label htmlFor="industry" className="text-sm text-zinc-400">Industry</label>
+                        <select
+                          id="industry"
+                          name="industry"
+                          value={form.industry}
+                          onChange={handleChange}
+                          required
+                          className="w-full rounded-lg border border-zinc-700 bg-zinc-900 px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-zinc-500 focus:ring-1 focus:ring-zinc-500"
+                        >
+                          <option value="" disabled>Select industry…</option>
+                          {INDUSTRIES.map((i) => <option key={i} value={i}>{i}</option>)}
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                <Input
+                  id="subject"
+                  name="subject"
+                  label="Subject"
+                  placeholder={isSales ? "Enterprise Sales Inquiry" : "Briefly describe your issue"}
+                  value={form.subject}
+                  onChange={handleChange}
+                  required
+                />
 
                 <div className="flex flex-col gap-1.5">
                   <label htmlFor="message" className="text-sm text-zinc-400">Message</label>
@@ -139,7 +359,11 @@ export default function SupportPage() {
                     id="message"
                     name="message"
                     rows={5}
-                    placeholder="Describe your issue in detail. Include module serial number if relevant."
+                    placeholder={
+                      isSales
+                        ? "Tell us about your fleet size, coverage area needs, deployment timeline, or any specific requirements."
+                        : "Describe your issue in detail. Include module serial number if relevant."
+                    }
                     value={form.message}
                     onChange={handleChange}
                     required
@@ -153,7 +377,7 @@ export default function SupportPage() {
                   </div>
                 )}
 
-                {/* Honeypot — hidden from real users, filled by bots */}
+                {/* Honeypot */}
                 <input
                   type="text"
                   name="website"
@@ -166,7 +390,7 @@ export default function SupportPage() {
                 />
 
                 <Button type="submit" disabled={loading} className="w-full" size="md">
-                  {loading ? "Submitting…" : "Submit ticket"}
+                  {loading ? "Submitting…" : isSales ? "Send sales inquiry" : isDev ? "Send developer inquiry" : "Submit ticket"}
                 </Button>
               </form>
             </>

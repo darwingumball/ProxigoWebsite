@@ -9,7 +9,9 @@ import { createClient } from "@/lib/supabase/client";
 import type { User } from "@supabase/supabase-js";
 
 const NAV_LINKS = [
-  { href: "/product", label: "Product" },
+  { href: "/product", label: "Macula" },
+  { href: "/desktop", label: "Software" },
+  { href: "/integrations", label: "Integration" },
   { href: "/pricing", label: "Pricing" },
   { href: "/docs", label: "Docs" },
   { href: "/support", label: "Support" },

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { CheckoutSuccessBanner } from "@/components/checkout-success-banner";
 import { SignOutButton } from "@/components/sign-out-button";
-import { BarChart3, Cpu, Map, Settings, CreditCard, ArrowRight } from "lucide-react";
+import { BarChart3, Cpu, Map, Settings, CreditCard, ArrowRight, Building2 } from "lucide-react";
 import { Suspense } from "react";
 
 export default async function DashboardPage() {
@@ -30,7 +30,7 @@ export default async function DashboardPage() {
     .gte("created_at", new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString());
 
   const kmThisMonth = (usageRows ?? []).reduce((sum, r) => sum + (r.km2 ?? 0), 0);
-  const kmLimit = profile?.plan === "pro" ? 2500 : profile?.plan === "starter" ? 500 : 0;
+  const kmLimit = profile?.plan === "pro" ? 100 : profile?.plan === "starter" ? 20 : 0;
   const usagePct = kmLimit > 0 ? Math.min((kmThisMonth / kmLimit) * 100, 100) : 0;
 
   const name = profile?.full_name?.split(" ")[0] ?? user.email?.split("@")[0] ?? "there";
@@ -165,6 +165,7 @@ export default async function DashboardPage() {
         <div className="grid sm:grid-cols-3 gap-3">
           {[
             { href: "/dashboard/usage", icon: BarChart3, label: "Usage history" },
+            { href: "/dashboard/organizations", icon: Building2, label: "Organization" },
             { href: "/dashboard/settings", icon: Settings, label: "Account settings" },
             { href: "/docs", icon: Map, label: "Documentation" },
           ].map(({ href, icon: Icon, label }) => (

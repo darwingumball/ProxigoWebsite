@@ -19,9 +19,13 @@ export async function POST(req: Request) {
     category?: string;
     subject?: string;
     message?: string;
+    companyName?: string;
+    companySize?: string;
+    industry?: string;
+    website?: string;
   };
 
-  const { name, email, category, subject, message, website } = body as typeof body & { website?: string };
+  const { name, email, category, subject, message, companyName, companySize, industry, website } = body;
 
   // Honeypot — bots fill hidden fields, humans don't
   if (website) {
@@ -30,6 +34,15 @@ export async function POST(req: Request) {
 
   if (!name || !email || !subject || !message || !category) {
     return NextResponse.json({ error: "All fields are required" }, { status: 400 });
+  }
+
+  // For sales inquiries, validate company fields and prepend to message
+  let fullMessage = message;
+  if (category === "Sales") {
+    if (!companyName || !companySize || !industry) {
+      return NextResponse.json({ error: "Company name, size, and industry are required for sales inquiries." }, { status: 400 });
+    }
+    fullMessage = `Company: ${companyName}\nSize: ${companySize}\nIndustry: ${industry}\n\n---\n\n${message}`;
   }
 
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
@@ -52,12 +65,12 @@ export async function POST(req: Request) {
     email,
     category,
     subject,
-    message,
+    message: fullMessage,
     status: "open",
   });
 
   try {
-    await sendSupportTicketEmail({ name, email, subject, message, ticketId });
+    await sendSupportTicketEmail({ name, email, subject, message: fullMessage, ticketId });
   } catch (err) {
     console.error("Email send failed", err);
   }

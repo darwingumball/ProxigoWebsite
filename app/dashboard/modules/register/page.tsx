@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, Cpu, CheckCircle2, AlertCircle } from "lucide-react";
-import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 
 export default function RegisterModulePage() {
@@ -14,41 +13,31 @@ export default function RegisterModulePage() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
 
+  const SERIAL_RE = /^MAC-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}$/;
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
     const norm = serial.trim().toUpperCase();
     if (!norm) { setError("Please enter a serial number."); return; }
-
-    setLoading(true);
-    const supabase = createClient();
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) { window.location.href = "/login"; return; }
-
-    const { data: existing } = await supabase
-      .from("modules")
-      .select("user_id")
-      .eq("serial", norm)
-      .single();
-
-    if (existing) {
-      setError(
-        existing.user_id === user.id
-          ? "This module is already registered to your account."
-          : "This serial is already registered to another account. Contact support if you believe this is an error."
-      );
-      setLoading(false);
+    if (!SERIAL_RE.test(norm)) {
+      setError("Invalid format. Serial should look like MAC-XXXX-XXXX-XXXX.");
       return;
     }
 
-    const { error: insertErr } = await supabase.from("modules").insert({
-      serial: norm,
-      user_id: user.id,
-      nickname: nickname.trim() || null,
-      status: "active",
+    setLoading(true);
+    const res = await fetch("/api/modules/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ serial: norm, nickname: nickname.trim() || null }),
     });
 
-    if (insertErr) { setError(insertErr.message); setLoading(false); return; }
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      setError(data.error ?? "Something went wrong. Please try again.");
+      setLoading(false);
+      return;
+    }
 
     setSuccess(true);
     setLoading(false);

@@ -59,21 +59,21 @@ const ECOSYSTEM = [
 
 function SpecCard({ group, items }: { group: string; items: string[][] }) {
   return (
-    <div className="flex flex-col">
-      <h3 className="text-[11px] font-semibold uppercase tracking-[0.15em] text-orange-500 mb-2">{group}</h3>
-      <div className="rounded-xl border border-zinc-800 overflow-hidden">
-        {items.map(([key, val], i) => (
-          <div
-            key={key}
-            className={`flex items-start justify-between px-4 py-2.5 text-sm gap-4 ${
-              i !== items.length - 1 ? "border-b border-zinc-800" : ""
-            } ${i % 2 === 0 ? "bg-zinc-900/20" : ""}`}
-          >
-            <span className="text-zinc-500 shrink-0 text-xs">{key}</span>
-            <span className="text-zinc-200 text-right font-mono text-xs">{val}</span>
-          </div>
-        ))}
+    <div className="rounded-xl border border-zinc-800 overflow-hidden">
+      <div className="px-5 py-3 border-b border-zinc-800 bg-zinc-900/60">
+        <h3 className="text-[10px] font-semibold uppercase tracking-[0.15em] text-orange-500">{group}</h3>
       </div>
+      {items.map(([key, val], i) => (
+        <div
+          key={key}
+          className={`grid grid-cols-2 gap-4 px-5 py-3 text-sm ${
+            i !== items.length - 1 ? "border-b border-zinc-800/60" : ""
+          } ${i % 2 === 0 ? "bg-zinc-900/20" : ""}`}
+        >
+          <span className="text-zinc-500">{key}</span>
+          <span className="text-zinc-200 font-mono text-xs leading-relaxed">{val}</span>
+        </div>
+      ))}
     </div>
   );
 }
@@ -83,31 +83,57 @@ export default function ProductPage() {
     <>
       {/* ── Hero ── */}
       <section className="pt-32 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl">
-          <div className="inline-flex items-center gap-2 rounded-full border border-orange-500/25 bg-orange-500/10 px-3.5 py-1.5 text-xs text-orange-400 mb-6">
-            <Cpu size={11} />
-            Macula Visual Positioning System
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* Text */}
+          <div>
+            <div className="inline-flex items-center gap-2 rounded-full border border-orange-500/25 bg-orange-500/10 px-3.5 py-1.5 text-xs text-orange-400 mb-6">
+              <Cpu size={11} />
+              Macula Visual Positioning System
+            </div>
+            <h1 className="text-5xl sm:text-6xl font-black text-white tracking-tight leading-[0.95] mb-6">
+              Position<br />without GPS.
+            </h1>
+            <p className="text-xl text-zinc-400 leading-relaxed mb-8">
+              Macula mounts to the bottom of any drone and delivers continuous, sub-meter-accurate
+              position estimates using only a downward-facing camera and our onboard vision models.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <Link
+                href="/pricing"
+                className="inline-flex items-center gap-2 bg-orange-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-orange-500 transition-colors text-sm"
+              >
+                Pre-order <ArrowRight size={15} />
+              </Link>
+              <Link
+                href="/docs"
+                className="inline-flex items-center gap-2 border border-zinc-700 text-zinc-300 font-medium px-6 py-3 rounded-lg hover:border-zinc-500 hover:text-white transition-colors text-sm"
+              >
+                Documentation
+              </Link>
+            </div>
           </div>
-          <h1 className="text-5xl sm:text-6xl font-black text-white tracking-tight leading-[0.95] mb-6">
-            Position<br />without GPS.
-          </h1>
-          <p className="text-xl text-zinc-400 leading-relaxed mb-8 max-w-lg">
-            Macula mounts to the bottom of any drone and delivers continuous, centimeter-accurate
-            position estimates using only a downward-facing camera and our onboard vision models.
-          </p>
-          <div className="flex flex-wrap gap-3">
-            <Link
-              href="/pricing"
-              className="inline-flex items-center gap-2 bg-orange-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-orange-500 transition-colors text-sm"
-            >
-              Pre-order — $499 <ArrowRight size={15} />
-            </Link>
-            <Link
-              href="/docs"
-              className="inline-flex items-center gap-2 border border-zinc-700 text-zinc-300 font-medium px-6 py-3 rounded-lg hover:border-zinc-500 hover:text-white transition-colors text-sm"
-            >
-              Documentation
-            </Link>
+
+          {/* Product render placeholder */}
+          <div className="relative rounded-2xl border border-zinc-800 bg-zinc-900/40 overflow-hidden aspect-square lg:aspect-[4/3] flex items-center justify-center">
+            <div className="absolute inset-0 grid-pattern opacity-20" />
+            <div className="absolute top-3 left-3 w-4 h-4 border-t border-l border-orange-500/40" />
+            <div className="absolute top-3 right-3 w-4 h-4 border-t border-r border-orange-500/40" />
+            <div className="absolute bottom-3 left-3 w-4 h-4 border-b border-l border-orange-500/40" />
+            <div className="absolute bottom-3 right-3 w-4 h-4 border-b border-r border-orange-500/40" />
+            {/* Glow */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <div className="w-48 h-48 bg-orange-500/10 rounded-full blur-3xl" />
+            </div>
+            <div className="relative z-10 text-center px-8">
+              <div className="w-20 h-20 rounded-2xl bg-orange-600/20 border border-orange-500/30 flex items-center justify-center mx-auto mb-5">
+                <Cpu size={36} className="text-orange-500" />
+              </div>
+              <p className="text-sm font-semibold text-zinc-400 mb-1">Macula VPS</p>
+              <p className="text-xs text-zinc-600">Product render / GIF coming soon</p>
+            </div>
+            <p className="absolute bottom-4 left-0 right-0 text-center text-[10px] font-mono tracking-[0.2em] text-zinc-700">
+              MACULA-VPS-MODULE-R1
+            </p>
           </div>
         </div>
       </section>
@@ -176,16 +202,13 @@ export default function ProductPage() {
         </div>
       </section>
 
-      {/* ── Full specs — 2-column paired layout ── */}
+      {/* ── Full specs ── */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
         <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-orange-500 mb-4">Specifications</p>
         <h2 className="text-3xl font-bold text-white mb-10">Full Specifications</h2>
-        <div className="space-y-8">
-          {SPEC_PAIRS.map(([a, b]) => (
-            <div key={a.group} className="grid sm:grid-cols-2 gap-4 items-start">
-              <SpecCard group={a.group} items={a.items} />
-              <SpecCard group={b.group} items={b.items} />
-            </div>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {FULL_SPECS.map((spec) => (
+            <SpecCard key={spec.group} group={spec.group} items={spec.items} />
           ))}
         </div>
       </section>

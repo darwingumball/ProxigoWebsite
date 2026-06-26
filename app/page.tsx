@@ -21,7 +21,7 @@ const SPECS = [
   ["Processing",     "Raspberry Pi CM5 (4GB)"],
   ["Camera",         "8MP Global Shutter, 100° FOV"],
   ["Output",         "MAVLink 2 / UART / USB"],
-  ["Accuracy",       "< 5cm at 5m AGL"],
+  ["Accuracy",       "< 1m at 5m AGL"],
   ["Weight",         "~210g"],
   ["Power",          "5V / 2.5A via XT30"],
   ["OS",             "Proxigo OS (Debian 12)"],
@@ -62,7 +62,7 @@ export default function Home() {
                   href="/pricing"
                   className="inline-flex items-center gap-2 bg-orange-600 text-white font-semibold px-7 py-3.5 rounded-lg hover:bg-orange-500 transition-colors text-sm"
                 >
-                  Pre-order — $499
+                  Pre-order
                   <ArrowRight size={16} />
                 </Link>
                 <Link
@@ -76,7 +76,7 @@ export default function Home() {
               {/* Quick specs */}
               <div className="hero-a5 grid grid-cols-3 gap-4 mt-12 pt-8 border-t border-zinc-800/60">
                 {[
-                  { v: "< 5cm", l: "Accuracy" },
+                  { v: "< 1m", l: "Accuracy" },
                   { v: "~210g", l: "Weight" },
                   { v: "100°",  l: "Camera FOV" },
                 ].map(({ v, l }) => (
@@ -105,7 +105,7 @@ export default function Home() {
       <section className="border-y border-zinc-800 bg-zinc-900/40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 grid grid-cols-3">
           {[
-            { value: "< 5cm", label: "Positioning accuracy" },
+            { value: "< 1m", label: "Positioning accuracy" },
             { value: "100°",  label: "Camera FOV" },
             { value: "~210g", label: "Module weight" },
           ].map(({ value, label }, i) => (
