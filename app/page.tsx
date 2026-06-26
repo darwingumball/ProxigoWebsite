@@ -54,7 +54,7 @@ export default function Home() {
 
               <p className="hero-a3 text-lg text-zinc-400 leading-relaxed mb-10 max-w-lg">
                 The <span className="text-white font-medium">Macula VPS Module</span> gives your
-                drone centimeter-level visual positioning — no GPS, no cloud, no compromise.
+                drone centimeter-level visual positioning. No GPS, no cloud, no compromise.
               </p>
 
               <div className="hero-a4 flex flex-wrap gap-3">

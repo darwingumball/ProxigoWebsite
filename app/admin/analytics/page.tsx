@@ -74,7 +74,7 @@ export default async function AdminAnalyticsPage() {
       <div className="mb-8">
         <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-orange-500 mb-1">Admin</p>
         <h1 className="text-2xl font-semibold text-white">Analytics</h1>
-        <p className="text-sm text-zinc-500 mt-0.5">Last 30 days — data from your Supabase tables.</p>
+        <p className="text-sm text-zinc-500 mt-0.5">Last 30 days, from your Supabase tables.</p>
       </div>
 
       <div className="space-y-4 mb-8">

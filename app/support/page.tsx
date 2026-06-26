@@ -160,7 +160,7 @@ export default function SupportPage() {
         <div className="max-w-2xl">
           <h1 className="text-5xl font-bold text-white tracking-tight mb-4">Support</h1>
           <p className="text-zinc-400 text-lg leading-relaxed">
-            We&apos;re a small team — we read every ticket and typically respond within one business day.
+            We&apos;re a small team. We read every ticket and typically respond within one business day.
           </p>
         </div>
       </section>

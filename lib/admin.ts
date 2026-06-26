@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import { createServiceClient } from "@/lib/supabase/service";
 import { redirect } from "next/navigation";
 
 export async function requireAdmin() {
@@ -14,5 +15,8 @@ export async function requireAdmin() {
 
   if (!profile?.is_admin) redirect("/dashboard");
 
-  return { supabase, user, profile };
+  // Use service-role client for admin data queries (bypasses RLS)
+  const adminClient = createServiceClient();
+
+  return { supabase: adminClient, user, profile };
 }

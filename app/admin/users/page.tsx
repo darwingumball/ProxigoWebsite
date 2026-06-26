@@ -1,5 +1,6 @@
 import { requireAdmin } from "@/lib/admin";
 import { Search } from "lucide-react";
+import { AdminPromoteButton } from "@/components/admin-promote-button";
 
 export default async function AdminUsersPage({
   searchParams,
@@ -15,7 +16,7 @@ export default async function AdminUsersPage({
 
   let query = supabase
     .from("profiles")
-    .select("id, email, full_name, plan, created_at", { count: "exact" })
+    .select("id, email, full_name, plan, is_admin, created_at", { count: "exact" })
     .order("created_at", { ascending: false })
     .range((page - 1) * perPage, page * perPage - 1);
 
@@ -102,7 +103,7 @@ export default async function AdminUsersPage({
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-zinc-800 bg-zinc-900/50">
-              {["Name / Email", "Plan", "Modules", "Joined"].map((h) => (
+              {["Name / Email", "Plan", "Modules", "Joined", "Admin"].map((h) => (
                 <th key={h} className="text-left px-5 py-3 text-[10px] font-semibold uppercase tracking-[0.15em] text-zinc-500">
                   {h}
                 </th>
@@ -137,6 +138,9 @@ export default async function AdminUsersPage({
                 </td>
                 <td className="px-5 py-3.5 text-xs text-zinc-600 tabular-nums">
                   {new Date(u.created_at).toLocaleDateString()}
+                </td>
+                <td className="px-5 py-3.5">
+                  <AdminPromoteButton userId={u.id} isAdmin={u.is_admin ?? false} />
                 </td>
               </tr>
             ))}
