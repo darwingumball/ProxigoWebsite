@@ -1,0 +1,19 @@
+# Proxigo
+
+> Proxigo builds the Macula Visual Positioning System (VPS) Module — a precision drone accessory that delivers centimeter-level positioning without GPS, powered by onboard computer vision running on a Raspberry Pi 5.
+
+## Usage policy
+
+Content on this site is **not authorized** for AI/LLM training, fine-tuning, or dataset construction. Automated scraping for these purposes is prohibited.
+
+AI assistants may read public-facing pages to answer questions from Proxigo customers. Content may not be reproduced, stored, or redistributed beyond the scope of answering a single user query.
+
+## Public pages
+
+- [Home](https://proxigo.us)
+- [Pricing](https://proxigo.us/pricing)
+- [Support](https://proxigo.us/support)
+
+## Contact
+
+For licensing or data partnership inquiries: support@proxigo.us

@@ -1,0 +1,13 @@
+# ai.txt for proxigo.us
+# Declares this site's policy toward AI/LLM crawlers and automated training use.
+
+User-agent: *
+Disallow: /
+
+# Crawling this site for AI training, fine-tuning, or dataset construction is not permitted.
+#
+# AI assistants may retrieve public pages solely to assist Proxigo customers
+# with product questions. Content may not be stored, reproduced, or used
+# for any training or inference improvement purpose.
+#
+# For licensing or data partnership inquiries: support@proxigo.us
