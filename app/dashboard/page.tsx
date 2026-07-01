@@ -20,7 +20,7 @@ export default async function DashboardPage() {
     supabase.from("profiles").select("full_name, plan, stripe_customer_id, is_admin").eq("id", user.id).single(),
     supabase.from("modules").select("serial, nickname, registered_at, status").eq("user_id", user.id),
     supabase.from("usage_events").select("km2").eq("user_id", user.id).gte("created_at", monthStart),
-    supabase.from("org_members").select("role, km2_allowance, org:orgs(id, name, plan, km2_limit)").eq("user_id", user.id).maybeSingle(),
+    supabase.from("org_members").select("role, km2_allowance, org:orgs(id, name, plan, km2_limit)").eq("user_id", user.id).limit(1).maybeSingle(),
   ]);
 
   const profile = profileResult.data;

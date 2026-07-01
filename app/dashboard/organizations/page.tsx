@@ -15,6 +15,7 @@ export default async function OrganizationsPage() {
     .from("org_members")
     .select("role, km2_allowance, org:orgs(id, name, plan, km2_limit, owner_user_id)")
     .eq("user_id", user.id)
+    .limit(1)
     .maybeSingle();
 
   const orgRow = membership?.org as {
