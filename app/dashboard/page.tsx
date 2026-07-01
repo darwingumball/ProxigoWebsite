@@ -4,34 +4,49 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { CheckoutSuccessBanner } from "@/components/checkout-success-banner";
 import { SignOutButton } from "@/components/sign-out-button";
-import { BarChart3, Cpu, Map, Settings, CreditCard, ArrowRight, Building2, ShieldCheck } from "lucide-react";
+import { BarChart3, Cpu, Map, Settings, CreditCard, ArrowRight, Building2, ShieldCheck, Users } from "lucide-react";
 import { Suspense } from "react";
+
+const PLAN_LIMITS: Record<string, number> = { starter: 500, pro: 2500 };
 
 export default async function DashboardPage() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/login");
 
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("full_name, plan, stripe_customer_id, is_admin")
-    .eq("id", user.id)
-    .single();
+  const monthStart = new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString();
 
-  const { data: modules } = await supabase
-    .from("modules")
-    .select("serial, nickname, registered_at, status")
-    .eq("user_id", user.id);
+  const [profileResult, modulesResult, personalUsageResult, orgMemberResult] = await Promise.all([
+    supabase.from("profiles").select("full_name, plan, stripe_customer_id, is_admin").eq("id", user.id).single(),
+    supabase.from("modules").select("serial, nickname, registered_at, status").eq("user_id", user.id),
+    supabase.from("usage_events").select("km2").eq("user_id", user.id).gte("created_at", monthStart),
+    supabase.from("org_members").select("role, km2_allowance, org:orgs(id, name, plan, km2_limit)").eq("user_id", user.id).maybeSingle(),
+  ]);
 
-  const { data: usageRows } = await supabase
-    .from("usage_events")
-    .select("km2, created_at")
-    .eq("user_id", user.id)
-    .gte("created_at", new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString());
+  const profile = profileResult.data;
+  const modules = modulesResult.data ?? [];
+  const personalKm2 = (personalUsageResult.data ?? []).reduce((sum, r) => sum + Number(r.km2 ?? 0), 0);
 
-  const kmThisMonth = (usageRows ?? []).reduce((sum, r) => sum + (r.km2 ?? 0), 0);
-  const kmLimit = profile?.plan === "pro" ? 100 : profile?.plan === "starter" ? 20 : 0;
-  const usagePct = kmLimit > 0 ? Math.min((kmThisMonth / kmLimit) * 100, 100) : 0;
+  // Org context
+  const orgMembership = orgMemberResult.data;
+  const orgRow = orgMembership?.org as { id: string; name: string; plan: string; km2_limit: number } | null | undefined;
+
+  let orgKm2Used = 0;
+  let orgMemberCount = 0;
+  if (orgRow) {
+    const { data: allMembers } = await supabase.from("org_members").select("user_id").eq("org_id", orgRow.id);
+    const memberIds = (allMembers ?? []).map((m) => m.user_id);
+    orgMemberCount = memberIds.length;
+    const { data: orgUsage } = await supabase
+      .from("usage_events").select("km2").in("user_id", memberIds).gte("created_at", monthStart);
+    orgKm2Used = (orgUsage ?? []).reduce((sum, r) => sum + Number(r.km2 ?? 0), 0);
+  }
+
+  // Effective quota display: org pool if in org, personal otherwise
+  const displayKm2Used  = orgRow ? orgKm2Used  : personalKm2;
+  const displayKm2Limit = orgRow ? orgRow.km2_limit : (profile?.plan ? (PLAN_LIMITS[profile.plan] ?? 0) : 0);
+  const displayPlan     = orgRow ? orgRow.plan  : profile?.plan;
+  const usagePct = displayKm2Limit > 0 ? Math.min((displayKm2Used / displayKm2Limit) * 100, 100) : 0;
 
   const name = profile?.full_name?.split(" ")[0] ?? user.email?.split("@")[0] ?? "there";
 
@@ -48,6 +63,11 @@ export default async function DashboardPage() {
             <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-orange-500 mb-1">Dashboard</p>
             <h1 className="text-2xl font-semibold text-white mb-1">Good to see you, {name}</h1>
             <p className="text-sm text-zinc-500">{user.email}</p>
+            {orgRow && (
+              <p className="text-xs text-zinc-600 mt-0.5">
+                {orgRow.name} · <span className="capitalize">{orgMembership?.role}</span>
+              </p>
+            )}
           </div>
           <SignOutButton />
         </div>
@@ -59,16 +79,18 @@ export default async function DashboardPage() {
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2 text-sm text-zinc-400">
                 <Map size={14} />
-                Map downloads
+                {orgRow ? "Org map usage" : "Map downloads"}
               </div>
-              <Badge variant={profile?.plan ? "success" : "default"}>
-                {profile?.plan ?? "no plan"}
-              </Badge>
+              {displayPlan ? (
+                <Badge variant="success" className="capitalize">{displayPlan}</Badge>
+              ) : (
+                <Badge variant="default">no plan</Badge>
+              )}
             </div>
             <div className="text-2xl font-bold text-white mb-1">
-              {kmThisMonth.toFixed(1)} <span className="text-base font-normal text-zinc-500">km²</span>
+              {displayKm2Used.toFixed(1)} <span className="text-base font-normal text-zinc-500">km²</span>
             </div>
-            {kmLimit > 0 && (
+            {displayKm2Limit > 0 ? (
               <>
                 <div className="w-full h-1.5 bg-zinc-800 rounded-full mt-3 mb-1 overflow-hidden">
                   <div
@@ -77,11 +99,11 @@ export default async function DashboardPage() {
                   />
                 </div>
                 <p className="text-xs text-zinc-600">
-                  {kmThisMonth.toFixed(0)} / {kmLimit.toLocaleString()} km² this month
+                  {displayKm2Used.toFixed(0)} / {displayKm2Limit.toLocaleString()} km² this month
+                  {orgRow && ` · ${orgMemberCount} member${orgMemberCount !== 1 ? "s" : ""}`}
                 </p>
               </>
-            )}
-            {!profile?.plan && (
+            ) : (
               <Link href="/pricing" className="inline-flex items-center gap-1 text-xs text-orange-500 hover:text-orange-400 mt-3 transition-colors">
                 Choose a plan <ArrowRight size={11} />
               </Link>
@@ -94,32 +116,42 @@ export default async function DashboardPage() {
               <Cpu size={14} />
               Registered modules
             </div>
-            <div className="text-2xl font-bold text-white mb-1">
-              {(modules ?? []).length}
-            </div>
+            <div className="text-2xl font-bold text-white mb-1">{modules.length}</div>
             <p className="text-xs text-zinc-600 mb-3">
-              {(modules ?? []).filter((m) => m.status === "active").length} active
+              {modules.filter((m) => m.status === "active").length} active
             </p>
             <Link href="/dashboard/modules" className="inline-flex items-center gap-1 text-xs text-zinc-400 hover:text-white transition-colors">
               Manage modules <ArrowRight size={11} />
             </Link>
           </div>
 
-          {/* Plan */}
+          {/* Plan / Org */}
           <div className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-6">
             <div className="flex items-center gap-2 text-sm text-zinc-400 mb-3">
-              <CreditCard size={14} />
-              Billing
+              {orgRow ? <Users size={14} /> : <CreditCard size={14} />}
+              {orgRow ? "Organization" : "Billing"}
             </div>
-            <div className="text-2xl font-bold text-white capitalize mb-1">
-              {profile?.plan ?? "—"}
-            </div>
-            <p className="text-xs text-zinc-600 mb-3">
-              {profile?.plan ? "Active subscription" : "No active plan"}
-            </p>
-            <Link href="/dashboard/billing" className="inline-flex items-center gap-1 text-xs text-zinc-400 hover:text-white transition-colors">
-              Manage billing <ArrowRight size={11} />
-            </Link>
+            {orgRow ? (
+              <>
+                <div className="text-2xl font-bold text-white mb-1">{orgRow.name}</div>
+                <p className="text-xs text-zinc-600 mb-3 capitalize">
+                  {orgRow.plan} plan · {orgMemberCount} member{orgMemberCount !== 1 ? "s" : ""}
+                </p>
+                <Link href="/dashboard/organizations" className="inline-flex items-center gap-1 text-xs text-zinc-400 hover:text-white transition-colors">
+                  Manage org <ArrowRight size={11} />
+                </Link>
+              </>
+            ) : (
+              <>
+                <div className="text-2xl font-bold text-white capitalize mb-1">{profile?.plan ?? "—"}</div>
+                <p className="text-xs text-zinc-600 mb-3">
+                  {profile?.plan ? "Active subscription" : "No active plan"}
+                </p>
+                <Link href="/dashboard/billing" className="inline-flex items-center gap-1 text-xs text-zinc-400 hover:text-white transition-colors">
+                  Manage billing <ArrowRight size={11} />
+                </Link>
+              </>
+            )}
           </div>
         </div>
 
@@ -134,19 +166,16 @@ export default async function DashboardPage() {
               + Register module
             </Link>
           </div>
-          {(modules ?? []).length === 0 ? (
+          {modules.length === 0 ? (
             <div className="px-6 py-10 text-center">
               <p className="text-sm text-zinc-600 mb-3">No modules registered yet.</p>
-              <Link
-                href="/dashboard/modules/register"
-                className="inline-flex items-center gap-1.5 text-sm text-zinc-400 hover:text-white transition-colors"
-              >
+              <Link href="/dashboard/modules/register" className="inline-flex items-center gap-1.5 text-sm text-zinc-400 hover:text-white transition-colors">
                 Register your Macula module <ArrowRight size={13} />
               </Link>
             </div>
           ) : (
             <div className="divide-y divide-zinc-800">
-              {(modules ?? []).map((m) => (
+              {modules.map((m) => (
                 <div key={m.serial} className="flex items-center justify-between px-6 py-4">
                   <div>
                     <p className="text-sm font-medium text-white">{m.nickname ?? m.serial}</p>
@@ -167,7 +196,6 @@ export default async function DashboardPage() {
             { href: "/dashboard/usage", icon: BarChart3, label: "Usage history" },
             { href: "/dashboard/organizations", icon: Building2, label: "Organization" },
             { href: "/dashboard/settings", icon: Settings, label: "Account settings" },
-            { href: "/docs", icon: Map, label: "Documentation" },
           ].map(({ href, icon: Icon, label }) => (
             <Link
               key={href}
@@ -181,7 +209,6 @@ export default async function DashboardPage() {
           ))}
         </div>
 
-        {/* Admin shortcut — only visible to admins */}
         {profile?.is_admin && (
           <Link
             href="/admin"
