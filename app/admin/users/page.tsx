@@ -1,6 +1,7 @@
 import { requireAdmin } from "@/lib/admin";
 import { Search } from "lucide-react";
 import { AdminPromoteButton } from "@/components/admin-promote-button";
+import { AdminSetPlanButton } from "@/components/admin-set-plan-button";
 
 export default async function AdminUsersPage({
   searchParams,
@@ -103,7 +104,7 @@ export default async function AdminUsersPage({
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-zinc-800 bg-zinc-900/50">
-              {["Name / Email", "Plan", "Modules", "Joined", "Admin"].map((h) => (
+              {["Name / Email", "Plan", "Modules", "Joined", "Admin", ""].map((h) => (
                 <th key={h} className="text-left px-5 py-3 text-[10px] font-semibold uppercase tracking-[0.15em] text-zinc-500">
                   {h}
                 </th>
@@ -125,13 +126,7 @@ export default async function AdminUsersPage({
                   <p className="text-xs text-zinc-600 mt-0.5">{u.email ?? u.id.slice(0, 16) + "…"}</p>
                 </td>
                 <td className="px-5 py-3.5">
-                  {u.plan ? (
-                    <span className={`text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full border ${PLAN_COLORS[u.plan] ?? "text-zinc-400 bg-zinc-800 border-zinc-700"}`}>
-                      {u.plan}
-                    </span>
-                  ) : (
-                    <span className="text-xs text-zinc-700">free</span>
-                  )}
+                  <AdminSetPlanButton userId={u.id} currentPlan={u.plan ?? null} />
                 </td>
                 <td className="px-5 py-3.5 font-mono text-zinc-400">
                   {modulesByUser[u.id] ?? 0}
