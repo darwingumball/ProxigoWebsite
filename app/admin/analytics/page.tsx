@@ -11,12 +11,28 @@ export default async function AdminAnalyticsPage() {
   const [
     { data: usageRows },
     { data: signupRows },
+    { data: recentDownloads },
     va,
   ] = await Promise.all([
     supabase.from("usage_events").select("km2, created_at").gte("created_at", start.toISOString()).order("created_at"),
     supabase.from("profiles").select("created_at").gte("created_at", start.toISOString()).order("created_at"),
+    supabase.from("usage_events")
+      .select("km2, location_label, lat_min, lat_max, lon_min, lon_max, created_at, user_id")
+      .gte("created_at", start.toISOString())
+      .order("created_at", { ascending: false })
+      .limit(50),
     fetchVercelAnalytics(30),
   ]);
+
+  // Top locations by km² downloaded
+  const locationMap: Record<string, number> = {};
+  for (const r of recentDownloads ?? []) {
+    const label = r.location_label ?? "Unknown";
+    locationMap[label] = (locationMap[label] ?? 0) + Number(r.km2 ?? 0);
+  }
+  const topLocations = Object.entries(locationMap)
+    .sort(([, a], [, b]) => b - a)
+    .slice(0, 10);
 
   function bucketByDay<T extends { created_at: string }>(
     rows: T[],
@@ -102,6 +118,66 @@ export default async function AdminAnalyticsPage() {
           </div>
         ))}
       </div>
+
+      {/* Top locations */}
+      {topLocations.length > 0 && (
+        <div className="rounded-xl border border-zinc-800 overflow-hidden mb-4">
+          <div className="px-5 py-3.5 border-b border-zinc-800">
+            <p className="text-sm font-medium text-white">Top areas downloaded (30d)</p>
+          </div>
+          <div className="divide-y divide-zinc-800/60">
+            {topLocations.map(([label, km2]) => {
+              const maxKm2loc = topLocations[0]?.[1] ?? 1;
+              const pct = (km2 / maxKm2loc) * 100;
+              return (
+                <div key={label} className="flex items-center gap-4 px-5 py-2.5">
+                  <p className="text-xs text-zinc-300 truncate flex-1">{label}</p>
+                  <div className="w-28 h-1.5 bg-zinc-800 rounded-full overflow-hidden shrink-0">
+                    <div className="h-full bg-orange-500 rounded-full" style={{ width: `${pct}%` }} />
+                  </div>
+                  <p className="text-xs text-zinc-400 font-mono tabular-nums w-16 text-right shrink-0">
+                    {km2.toFixed(1)} km²
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* Recent downloads */}
+      {(recentDownloads ?? []).length > 0 && (
+        <div className="rounded-xl border border-zinc-800 overflow-hidden mb-8">
+          <div className="px-5 py-3.5 border-b border-zinc-800">
+            <p className="text-sm font-medium text-white">Recent downloads (30d)</p>
+          </div>
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-zinc-800 bg-zinc-900/30">
+                {["Location", "km²", "Bbox", "Date"].map((h) => (
+                  <th key={h} className="text-left px-5 py-2 text-[10px] font-semibold uppercase tracking-[0.15em] text-zinc-500">{h}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-zinc-800">
+              {(recentDownloads ?? []).map((r, i) => (
+                <tr key={i} className="hover:bg-zinc-900/30 transition-colors">
+                  <td className="px-5 py-2.5 text-xs text-zinc-300 max-w-[200px] truncate">{r.location_label ?? "—"}</td>
+                  <td className="px-5 py-2.5 font-mono text-xs text-orange-300">{Number(r.km2).toFixed(1)}</td>
+                  <td className="px-5 py-2.5 font-mono text-[10px] text-zinc-600">
+                    {r.lat_min != null
+                      ? `${r.lat_min.toFixed(3)},${r.lon_min.toFixed(3)} → ${r.lat_max.toFixed(3)},${r.lon_max.toFixed(3)}`
+                      : "—"}
+                  </td>
+                  <td className="px-5 py-2.5 text-xs text-zinc-600 tabular-nums whitespace-nowrap">
+                    {new Date(r.created_at).toLocaleDateString()}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
 
       {/* Vercel Analytics — web traffic */}
       {va ? (

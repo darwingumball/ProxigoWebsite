@@ -11,10 +11,9 @@ async function getSupabase(req: Request) {
 /**
  * Desktop app posts usage events here.
  * Authorization: Bearer <supabase_jwt>
- * Body: { km2: number, module_serial: string, session_id?: string }
+ * Body: { km2, module_serial, session_id?, location_label?, lat_min?, lat_max?, lon_min?, lon_max? }
  */
 export async function POST(req: Request) {
-  // 60 usage reports per IP per minute (generous for desktop app batching)
   const { success, retryAfter } = rateLimit(`usage:${getIp(req)}`, 60, 60 * 1000);
   if (!success) {
     return NextResponse.json(
@@ -25,15 +24,22 @@ export async function POST(req: Request) {
 
   const supabase = await getSupabase(req);
   const { data: { user } } = await supabase.auth.getUser();
-
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  const body = await req.json() as { km2?: number; module_serial?: string; session_id?: string };
+  const body = await req.json() as {
+    km2?: number;
+    module_serial?: string;
+    session_id?: string;
+    location_label?: string;
+    lat_min?: number;
+    lat_max?: number;
+    lon_min?: number;
+    lon_max?: number;
+  };
 
   if (!body.km2 || typeof body.km2 !== "number" || body.km2 <= 0) {
     return NextResponse.json({ error: "km2 must be a positive number" }, { status: 400 });
   }
-  // Cap single-event km2 to prevent inflated usage claims (largest sane single download ~50,000 km²)
   if (body.km2 > 50_000) {
     return NextResponse.json({ error: "km2 value exceeds maximum allowed per event" }, { status: 400 });
   }
@@ -41,7 +47,6 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "module_serial is required" }, { status: 400 });
   }
 
-  // Verify the module belongs to this user
   const { data: module } = await supabase
     .from("modules")
     .select("id, status")
@@ -56,12 +61,16 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Module is not active" }, { status: 403 });
   }
 
-  // Log the usage event
   const { error } = await supabase.from("usage_events").insert({
-    user_id: user.id,
-    module_id: module.id,
-    km2: body.km2,
-    session_id: body.session_id ?? null,
+    user_id:        user.id,
+    module_id:      module.id,
+    km2:            body.km2,
+    session_id:     body.session_id ?? null,
+    location_label: body.location_label ?? null,
+    lat_min:        body.lat_min ?? null,
+    lat_max:        body.lat_max ?? null,
+    lon_min:        body.lon_min ?? null,
+    lon_max:        body.lon_max ?? null,
   });
 
   if (error) {
@@ -69,7 +78,6 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Failed to record usage" }, { status: 500 });
   }
 
-  // Get remaining quota for the month
   const startOfMonth = new Date();
   startOfMonth.setDate(1);
   startOfMonth.setHours(0, 0, 0, 0);
@@ -91,7 +99,6 @@ export async function POST(req: Request) {
 export async function GET(req: Request) {
   const supabase = await getSupabase(req);
   const { data: { user } } = await supabase.auth.getUser();
-
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const { data: profile } = await supabase
@@ -115,9 +122,9 @@ export async function GET(req: Request) {
   const limit = profile?.plan ? (limits[profile.plan] ?? 0) : 0;
 
   return NextResponse.json({
-    plan: profile?.plan ?? null,
-    km2_used: totalKm2,
-    km2_limit: limit,
+    plan:          profile?.plan ?? null,
+    km2_used:      totalKm2,
+    km2_limit:     limit,
     km2_remaining: Math.max(0, limit - totalKm2),
   });
 }
