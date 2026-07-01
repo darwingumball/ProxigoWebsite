@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import { createServiceClient } from "@/lib/supabase/service";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
@@ -10,11 +11,11 @@ import { Suspense } from "react";
 const PLAN_LIMITS: Record<string, number> = { starter: 500, pro: 2500 };
 
 export default async function DashboardPage() {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const authClient = await createClient();
+  const { data: { user } } = await authClient.auth.getUser();
   if (!user) redirect("/login");
 
-  const svc = supabase;
+  const svc = createServiceClient();
   const monthStart = new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString();
 
   const [profileResult, modulesResult, personalUsageResult, orgMemberResult] = await Promise.all([

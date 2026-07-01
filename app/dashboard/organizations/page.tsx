@@ -1,15 +1,17 @@
 import { createClient } from "@/lib/supabase/server";
+import { createServiceClient } from "@/lib/supabase/service";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Users, Crown, User } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { OrgInviteForm } from "@/components/org-invite-form";
 
 export default async function OrganizationsPage() {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const auth = await createClient();
+  const { data: { user } } = await auth.auth.getUser();
   if (!user) redirect("/login");
 
-  const svc = supabase;
+  const svc = createServiceClient();
   const monthStart = new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString();
 
   const { data: membership } = await svc
@@ -50,11 +52,13 @@ export default async function OrganizationsPage() {
 
   const [orgUsageResult, profilesResult] = await Promise.all([
     svc.from("usage_events").select("km2, user_id").in("user_id", memberIds).gte("created_at", monthStart),
-    svc.from("profiles").select("id, full_name").in("id", memberIds),
+    svc.from("profiles").select("id, full_name, email").in("id", memberIds),
   ]);
 
   const orgUsage = orgUsageResult.data ?? [];
-  const profileMap = Object.fromEntries((profilesResult.data ?? []).map((p) => [p.id, p.full_name]));
+  const profileMap = Object.fromEntries(
+    (profilesResult.data ?? []).map((p) => [p.id, { name: p.full_name, email: p.email }])
+  );
   const usageByMember = Object.fromEntries(
     memberIds.map((id) => [
       id,
@@ -66,7 +70,7 @@ export default async function OrganizationsPage() {
   const orgKm2Limit = orgRow.km2_limit;
   const orgKm2Remaining = Math.max(0, orgKm2Limit - orgKm2Used);
   const usagePct = orgKm2Limit > 0 ? Math.min((orgKm2Used / orgKm2Limit) * 100, 100) : 0;
-  const isAdmin = membership?.role === "admin";
+  const isOrgAdmin = membership?.role === "admin";
 
   return (
     <div className="min-h-screen pt-20 pb-24 bg-zinc-950">
@@ -112,7 +116,7 @@ export default async function OrganizationsPage() {
         </div>
 
         {/* Member list */}
-        <div className="rounded-xl border border-zinc-800">
+        <div className="rounded-xl border border-zinc-800 mb-6">
           <div className="px-6 py-4 border-b border-zinc-800">
             <h2 className="font-medium text-white flex items-center gap-2">
               <Users size={15} className="text-zinc-500" />
@@ -121,7 +125,7 @@ export default async function OrganizationsPage() {
           </div>
           <div className="divide-y divide-zinc-800">
             {(allMembers ?? []).map((m) => {
-              const displayName = profileMap[m.user_id] ?? m.user_id.slice(0, 8) + "…";
+              const profile = profileMap[m.user_id] as { name: string | null; email: string | null } | undefined;
               const km2Used = usageByMember[m.user_id] ?? 0;
               const isMe = m.user_id === user.id;
               return (
@@ -134,9 +138,9 @@ export default async function OrganizationsPage() {
                     </div>
                     <div className="min-w-0">
                       <p className="text-sm font-medium text-white truncate">
-                        {displayName}{isMe && <span className="text-zinc-500 ml-1">(you)</span>}
+                        {profile?.name ?? "—"}{isMe && <span className="text-zinc-500 ml-1">(you)</span>}
                       </p>
-                      <p className="text-xs text-zinc-600 capitalize">{m.role}</p>
+                      <p className="text-xs text-zinc-600">{profile?.email ?? m.user_id.slice(0, 16) + "…"}</p>
                     </div>
                   </div>
                   <div className="text-right shrink-0">
@@ -151,11 +155,22 @@ export default async function OrganizationsPage() {
           </div>
         </div>
 
-        <p className="text-xs text-zinc-600 mt-4 text-center">
-          {isAdmin
-            ? "Member allowances can be set via the desktop app or the API."
-            : "Contact your org admin to change member limits."}
-        </p>
+        {/* Org admin: invite by email */}
+        {isOrgAdmin && (
+          <div className="rounded-xl border border-zinc-800 p-6">
+            <h2 className="font-medium text-white mb-1">Add team member</h2>
+            <p className="text-xs text-zinc-500 mb-4">
+              Add a member by email. They will be notified and appear in the member list immediately.
+            </p>
+            <OrgInviteForm />
+          </div>
+        )}
+
+        {!isOrgAdmin && (
+          <p className="text-xs text-zinc-600 text-center">
+            Contact your org admin to add or remove members.
+          </p>
+        )}
       </div>
     </div>
   );
