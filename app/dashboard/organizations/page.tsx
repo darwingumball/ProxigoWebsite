@@ -1,5 +1,4 @@
 import { createClient } from "@/lib/supabase/server";
-import { createServiceClient } from "@/lib/supabase/service";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Users, Crown, User } from "lucide-react";
@@ -10,7 +9,7 @@ export default async function OrganizationsPage() {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/login");
 
-  const svc = createServiceClient();
+  const svc = supabase;
   const monthStart = new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString();
 
   const { data: membership } = await svc
