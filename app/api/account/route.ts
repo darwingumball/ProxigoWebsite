@@ -57,7 +57,7 @@ export async function GET(req: Request) {
   let org = null;
   if (orgMemberResult.data) {
     const membership = orgMemberResult.data;
-    const orgRow = membership.org as { id: string; name: string; plan: string; km2_limit: number } | null;
+    const orgRow = membership.org as unknown as { id: string; name: string; plan: string; km2_limit: number } | null;
     if (orgRow) {
       // Get all org members
       const { data: allMembers } = await supabase
