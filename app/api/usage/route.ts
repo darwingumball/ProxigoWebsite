@@ -33,6 +33,10 @@ export async function POST(req: Request) {
   if (!body.km2 || typeof body.km2 !== "number" || body.km2 <= 0) {
     return NextResponse.json({ error: "km2 must be a positive number" }, { status: 400 });
   }
+  // Cap single-event km2 to prevent inflated usage claims (largest sane single download ~50,000 km²)
+  if (body.km2 > 50_000) {
+    return NextResponse.json({ error: "km2 value exceeds maximum allowed per event" }, { status: 400 });
+  }
   if (!body.module_serial || typeof body.module_serial !== "string") {
     return NextResponse.json({ error: "module_serial is required" }, { status: 400 });
   }
