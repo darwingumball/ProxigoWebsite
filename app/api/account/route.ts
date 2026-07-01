@@ -1,9 +1,10 @@
 import { createClient } from "@/lib/supabase/server";
+import { createServiceClient } from "@/lib/supabase/service";
 import { createBearerClient, extractBearerToken } from "@/lib/supabase/bearer";
 import { rateLimit, getIp } from "@/lib/rate-limit";
 import { NextResponse } from "next/server";
 
-async function getSupabase(req: Request) {
+async function getAuthClient(req: Request) {
   const token = extractBearerToken(req);
   return token ? createBearerClient(token) : createClient();
 }
@@ -17,87 +18,52 @@ export async function GET(req: Request) {
     );
   }
 
-  const supabase = await getSupabase(req);
-  const { data: { user } } = await supabase.auth.getUser();
+  const authClient = await getAuthClient(req);
+  const { data: { user } } = await authClient.auth.getUser();
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
+  // Service client bypasses RLS — safe because we've verified the user above
+  const svc = createServiceClient();
   const monthStart = startOfMonth();
 
   const [profileResult, modulesResult, personalUsageResult, orgMemberResult] = await Promise.all([
-    supabase
-      .from("profiles")
-      .select("full_name, plan, stripe_subscription_id")
-      .eq("id", user.id)
-      .single(),
-    supabase
-      .from("modules")
-      .select("serial, nickname, status, registered_at")
-      .eq("user_id", user.id)
-      .order("registered_at", { ascending: true }),
-    supabase
-      .from("usage_events")
-      .select("km2")
-      .eq("user_id", user.id)
-      .gte("created_at", monthStart),
-    supabase
-      .from("org_members")
-      .select("role, km2_allowance, org:orgs(id, name, plan, km2_limit)")
-      .eq("user_id", user.id)
-      .maybeSingle(),
+    svc.from("profiles").select("full_name, plan, stripe_subscription_id").eq("id", user.id).single(),
+    svc.from("modules").select("serial, nickname, status, registered_at").eq("user_id", user.id).order("registered_at", { ascending: true }),
+    svc.from("usage_events").select("km2").eq("user_id", user.id).gte("created_at", monthStart),
+    svc.from("org_members").select("role, km2_allowance, org:orgs(id, name, plan, km2_limit)").eq("user_id", user.id).limit(1).maybeSingle(),
   ]);
 
   const profile = profileResult.data;
   const modules = modulesResult.data ?? [];
-  const personalRows = personalUsageResult.data ?? [];
-
-  const personalKm2Used = personalRows.reduce((sum, r) => sum + Number(r.km2 ?? 0), 0);
+  const personalKm2Used = (personalUsageResult.data ?? []).reduce((sum, r) => sum + Number(r.km2 ?? 0), 0);
   const planLimits: Record<string, number> = { starter: 500, pro: 2500 };
 
-  // Build org context if user is a member of an org
   let org = null;
   if (orgMemberResult.data) {
     const membership = orgMemberResult.data;
     const orgRow = membership.org as unknown as { id: string; name: string; plan: string; km2_limit: number } | null;
     if (orgRow) {
-      // Get all org members
-      const { data: allMembers } = await supabase
-        .from("org_members")
-        .select("user_id, role, km2_allowance")
-        .eq("org_id", orgRow.id);
-
+      const { data: allMembers } = await svc.from("org_members").select("user_id, role, km2_allowance").eq("org_id", orgRow.id);
       const memberIds = (allMembers ?? []).map((m) => m.user_id);
 
-      // Get org-wide usage for this month (RLS policy grants access to org members' usage)
-      const { data: orgUsageRows } = await supabase
+      const { data: orgUsageRows } = await svc
         .from("usage_events")
         .select("km2, user_id")
         .in("user_id", memberIds)
         .gte("created_at", monthStart);
 
       const orgKm2Used = (orgUsageRows ?? []).reduce((sum, r) => sum + Number(r.km2 ?? 0), 0);
-      const myOrgKm2Used = (orgUsageRows ?? [])
-        .filter((r) => r.user_id === user.id)
-        .reduce((sum, r) => sum + Number(r.km2 ?? 0), 0);
-
+      const myOrgKm2Used = (orgUsageRows ?? []).filter((r) => r.user_id === user.id).reduce((sum, r) => sum + Number(r.km2 ?? 0), 0);
       const orgKm2Limit = orgRow.km2_limit;
       const orgKm2Remaining = Math.max(0, orgKm2Limit - orgKm2Used);
 
-      // For admins: include per-member breakdown
-      let members: Array<{
-        user_id: string;
-        role: string;
-        km2_allowance: number | null;
-        km2_used: number;
-      }> | undefined;
-
+      let members: Array<{ user_id: string; role: string; km2_allowance: number | null; km2_used: number }> | undefined;
       if (membership.role === "admin") {
         members = (allMembers ?? []).map((m) => ({
           user_id: m.user_id,
           role: m.role,
           km2_allowance: m.km2_allowance ?? null,
-          km2_used: (orgUsageRows ?? [])
-            .filter((r) => r.user_id === m.user_id)
-            .reduce((sum, r) => sum + Number(r.km2 ?? 0), 0),
+          km2_used: (orgUsageRows ?? []).filter((r) => r.user_id === m.user_id).reduce((sum, r) => sum + Number(r.km2 ?? 0), 0),
         }));
       }
 
@@ -117,7 +83,6 @@ export async function GET(req: Request) {
     }
   }
 
-  // Personal plan limits (used when not in org)
   const personalPlan = profile?.plan ?? null;
   const personalKm2Limit = personalPlan ? (planLimits[personalPlan] ?? 0) : 0;
 
@@ -130,11 +95,7 @@ export async function GET(req: Request) {
     km2_used: personalKm2Used,
     km2_limit: personalKm2Limit,
     km2_remaining: Math.max(0, personalKm2Limit - personalKm2Used),
-    modules: modules.map((m) => ({
-      serial: m.serial,
-      nickname: m.nickname ?? null,
-      status: m.status,
-    })),
+    modules: modules.map((m) => ({ serial: m.serial, nickname: m.nickname ?? null, status: m.status })),
     org,
   });
 }

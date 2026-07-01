@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import { createServiceClient } from "@/lib/supabase/service";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Users, Crown, User } from "lucide-react";
@@ -9,17 +10,18 @@ export default async function OrganizationsPage() {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/login");
 
+  const svc = createServiceClient();
   const monthStart = new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString();
 
-  const { data: membership } = await supabase
+  const { data: membership } = await svc
     .from("org_members")
-    .select("role, km2_allowance, org:orgs(id, name, plan, km2_limit, owner_user_id)")
+    .select("role, km2_allowance, org:orgs(id, name, plan, km2_limit)")
     .eq("user_id", user.id)
     .limit(1)
     .maybeSingle();
 
   const orgRow = membership?.org as {
-    id: string; name: string; plan: string; km2_limit: number; owner_user_id: string;
+    id: string; name: string; plan: string; km2_limit: number;
   } | null | undefined;
 
   if (!orgRow) {
@@ -40,7 +42,7 @@ export default async function OrganizationsPage() {
     );
   }
 
-  const { data: allMembers } = await supabase
+  const { data: allMembers } = await svc
     .from("org_members")
     .select("user_id, role, km2_allowance")
     .eq("org_id", orgRow.id);
@@ -48,8 +50,8 @@ export default async function OrganizationsPage() {
   const memberIds = (allMembers ?? []).map((m) => m.user_id);
 
   const [orgUsageResult, profilesResult] = await Promise.all([
-    supabase.from("usage_events").select("km2, user_id").in("user_id", memberIds).gte("created_at", monthStart),
-    supabase.from("profiles").select("id, full_name").in("id", memberIds),
+    svc.from("usage_events").select("km2, user_id").in("user_id", memberIds).gte("created_at", monthStart),
+    svc.from("profiles").select("id, full_name").in("id", memberIds),
   ]);
 
   const orgUsage = orgUsageResult.data ?? [];
@@ -103,10 +105,7 @@ export default async function OrganizationsPage() {
             </div>
           </div>
           <div className="w-full h-1.5 bg-zinc-800 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-orange-500 rounded-full transition-all"
-              style={{ width: `${usagePct}%` }}
-            />
+            <div className="h-full bg-orange-500 rounded-full transition-all" style={{ width: `${usagePct}%` }} />
           </div>
           <p className="text-xs text-zinc-600 mt-1.5">
             {orgKm2Used.toFixed(0)} / {orgKm2Limit.toLocaleString()} km²

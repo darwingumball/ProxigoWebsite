@@ -1,10 +1,11 @@
 import { createClient } from "@/lib/supabase/server";
+import { createServiceClient } from "@/lib/supabase/service";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { CheckoutSuccessBanner } from "@/components/checkout-success-banner";
 import { SignOutButton } from "@/components/sign-out-button";
-import { BarChart3, Cpu, Map, Settings, CreditCard, ArrowRight, Building2, ShieldCheck, Users } from "lucide-react";
+import { BarChart3, Cpu, Settings, CreditCard, ArrowRight, Building2, ShieldCheck, Users } from "lucide-react";
 import { Suspense } from "react";
 
 const PLAN_LIMITS: Record<string, number> = { starter: 500, pro: 2500 };
@@ -14,35 +15,33 @@ export default async function DashboardPage() {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/login");
 
+  const svc = createServiceClient();
   const monthStart = new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString();
 
   const [profileResult, modulesResult, personalUsageResult, orgMemberResult] = await Promise.all([
-    supabase.from("profiles").select("full_name, plan, stripe_customer_id, is_admin").eq("id", user.id).single(),
-    supabase.from("modules").select("serial, nickname, registered_at, status").eq("user_id", user.id),
-    supabase.from("usage_events").select("km2").eq("user_id", user.id).gte("created_at", monthStart),
-    supabase.from("org_members").select("role, km2_allowance, org:orgs(id, name, plan, km2_limit)").eq("user_id", user.id).limit(1).maybeSingle(),
+    svc.from("profiles").select("full_name, plan, stripe_customer_id, is_admin").eq("id", user.id).single(),
+    svc.from("modules").select("serial, nickname, registered_at, status").eq("user_id", user.id),
+    svc.from("usage_events").select("km2").eq("user_id", user.id).gte("created_at", monthStart),
+    svc.from("org_members").select("role, km2_allowance, org:orgs(id, name, plan, km2_limit)").eq("user_id", user.id).limit(1).maybeSingle(),
   ]);
 
   const profile = profileResult.data;
   const modules = modulesResult.data ?? [];
   const personalKm2 = (personalUsageResult.data ?? []).reduce((sum, r) => sum + Number(r.km2 ?? 0), 0);
 
-  // Org context
   const orgMembership = orgMemberResult.data;
   const orgRow = orgMembership?.org as { id: string; name: string; plan: string; km2_limit: number } | null | undefined;
 
   let orgKm2Used = 0;
   let orgMemberCount = 0;
   if (orgRow) {
-    const { data: allMembers } = await supabase.from("org_members").select("user_id").eq("org_id", orgRow.id);
+    const { data: allMembers } = await svc.from("org_members").select("user_id").eq("org_id", orgRow.id);
     const memberIds = (allMembers ?? []).map((m) => m.user_id);
     orgMemberCount = memberIds.length;
-    const { data: orgUsage } = await supabase
-      .from("usage_events").select("km2").in("user_id", memberIds).gte("created_at", monthStart);
+    const { data: orgUsage } = await svc.from("usage_events").select("km2").in("user_id", memberIds).gte("created_at", monthStart);
     orgKm2Used = (orgUsage ?? []).reduce((sum, r) => sum + Number(r.km2 ?? 0), 0);
   }
 
-  // Effective quota display: org pool if in org, personal otherwise
   const displayKm2Used  = orgRow ? orgKm2Used  : personalKm2;
   const displayKm2Limit = orgRow ? orgRow.km2_limit : (profile?.plan ? (PLAN_LIMITS[profile.plan] ?? 0) : 0);
   const displayPlan     = orgRow ? orgRow.plan  : profile?.plan;
@@ -78,7 +77,7 @@ export default async function DashboardPage() {
           <div className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-6">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2 text-sm text-zinc-400">
-                <Map size={14} />
+                <Building2 size={14} />
                 {orgRow ? "Org map usage" : "Map downloads"}
               </div>
               {displayPlan ? (
@@ -93,10 +92,7 @@ export default async function DashboardPage() {
             {displayKm2Limit > 0 ? (
               <>
                 <div className="w-full h-1.5 bg-zinc-800 rounded-full mt-3 mb-1 overflow-hidden">
-                  <div
-                    className="h-full bg-orange-500 rounded-full transition-all"
-                    style={{ width: `${usagePct}%` }}
-                  />
+                  <div className="h-full bg-orange-500 rounded-full transition-all" style={{ width: `${usagePct}%` }} />
                 </div>
                 <p className="text-xs text-zinc-600">
                   {displayKm2Used.toFixed(0)} / {displayKm2Limit.toLocaleString()} km² this month
@@ -181,9 +177,7 @@ export default async function DashboardPage() {
                     <p className="text-sm font-medium text-white">{m.nickname ?? m.serial}</p>
                     <p className="text-xs text-zinc-600 font-mono mt-0.5">{m.serial}</p>
                   </div>
-                  <Badge variant={m.status === "active" ? "success" : "default"}>
-                    {m.status ?? "unknown"}
-                  </Badge>
+                  <Badge variant={m.status === "active" ? "success" : "default"}>{m.status ?? "unknown"}</Badge>
                 </div>
               ))}
             </div>
