@@ -26,11 +26,11 @@ export async function GET(req: Request) {
   const svc = createServiceClient();
   const monthStart = startOfMonth();
 
-  const [profileResult, modulesResult, personalUsageResult, orgMemberResult] = await Promise.all([
+  const [profileResult, modulesResult, personalUsageResult, membershipResult] = await Promise.all([
     svc.from("profiles").select("full_name, plan, stripe_subscription_id").eq("id", user.id).single(),
     svc.from("modules").select("serial, nickname, status, registered_at").eq("user_id", user.id).order("registered_at", { ascending: true }),
     svc.from("usage_events").select("km2").eq("user_id", user.id).gte("created_at", monthStart),
-    svc.from("org_members").select("role, km2_allowance, org:orgs(id, name, plan, km2_limit)").eq("user_id", user.id).limit(1).maybeSingle(),
+    svc.from("org_members").select("role, km2_allowance, org_id").eq("user_id", user.id).limit(1).maybeSingle(),
   ]);
 
   const profile = profileResult.data;
@@ -39,18 +39,18 @@ export async function GET(req: Request) {
   const planLimits: Record<string, number> = { starter: 500, pro: 2500 };
 
   let org = null;
-  if (orgMemberResult.data) {
-    const membership = orgMemberResult.data;
-    const orgRow = membership.org as unknown as { id: string; name: string; plan: string; km2_limit: number } | null;
+  if (membershipResult.data) {
+    const membership = membershipResult.data;
+    const { data: orgRow } = await svc.from("orgs").select("id, name, plan, km2_limit").eq("id", membership.org_id).single();
     if (orgRow) {
-      const { data: allMembers } = await svc.from("org_members").select("user_id, role, km2_allowance").eq("org_id", orgRow.id);
+      const { data: allMembers } = await svc.from("org_members").select("user_id, role, km2_allowance").eq("org_id", orgRow.id as string);
       const memberIds = (allMembers ?? []).map((m) => m.user_id);
 
-      const { data: orgUsageRows } = await svc
+      const { data: orgUsageRows } = memberIds.length > 0 ? await svc
         .from("usage_events")
         .select("km2, user_id")
         .in("user_id", memberIds)
-        .gte("created_at", monthStart);
+        .gte("created_at", monthStart) : { data: [] };
 
       const orgKm2Used = (orgUsageRows ?? []).reduce((sum, r) => sum + Number(r.km2 ?? 0), 0);
       const myOrgKm2Used = (orgUsageRows ?? []).filter((r) => r.user_id === user.id).reduce((sum, r) => sum + Number(r.km2 ?? 0), 0);
@@ -68,8 +68,8 @@ export async function GET(req: Request) {
       }
 
       org = {
-        org_id: orgRow.id,
-        org_name: orgRow.name,
+        org_id: orgRow.id as string,
+        org_name: orgRow.name as string,
         org_plan: orgRow.plan,
         role: membership.role as "admin" | "member",
         org_km2_limit: orgKm2Limit,
