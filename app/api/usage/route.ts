@@ -1,13 +1,7 @@
-import { createClient } from "@/lib/supabase/server";
 import { createServiceClient } from "@/lib/supabase/service";
-import { createBearerClient, extractBearerToken } from "@/lib/supabase/bearer";
+import { getUserFromRequest } from "@/lib/supabase/bearer";
 import { rateLimit, getIp } from "@/lib/rate-limit";
 import { NextResponse } from "next/server";
-
-async function getAuthClient(req: Request) {
-  const token = extractBearerToken(req);
-  return token ? createBearerClient(token) : createClient();
-}
 
 /**
  * Desktop app posts usage events here.
@@ -23,8 +17,7 @@ export async function POST(req: Request) {
     );
   }
 
-  const authClient = await getAuthClient(req);
-  const { data: { user } } = await authClient.auth.getUser();
+  const user = await getUserFromRequest(req);
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const svc = createServiceClient();
@@ -100,8 +93,7 @@ export async function POST(req: Request) {
  * Desktop app polls current usage summary.
  */
 export async function GET(req: Request) {
-  const authClient = await getAuthClient(req);
-  const { data: { user } } = await authClient.auth.getUser();
+  const user = await getUserFromRequest(req);
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const svc = createServiceClient();

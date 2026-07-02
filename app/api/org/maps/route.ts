@@ -1,13 +1,9 @@
-import { createClient } from "@/lib/supabase/server";
 import { createServiceClient } from "@/lib/supabase/service";
-import { createBearerClient, extractBearerToken } from "@/lib/supabase/bearer";
+import { getUserFromRequest } from "@/lib/supabase/bearer";
 import { NextResponse } from "next/server";
 
 async function getAuthUser(req: Request) {
-  const token = extractBearerToken(req);
-  const client = token ? createBearerClient(token) : await createClient();
-  const { data: { user } } = await client.auth.getUser();
-  return user;
+  return getUserFromRequest(req);
 }
 
 async function getMembership(svc: ReturnType<typeof createServiceClient>, userId: string) {
