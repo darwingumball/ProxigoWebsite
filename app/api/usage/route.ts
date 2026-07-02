@@ -1,9 +1,10 @@
 import { createClient } from "@/lib/supabase/server";
+import { createServiceClient } from "@/lib/supabase/service";
 import { createBearerClient, extractBearerToken } from "@/lib/supabase/bearer";
 import { rateLimit, getIp } from "@/lib/rate-limit";
 import { NextResponse } from "next/server";
 
-async function getSupabase(req: Request) {
+async function getAuthClient(req: Request) {
   const token = extractBearerToken(req);
   return token ? createBearerClient(token) : createClient();
 }
@@ -22,9 +23,11 @@ export async function POST(req: Request) {
     );
   }
 
-  const supabase = await getSupabase(req);
-  const { data: { user } } = await supabase.auth.getUser();
+  const authClient = await getAuthClient(req);
+  const { data: { user } } = await authClient.auth.getUser();
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  const svc = createServiceClient();
 
   const body = await req.json() as {
     km2?: number;
@@ -47,7 +50,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "module_serial is required" }, { status: 400 });
   }
 
-  const { data: module } = await supabase
+  const { data: module } = await svc
     .from("modules")
     .select("id, status")
     .eq("serial", body.module_serial)
@@ -61,7 +64,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Module is not active" }, { status: 403 });
   }
 
-  const { error } = await supabase.from("usage_events").insert({
+  const { error } = await svc.from("usage_events").insert({
     user_id:        user.id,
     module_id:      module.id,
     km2:            body.km2,
@@ -82,7 +85,7 @@ export async function POST(req: Request) {
   startOfMonth.setDate(1);
   startOfMonth.setHours(0, 0, 0, 0);
 
-  const { data: usageRows } = await supabase
+  const { data: usageRows } = await svc
     .from("usage_events")
     .select("km2")
     .eq("user_id", user.id)
@@ -97,11 +100,13 @@ export async function POST(req: Request) {
  * Desktop app polls current usage summary.
  */
 export async function GET(req: Request) {
-  const supabase = await getSupabase(req);
-  const { data: { user } } = await supabase.auth.getUser();
+  const authClient = await getAuthClient(req);
+  const { data: { user } } = await authClient.auth.getUser();
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  const { data: profile } = await supabase
+  const svc = createServiceClient();
+
+  const { data: profile } = await svc
     .from("profiles")
     .select("plan")
     .eq("id", user.id)
@@ -111,7 +116,7 @@ export async function GET(req: Request) {
   startOfMonth.setDate(1);
   startOfMonth.setHours(0, 0, 0, 0);
 
-  const { data: usageRows } = await supabase
+  const { data: usageRows } = await svc
     .from("usage_events")
     .select("km2")
     .eq("user_id", user.id)
