@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import { createServiceClient } from "@/lib/supabase/service";
 import { NextResponse } from "next/server";
 
 // Matches MAC-XXXX-XXXX-XXXX where X is alphanumeric (uppercase)
@@ -24,9 +25,11 @@ export async function POST(req: Request) {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
+    // Use service client for inventory + modules table — RLS blocks cookie client
+    const svc = createServiceClient();
+
     // Verify the serial exists in the provisioned module inventory.
-    // This prevents users from registering made-up serials.
-    const { data: provisioned } = await supabase
+    const { data: provisioned } = await svc
       .from("module_inventory")
       .select("serial")
       .eq("serial", norm)
@@ -40,7 +43,7 @@ export async function POST(req: Request) {
     }
 
     // Check if already claimed
-    const { data: existing } = await supabase
+    const { data: existing } = await svc
       .from("modules")
       .select("user_id")
       .eq("serial", norm)
@@ -58,7 +61,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const { error: insertErr } = await supabase.from("modules").insert({
+    const { error: insertErr } = await svc.from("modules").insert({
       serial: norm,
       user_id: user.id,
       nickname: nickname?.trim() || null,
