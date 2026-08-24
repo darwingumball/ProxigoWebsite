@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowLeft, Users } from "lucide-react";
 import { AdminOrgMemberRow } from "@/components/admin-org-member-row";
 import { AdminOrgAddMember } from "@/components/admin-org-add-member";
+import { AdminEditOrg } from "@/components/admin-edit-org";
 
 export default async function AdminOrgDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { supabase } = await requireAdmin();
@@ -67,9 +68,12 @@ export default async function AdminOrgDetailPage({ params }: { params: Promise<{
             {memberIds.length} member{memberIds.length !== 1 ? "s" : ""} · Created {new Date(org.created_at).toLocaleDateString()}
           </p>
         </div>
-        <span className={`text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full border capitalize ${PLAN_COLORS[org.plan] ?? "text-zinc-400 border-zinc-700"}`}>
-          {org.plan}
-        </span>
+        <div className="flex items-center gap-3">
+          <span className={`text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full border capitalize ${PLAN_COLORS[org.plan] ?? "text-zinc-400 border-zinc-700"}`}>
+            {org.plan}
+          </span>
+          <AdminEditOrg orgId={org.id} name={org.name} plan={org.plan} km2Limit={org.km2_limit} />
+        </div>
       </div>
 
       {/* Stats */}
@@ -136,7 +140,7 @@ export default async function AdminOrgDetailPage({ params }: { params: Promise<{
       {/* Add member */}
       <div className="rounded-xl border border-zinc-800 p-5">
         <h2 className="font-medium text-white mb-4">Add member by email</h2>
-        <AdminOrgAddMember orgId={id} />
+        <AdminOrgAddMember orgId={id} orgName={org.name} />
       </div>
     </div>
   );
