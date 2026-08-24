@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Cpu, Map, Zap, Shield, Radio, BarChart3, ChevronRight } from "lucide-react";
+import { ArrowRight, Cpu, Map, Zap, Shield, Radio, BarChart3 } from "lucide-react";
 import { HeroVisual } from "@/components/hero-visual";
 
 const FEATURES = [
@@ -41,23 +41,17 @@ export default function Home() {
 
             {/* Left — text */}
             <div>
-              <div className="hero-a1 inline-flex items-center gap-2 rounded-full border border-orange-500/25 bg-orange-500/10 px-4 py-1.5 text-xs text-orange-400 mb-8">
-                <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
-                Launching August 2026 · Pre-orders open
-                <ChevronRight size={12} className="text-orange-500/60" />
-              </div>
-
-              <h1 className="hero-a2 text-5xl sm:text-6xl xl:text-7xl font-black text-white leading-[0.95] tracking-tight mb-6">
+              <h1 className="hero-a1 text-5xl sm:text-6xl xl:text-7xl font-black text-white leading-[0.95] tracking-tight mb-6">
                 Know Exactly<br />
                 <span className="text-zinc-600">Where You Are.</span>
               </h1>
 
-              <p className="hero-a3 text-lg text-zinc-400 leading-relaxed mb-10 max-w-lg">
+              <p className="hero-a2 text-lg text-zinc-400 leading-relaxed mb-10 max-w-lg">
                 The <span className="text-white font-medium">Macula VPS Module</span> gives your
                 drone centimeter-level visual positioning. No GPS, no cloud, no compromise.
               </p>
 
-              <div className="hero-a4 flex flex-wrap gap-3">
+              <div className="hero-a3 flex flex-wrap gap-3">
                 <Link
                   href="/pricing"
                   className="inline-flex items-center gap-2 bg-orange-600 text-white font-semibold px-7 py-3.5 rounded-lg hover:bg-orange-500 transition-colors text-sm"
@@ -74,7 +68,7 @@ export default function Home() {
               </div>
 
               {/* Quick specs */}
-              <div className="hero-a5 grid grid-cols-3 gap-4 mt-12 pt-8 border-t border-zinc-800/60">
+              <div className="hero-a4 grid grid-cols-3 gap-4 mt-12 pt-8 border-t border-zinc-800/60">
                 {[
                   { v: "< 1m", l: "Accuracy" },
                   { v: "~210g", l: "Weight" },
@@ -89,13 +83,13 @@ export default function Home() {
             </div>
 
             {/* Right — animated visual */}
-            <div className="hero-a3 hidden lg:block">
+            <div className="hero-a2 hidden lg:block">
               <HeroVisual />
             </div>
           </div>
 
           {/* Mobile visual */}
-          <div className="lg:hidden mt-12 hero-a5">
+          <div className="lg:hidden mt-12 hero-a4">
             <HeroVisual />
           </div>
         </div>
@@ -205,7 +199,7 @@ export default function Home() {
               Ready to fly with precision?
             </h2>
             <p className="text-zinc-400 text-lg mb-10 max-w-xl mx-auto">
-              Pre-order the Macula module today. Ships August 2026. Limited units available at launch.
+              Pre-order the Macula module today. Ships October 2026. Limited units available at launch.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link href="/pricing" className="inline-flex items-center gap-2 bg-orange-600 text-white font-semibold px-7 py-3.5 rounded-lg hover:bg-orange-500 transition-colors text-sm">

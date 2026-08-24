@@ -25,10 +25,6 @@ export default function DesktopPage() {
     <>
       {/* Hero */}
       <section className="pt-32 pb-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div className="inline-flex items-center gap-2 rounded-full border border-orange-500/25 bg-orange-500/10 px-3.5 py-1.5 text-xs text-orange-400 mb-6">
-          <Monitor size={11} />
-          Free with every module
-        </div>
         <h1 className="text-5xl font-bold text-white tracking-tight mb-5">
           Mission control<br />for your fleet
         </h1>
@@ -96,7 +92,7 @@ export default function DesktopPage() {
           <div className="text-center mb-10">
             <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-orange-500 mb-3">Download</p>
             <h2 className="text-3xl font-bold text-white mb-3">Proxigo Desktop</h2>
-            <p className="text-zinc-500 text-sm">Free for all Macula module owners. Available at hardware launch, August 2026.</p>
+            <p className="text-zinc-500 text-sm">Free for all Macula module owners. Available at hardware launch, October 2026.</p>
           </div>
           <div className="grid sm:grid-cols-3 gap-4">
             {PLATFORMS.map(({ name, sub, icon }) => (
@@ -111,7 +107,7 @@ export default function DesktopPage() {
                 </div>
                 <span className="inline-flex items-center gap-1.5 text-xs text-zinc-600 border border-zinc-700 rounded-full px-3 py-1">
                   <Download size={10} />
-                  Available August 2026
+                  Available October 2026
                 </span>
               </div>
             ))}

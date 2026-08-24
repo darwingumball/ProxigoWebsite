@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Check, ArrowRight, Zap, Building2 } from "lucide-react";
+import { Check, ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Pricing",
@@ -91,10 +91,6 @@ export default function PricingPage() {
     <>
       {/* Hero */}
       <section className="pt-32 pb-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div className="inline-flex items-center gap-2 rounded-full border border-orange-500/25 bg-orange-500/10 px-3.5 py-1.5 text-xs text-orange-400 mb-6">
-          <Building2 size={11} />
-          Built for commercial operations
-        </div>
         <h1 className="text-5xl font-bold text-white tracking-tight mb-4">
           Pricing that scales<br />with your operation
         </h1>
@@ -231,17 +227,13 @@ export default function PricingPage() {
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
         <div className="rounded-2xl border border-zinc-700 bg-zinc-900/50 p-8 sm:p-10 grid sm:grid-cols-2 gap-8">
           <div>
-            <div className="inline-flex items-center gap-1.5 rounded-full bg-orange-500/10 border border-orange-500/25 px-3 py-1 text-xs text-orange-400 mb-4">
-              <Zap size={11} />
-              Hardware (one-time)
-            </div>
             <h2 className="text-3xl font-bold text-white mb-2">{HARDWARE.name}</h2>
             <p className="text-zinc-400 text-sm mb-6 leading-relaxed">{HARDWARE.desc}</p>
 
             <div className="flex items-baseline gap-2 mb-2">
               <span className="text-2xl font-bold text-white">From the low thousands</span>
             </div>
-            <p className="text-xs text-zinc-600 mb-8">Ships August 2026. Volume pricing available for 10+ units.</p>
+            <p className="text-xs text-zinc-600 mb-8">Ships October 2026. Volume pricing available for 10+ units.</p>
 
             <Link
               href="/support?type=sales#contact"

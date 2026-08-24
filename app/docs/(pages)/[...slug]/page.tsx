@@ -52,7 +52,7 @@ export default async function DocPage({ params }: Props) {
         <div>
           <p className="font-medium text-white mb-1">Content coming soon</p>
           <p className="text-sm text-zinc-500 max-w-xs">
-            This page is being written ahead of the August 2026 launch. Check back soon or{" "}
+            This page is being written ahead of the October 2026 launch. Check back soon or{" "}
             <Link href="/support" className="text-zinc-300 hover:text-white transition-colors underline underline-offset-2">
               open a ticket
             </Link>{" "}

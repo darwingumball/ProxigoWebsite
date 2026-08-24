@@ -60,10 +60,11 @@ export function Footer() {
 
         <div className="mt-16 pt-8 border-t border-zinc-800/60 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-zinc-600">
-            &copy; {new Date().getFullYear()} Proxigo Technologies, Inc. All rights reserved.
+            &copy; {new Date().getFullYear()} Proxigo AI Inc. All rights reserved.
+            Proxigo AI&trade; is a trademark of Proxigo AI Inc.
           </p>
           <p className="text-xs text-zinc-700">
-            Macula VPS Module · Launching August 2026
+            Macula VPS Module · Launching October 2026
           </p>
         </div>
       </div>

@@ -86,10 +86,6 @@ export default function ProductPage() {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Text */}
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-orange-500/25 bg-orange-500/10 px-3.5 py-1.5 text-xs text-orange-400 mb-6">
-              <Cpu size={11} />
-              Macula Visual Positioning System
-            </div>
             <h1 className="text-5xl sm:text-6xl font-black text-white tracking-tight leading-[0.95] mb-6">
               Position<br />without GPS.
             </h1>

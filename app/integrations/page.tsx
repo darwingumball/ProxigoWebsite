@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, Plug, Code2, Layers, Shield, GitBranch } from "lucide-react";
+import { ArrowRight, Code2, Layers, Shield, GitBranch } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Integrations",
@@ -28,10 +28,6 @@ export default function IntegrationsPage() {
     <>
       {/* Hero */}
       <section className="pt-32 pb-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div className="inline-flex items-center gap-2 rounded-full border border-orange-500/25 bg-orange-500/10 px-3.5 py-1.5 text-xs text-orange-400 mb-6">
-          <Plug size={11} />
-          Universal by design
-        </div>
         <h1 className="text-5xl font-bold text-white tracking-tight mb-5">
           Plug into anything.<br />
           <span className="text-zinc-500">No lock-in.</span>
