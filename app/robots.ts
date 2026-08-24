@@ -34,6 +34,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/dashboard", "/dashboard/", "/api/"],
       },
     ],
-    sitemap: "https://proxigo.us/sitemap.xml",
+    sitemap: "https://proxigo.ai/sitemap.xml",
   };
 }

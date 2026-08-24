@@ -63,10 +63,10 @@ export async function POST(req: Request) {
   try {
     const resend = new Resend(process.env.RESEND_API_KEY!);
     await resend.emails.send({
-      from: "Proxigo <no-reply@proxigo.us>",
+      from: "Proxigo <no-reply@proxigo.ai>",
       to: email.trim(),
       subject: `You've been added to ${org.name} on Proxigo`,
-      text: `Hi${targetProfile.full_name ? ` ${targetProfile.full_name}` : ""},\n\nYou've been added as a member of ${org.name} on Proxigo.\n\nLog in to your dashboard to see your organization details:\nhttps://proxigo.us/dashboard/organizations\n\nThanks,\nThe Proxigo Team`,
+      text: `Hi${targetProfile.full_name ? ` ${targetProfile.full_name}` : ""},\n\nYou've been added as a member of ${org.name} on Proxigo.\n\nLog in to your dashboard to see your organization details:\nhttps://proxigo.ai/dashboard/organizations\n\nThanks,\nThe Proxigo Team`,
     });
   } catch {
     // ignore

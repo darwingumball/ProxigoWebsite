@@ -177,8 +177,8 @@ export default function SupportPage() {
           {
             icon: Mail,
             title: "Email",
-            desc: "Reach us directly at support@proxigo.us",
-            href: "mailto:support@proxigo.us",
+            desc: "Reach us directly at support@proxigo.ai",
+            href: "mailto:support@proxigo.ai",
             label: "Send email",
           },
         ].map(({ icon: Icon, title, desc, href, label }) => (

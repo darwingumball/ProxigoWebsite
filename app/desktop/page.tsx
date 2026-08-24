@@ -4,7 +4,7 @@ import { ArrowRight, Download, Map, Cpu, Radio, RefreshCw, Monitor } from "lucid
 
 export const metadata: Metadata = {
   title: "Desktop App",
-  description: "Proxigo Desktop — download satellite maps, configure your Macula module, and push firmware updates. Free with every module.",
+  description: "Proxigo Desktop downloads satellite maps, configures your Macula module, and pushes firmware updates. Free with every module.",
 };
 
 const PLATFORMS = [

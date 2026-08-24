@@ -89,7 +89,7 @@ export default async function AdminOnboardingPage() {
             <p className="text-xs font-semibold text-orange-400 uppercase tracking-widest mb-1">Biggest drop-off</p>
             <p className="text-sm text-zinc-300">
               <span className="text-white font-medium">{worstDrop.label}</span> has the highest drop-off at{" "}
-              <span className="text-orange-400 font-semibold">{worstDrop.pct.toFixed(0)}%</span> — focus onboarding improvements here.
+              <span className="text-orange-400 font-semibold">{worstDrop.pct.toFixed(0)}%</span>. Focus onboarding improvements here.
             </p>
           </div>
         );

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
@@ -52,8 +53,8 @@ export function Nav() {
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5 group">
-          <div className="w-7 h-7 rounded-md bg-orange-600 flex items-center justify-center">
-            <span className="text-white font-black text-sm leading-none">P</span>
+          <div className="w-7 h-7 rounded-md bg-orange-600 flex items-center justify-center p-1.5">
+            <Image src="/proxigo-mark.png" alt="" width={20} height={20} className="w-full h-full" priority />
           </div>
           <span className="font-semibold text-white tracking-tight">Proxigo</span>
         </Link>

@@ -3,7 +3,7 @@ import { ArrowRight, Cpu, Map, Zap, Shield, Radio, BarChart3, ChevronRight } fro
 import { HeroVisual } from "@/components/hero-visual";
 
 const FEATURES = [
-  { icon: Radio,    title: "GPS-Independent",         desc: "Operates in GPS-denied environments — indoors, under canopy, near jamming." },
+  { icon: Radio,    title: "GPS-Independent",         desc: "Operates in GPS-denied environments: indoors, under canopy, near jamming." },
   { icon: Zap,      title: "Real-Time Estimates",      desc: "Sub-second position updates from our onboard vision pipeline running on the RPi5." },
   { icon: Map,      title: "Satellite Map Preloading", desc: "Download and cache high-resolution terrain maps before flight via the Desktop App." },
   { icon: Cpu,      title: "Edge Processing",          desc: "All inference runs locally on the module. No cloud dependency during flight." },
@@ -43,7 +43,7 @@ export default function Home() {
             <div>
               <div className="hero-a1 inline-flex items-center gap-2 rounded-full border border-orange-500/25 bg-orange-500/10 px-4 py-1.5 text-xs text-orange-400 mb-8">
                 <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
-                Launching August 2026 — Pre-orders open
+                Launching August 2026 · Pre-orders open
                 <ChevronRight size={12} className="text-orange-500/60" />
               </div>
 

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const LINKS = {
   Product: [
@@ -25,8 +26,8 @@ export function Footer() {
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
             <div className="flex items-center gap-2.5 mb-4">
-              <div className="w-7 h-7 rounded-md bg-orange-600 flex items-center justify-center">
-                <span className="text-white font-black text-sm leading-none">P</span>
+              <div className="w-7 h-7 rounded-md bg-orange-600 flex items-center justify-center p-1.5">
+                <Image src="/proxigo-mark.png" alt="" width={20} height={20} className="w-full h-full" />
               </div>
               <span className="font-semibold text-white tracking-tight">Proxigo</span>
             </div>
@@ -62,7 +63,7 @@ export function Footer() {
             &copy; {new Date().getFullYear()} Proxigo Technologies, Inc. All rights reserved.
           </p>
           <p className="text-xs text-zinc-700">
-            Macula VPS Module — Launching August 2026
+            Macula VPS Module · Launching August 2026
           </p>
         </div>
       </div>

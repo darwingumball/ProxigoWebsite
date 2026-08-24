@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Check, ArrowRight, Zap, Building2 } from "lucide-react";
-import { CheckoutButton } from "@/components/checkout-button";
 
 export const metadata: Metadata = {
   title: "Pricing",
@@ -234,22 +233,22 @@ export default function PricingPage() {
           <div>
             <div className="inline-flex items-center gap-1.5 rounded-full bg-orange-500/10 border border-orange-500/25 px-3 py-1 text-xs text-orange-400 mb-4">
               <Zap size={11} />
-              Hardware — One-time
+              Hardware (one-time)
             </div>
             <h2 className="text-3xl font-bold text-white mb-2">{HARDWARE.name}</h2>
             <p className="text-zinc-400 text-sm mb-6 leading-relaxed">{HARDWARE.desc}</p>
 
             <div className="flex items-baseline gap-2 mb-2">
-              <span className="text-4xl font-bold text-white">${HARDWARE.price}</span>
-              <span className="text-zinc-500 text-sm">one-time</span>
+              <span className="text-2xl font-bold text-white">From the low thousands</span>
             </div>
             <p className="text-xs text-zinc-600 mb-8">Ships August 2026. Volume pricing available for 10+ units.</p>
 
-            <CheckoutButton
-              type="hardware"
-              label="Pre-order now"
-              className="inline-flex items-center gap-2 bg-orange-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-orange-500 transition-colors text-sm disabled:opacity-60"
-            />
+            <Link
+              href="/support?type=sales#contact"
+              className="inline-flex items-center gap-2 bg-orange-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-orange-500 transition-colors text-sm"
+            >
+              Talk to sales <ArrowRight size={15} />
+            </Link>
           </div>
 
           <div>
@@ -292,7 +291,7 @@ export default function PricingPage() {
             },
             {
               q: "Is there an on-premises or air-gapped deployment option?",
-              a: "Enterprise customers can deploy in fully air-gapped environments. Satellite imagery is pre-loaded via the Desktop App before flight — no internet connection is required during operations. Contact us to discuss your security requirements.",
+              a: "Enterprise customers can deploy in fully air-gapped environments. Satellite imagery is pre-loaded via the Desktop App before flight, so no internet connection is required during operations. Contact us to discuss your security requirements.",
             },
           ].map(({ q, a }) => (
             <div key={q} className="rounded-xl border border-zinc-800 bg-zinc-900/30 p-6 hover:border-zinc-700 transition-colors">

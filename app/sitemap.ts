@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-const BASE = "https://proxigo.us";
+const BASE = "https://proxigo.ai";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [

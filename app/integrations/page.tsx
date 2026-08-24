@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 };
 
 const PLATFORMS = [
-  { name: "PX4 Autopilot",    logo: "PX4",   desc: "Drop-in external positioning source. Configure as AUX GPS/VIO — no custom firmware required." },
+  { name: "PX4 Autopilot",    logo: "PX4",   desc: "Drop-in external positioning source. Configure as AUX GPS/VIO, no custom firmware required." },
   { name: "ArduPilot",        logo: "APM",   desc: "Non-GPS position source via ExternalNav. Tested on Copter, Plane, and Rover." },
   { name: "ROS 2 / ROS 1",    logo: "ROS",   desc: "Publish position estimates to any ROS topic via the serial bridge node. Works with Nav2 and MoveIt." },
   { name: "Custom autopilot", logo: "FC",    desc: "Parse raw MAVLink 2 frames or binary UART output directly. Full protocol documentation available." },
@@ -19,7 +19,7 @@ const PLATFORMS = [
 const SDK_FEATURES = [
   { icon: Code2,     title: "REST API",             desc: "Query module status, pull positioning logs, and trigger map downloads programmatically via HTTP." },
   { icon: GitBranch, title: "Open message format",  desc: "Full documentation for the binary UART frame format and MAVLink message set used by Proxigo OS." },
-  { icon: Shield,    title: "Air-gapped support",   desc: "No cloud dependency during operation. SDK calls are local-only — nothing leaves the network boundary." },
+  { icon: Shield,    title: "Air-gapped support",   desc: "No cloud dependency during operation. SDK calls are local-only, nothing leaves the network boundary." },
   { icon: Layers,    title: "Multi-module support",  desc: "Address up to 16 modules on a single bus. Assign IDs via Desktop App or serial command." },
 ];
 
@@ -132,8 +132,8 @@ export default function IntegrationsPage() {
           {/* Protocol legend */}
           <div className="relative z-10 mt-8 pt-6 border-t border-zinc-800 flex flex-wrap gap-x-8 gap-y-2">
             {[
-              { color: "bg-orange-500", label: "MAVLink 2 / UART — primary positioning output" },
-              { color: "bg-zinc-500",   label: "USB-C — ground config and map transfer only" },
+              { color: "bg-orange-500", label: "MAVLink 2 / UART: primary positioning output" },
+              { color: "bg-zinc-500",   label: "USB-C: ground config and map transfer only" },
             ].map(({ color, label }) => (
               <div key={label} className="flex items-center gap-2">
                 <div className={`w-5 h-px ${color}`} />

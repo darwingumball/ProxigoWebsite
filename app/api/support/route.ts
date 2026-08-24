@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import { createServiceClient } from "@/lib/supabase/service";
 import { sendSupportTicketEmail } from "@/lib/resend";
 import { rateLimit, getIp } from "@/lib/rate-limit";
 import { NextResponse } from "next/server";
@@ -58,7 +59,9 @@ export async function POST(req: Request) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
-  await supabase.from("support_tickets").insert({
+  // Use service client for the insert — RLS has no INSERT policy on support_tickets
+  const svc = createServiceClient();
+  const { error: insertError } = await svc.from("support_tickets").insert({
     ticket_id: ticketId,
     user_id: user?.id ?? null,
     name,
@@ -68,6 +71,11 @@ export async function POST(req: Request) {
     message: fullMessage,
     status: "open",
   });
+
+  if (insertError) {
+    console.error("Support ticket insert failed", insertError);
+    return NextResponse.json({ error: "Something went wrong. Please try again." }, { status: 500 });
+  }
 
   try {
     await sendSupportTicketEmail({ name, email, subject, message: fullMessage, ticketId });

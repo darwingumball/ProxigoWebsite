@@ -1,4 +1,4 @@
-# ai.txt for proxigo.us
+# ai.txt for proxigo.ai
 # Declares this site's policy toward AI/LLM crawlers and automated training use.
 
 User-agent: *
@@ -10,4 +10,4 @@ Disallow: /
 # with product questions. Content may not be stored, reproduced, or used
 # for any training or inference improvement purpose.
 #
-# For licensing or data partnership inquiries: support@proxigo.us
+# For licensing or data partnership inquiries: support@proxigo.ai

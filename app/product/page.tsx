@@ -9,38 +9,38 @@ export const metadata: Metadata = {
 
 const FULL_SPECS = [
   { group: "Compute", items: [
-    ["Processor",  "Raspberry Pi CM5 (BCM2712, 2.4GHz quad-core A76)"],
-    ["RAM",        "4GB LPDDR4X"],
-    ["Storage",    "32GB industrial eMMC"],
-    ["OS",         "Proxigo OS — Debian 12, kernel 6.6"],
+    ["Processor",  "—"],
+    ["RAM",        "—"],
+    ["Storage",    "—"],
+    ["OS",         "Proxigo OS"],
   ]},
   { group: "Vision", items: [
-    ["Sensor",       "Sony IMX477 8MP global shutter"],
-    ["FOV",          "100° diagonal (M12 fisheye)"],
-    ["Frame rate",   "60 fps @ 1080p, 120 fps @ 720p"],
-    ["Shutter type", "Global (no rolling-shutter distortion)"],
+    ["Sensor",       "—"],
+    ["FOV",          "100° diagonal"],
+    ["Frame rate",   "60 fps @ 1080p"],
+    ["Shutter type", "Global shutter"],
   ]},
   { group: "Positioning", items: [
-    ["Algorithm",         "Proprietary optical flow + terrain matching"],
+    ["Algorithm",         "—"],
     ["Accuracy (5m AGL)", "< 5cm horizontal"],
     ["Accuracy (15m AGL)","< 15cm horizontal"],
     ["Latency",           "< 35ms end-to-end"],
   ]},
   { group: "Connectivity", items: [
-    ["Flight controller", "MAVLink 2 over UART (57600 baud default)"],
-    ["Desktop App",       "USB-C (CDC-ACM)"],
-    ["OTA updates",       "Wi-Fi 802.11 b/g/n/ac via Desktop App"],
+    ["Flight controller", "MAVLink 2 over UART"],
+    ["Desktop App",       "USB-C"],
+    ["OTA updates",       "Wi-Fi via Desktop App"],
   ]},
   { group: "Physical", items: [
     ["Weight",        "~210g (module + bracket)"],
     ["Dimensions",    "95 × 95 × 38mm"],
-    ["Mounting",      "Universal M3 pattern (30.5mm, 20mm)"],
+    ["Mounting",      "Universal M3 pattern"],
     ["Operating temp","−10°C to 55°C"],
     ["IP rating",     "IP42 (dust/drip resistant)"],
   ]},
   { group: "Power", items: [
     ["Input",        "5V via XT30 connector"],
-    ["Current draw", "2.5A peak, 1.8A typical"],
+    ["Current draw", "—"],
     ["Startup time", "< 8 seconds to first position fix"],
   ]},
 ];
@@ -152,10 +152,10 @@ export default function ProductPage() {
             </div>
             <div className="grid grid-cols-2 gap-3">
               {[
-                { label: "Dimensions", value: "65×65×22mm" },
-                { label: "Weight",     value: "48g" },
-                { label: "Mounting",   value: "M3 universal" },
-                { label: "IP Rating",  value: "IP42" },
+                { label: "Dimensions", value: "—" },
+                { label: "Weight",     value: "—" },
+                { label: "Mounting",   value: "—" },
+                { label: "IP Rating",  value: "—" },
               ].map(({ label, value }) => (
                 <div key={label} className="rounded-lg border border-zinc-800 bg-zinc-900/30 px-4 py-3">
                   <p className="text-xs text-zinc-600 mb-1">{label}</p>
