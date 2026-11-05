@@ -4,8 +4,11 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { CheckoutSuccessBanner } from "@/components/checkout-success-banner";
-import { SignOutButton } from "@/components/sign-out-button";
-import { BarChart3, Cpu, Settings, CreditCard, ArrowRight, Building2, ShieldCheck, Users } from "lucide-react";
+import { PageHeader } from "@/components/dashboard/page-header";
+import { TicketStatusBadge } from "@/components/dashboard/ticket-status";
+import { buttonClasses } from "@/components/ui/button-classes";
+import { PRODUCTS, STATUS_LABEL } from "@/lib/products";
+import { ArrowRight, Download, Plus } from "lucide-react";
 import { Suspense } from "react";
 
 const PLAN_LIMITS: Record<string, number> = { starter: 500, pro: 2500 };
@@ -18,15 +21,17 @@ export default async function DashboardPage() {
   const svc = createServiceClient();
   const monthStart = new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString();
 
-  const [profileResult, modulesResult, personalUsageResult, orgMemberResult] = await Promise.all([
+  const [profileResult, modulesResult, personalUsageResult, orgMemberResult, ticketsResult] = await Promise.all([
     svc.from("profiles").select("full_name, plan, stripe_customer_id, is_admin").eq("id", user.id).single(),
     svc.from("modules").select("serial, nickname, registered_at, status").eq("user_id", user.id),
     svc.from("usage_events").select("km2").eq("user_id", user.id).gte("created_at", monthStart),
     svc.from("org_members").select("role, km2_allowance, org:orgs(id, name, plan, km2_limit)").eq("user_id", user.id).limit(1).maybeSingle(),
+    authClient.from("support_tickets").select("ticket_id, subject, status, updated_at").eq("user_id", user.id).order("updated_at", { ascending: false }).limit(3),
   ]);
 
   const profile = profileResult.data;
   const modules = modulesResult.data ?? [];
+  const tickets = ticketsResult.data ?? [];
   const personalKm2 = (personalUsageResult.data ?? []).reduce((sum, r) => sum + Number(r.km2 ?? 0), 0);
 
   const orgMembership = orgMemberResult.data;
@@ -46,174 +51,213 @@ export default async function DashboardPage() {
   const displayKm2Limit = orgRow ? orgRow.km2_limit : (profile?.plan ? (PLAN_LIMITS[profile.plan] ?? 0) : 0);
   const displayPlan     = orgRow ? orgRow.plan  : profile?.plan;
   const usagePct = displayKm2Limit > 0 ? Math.min((displayKm2Used / displayKm2Limit) * 100, 100) : 0;
+  const activeModules = modules.filter((m) => m.status === "active").length;
 
   const name = profile?.full_name?.split(" ")[0] ?? user.email?.split("@")[0] ?? "there";
+  const macula = PRODUCTS.find((p) => p.slug === "macula")!;
+  const otherProducts = PRODUCTS.filter((p) => p.slug !== "macula");
 
   return (
-    <div className="min-h-screen pt-20 pb-24 bg-zinc-950">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Suspense fallback={null}>
-          <CheckoutSuccessBanner />
-        </Suspense>
+    <>
+      <Suspense fallback={null}>
+        <CheckoutSuccessBanner />
+      </Suspense>
 
-        {/* Header */}
-        <div className="flex items-start justify-between mb-10 pt-8">
-          <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-orange-500 mb-1">Dashboard</p>
-            <h1 className="text-2xl font-semibold text-white mb-1">Good to see you, {name}</h1>
-            <p className="text-sm text-zinc-500">{user.email}</p>
-            {orgRow && (
-              <p className="text-xs text-zinc-600 mt-0.5">
-                {orgRow.name} · <span className="capitalize">{orgMembership?.role}</span>
-              </p>
-            )}
-          </div>
-          <SignOutButton />
-        </div>
+      <PageHeader
+        title={`Good to see you, ${name}`}
+        description={
+          orgRow ? (
+            <>
+              {orgRow.name} · <span className="capitalize">{orgMembership?.role}</span>
+            </>
+          ) : (
+            user.email
+          )
+        }
+        actions={
+          <>
+            <Link href="/dashboard/modules/register" className={buttonClasses({ size: "sm" })}>
+              <Plus size={14} /> Register module
+            </Link>
+            <Link href="/dashboard/support#new" className={buttonClasses({ variant: "secondary", size: "sm" })}>
+              Get help
+            </Link>
+          </>
+        }
+      />
 
-        {/* Stats row */}
-        <div className="grid sm:grid-cols-3 gap-4 mb-8">
-          {/* Usage */}
-          <div className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-6">
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2 text-sm text-zinc-400">
-                <Building2 size={14} />
-                {orgRow ? "Org map usage" : "Map downloads"}
-              </div>
-              {displayPlan ? (
-                <Badge variant="success" className="capitalize">{displayPlan}</Badge>
-              ) : (
-                <Badge variant="default">no plan</Badge>
-              )}
-            </div>
-            <div className="text-2xl font-bold text-white mb-1">
-              {displayKm2Used.toFixed(1)} <span className="text-base font-normal text-zinc-500">km²</span>
-            </div>
-            {displayKm2Limit > 0 ? (
-              <>
-                <div className="w-full h-1.5 bg-zinc-800 rounded-full mt-3 mb-1 overflow-hidden">
-                  <div className="h-full bg-orange-500 rounded-full transition-all" style={{ width: `${usagePct}%` }} />
-                </div>
-                <p className="text-xs text-zinc-600">
-                  {displayKm2Used.toFixed(0)} / {displayKm2Limit.toLocaleString()} km² this month
-                  {orgRow && ` · ${orgMemberCount} member${orgMemberCount !== 1 ? "s" : ""}`}
-                </p>
-              </>
+      {/* Stat strip */}
+      <dl className="grid sm:grid-cols-3 border border-ink-800 rounded-lg divide-y sm:divide-y-0 sm:divide-x divide-ink-800 mb-8">
+        <div className="p-5">
+          <dt className="text-sm text-ink-400 flex items-center justify-between gap-2">
+            {orgRow ? "Org map usage this month" : "Map usage this month"}
+            {displayPlan ? (
+              <Badge variant="success" className="capitalize">{displayPlan}</Badge>
             ) : (
-              <Link href="/pricing" className="inline-flex items-center gap-1 text-xs text-orange-500 hover:text-orange-400 mt-3 transition-colors">
-                Choose a plan <ArrowRight size={11} />
+              <Badge>No plan</Badge>
+            )}
+          </dt>
+          <dd className="mt-2">
+            <span className="text-2xl font-mono text-white">{displayKm2Used.toFixed(1)}</span>
+            <span className="text-sm text-ink-400"> {displayKm2Limit > 0 ? `/ ${displayKm2Limit.toLocaleString()} km²` : "km²"}</span>
+            {displayKm2Limit > 0 ? (
+              <div
+                className="h-1 bg-ink-800 rounded-full mt-3 overflow-hidden"
+                role="progressbar"
+                aria-valuenow={Math.round(usagePct)}
+                aria-valuemin={0}
+                aria-valuemax={100}
+                aria-label="Map allowance used"
+              >
+                <div className="h-full bg-signal-500 rounded-full" style={{ width: `${usagePct}%` }} />
+              </div>
+            ) : (
+              <Link href="/pricing" className="block text-sm text-signal-400 hover:text-signal-300 mt-2">
+                Choose a plan
               </Link>
             )}
-          </div>
-
-          {/* Modules */}
-          <div className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-6">
-            <div className="flex items-center gap-2 text-sm text-zinc-400 mb-3">
-              <Cpu size={14} />
-              Registered modules
-            </div>
-            <div className="text-2xl font-bold text-white mb-1">{modules.length}</div>
-            <p className="text-xs text-zinc-600 mb-3">
-              {modules.filter((m) => m.status === "active").length} active
-            </p>
-            <Link href="/dashboard/modules" className="inline-flex items-center gap-1 text-xs text-zinc-400 hover:text-white transition-colors">
-              Manage modules <ArrowRight size={11} />
-            </Link>
-          </div>
-
-          {/* Plan / Org */}
-          <div className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-6">
-            <div className="flex items-center gap-2 text-sm text-zinc-400 mb-3">
-              {orgRow ? <Users size={14} /> : <CreditCard size={14} />}
-              {orgRow ? "Organization" : "Billing"}
-            </div>
+          </dd>
+        </div>
+        <div className="p-5">
+          <dt className="text-sm text-ink-400">Registered modules</dt>
+          <dd className="mt-2">
+            <span className="text-2xl font-mono text-white">{modules.length}</span>
+            <span className="text-sm text-ink-400"> · {activeModules} active</span>
+          </dd>
+        </div>
+        <div className="p-5">
+          <dt className="text-sm text-ink-400">{orgRow ? "Organization" : "Billing"}</dt>
+          <dd className="mt-2">
             {orgRow ? (
               <>
-                <div className="text-2xl font-bold text-white mb-1">{orgRow.name}</div>
-                <p className="text-xs text-zinc-600 mb-3 capitalize">
+                <Link href="/dashboard/organizations" className="text-lg font-medium text-white hover:text-signal-300">
+                  {orgRow.name}
+                </Link>
+                <p className="text-sm text-ink-400 capitalize">
                   {orgRow.plan} plan · {orgMemberCount} member{orgMemberCount !== 1 ? "s" : ""}
                 </p>
-                <Link href="/dashboard/organizations" className="inline-flex items-center gap-1 text-xs text-zinc-400 hover:text-white transition-colors">
-                  Manage org <ArrowRight size={11} />
-                </Link>
               </>
             ) : (
               <>
-                <div className="text-2xl font-bold text-white capitalize mb-1">{profile?.plan ?? "—"}</div>
-                <p className="text-xs text-zinc-600 mb-3">
-                  {profile?.plan ? "Active subscription" : "No active plan"}
-                </p>
-                <Link href="/dashboard/billing" className="inline-flex items-center gap-1 text-xs text-zinc-400 hover:text-white transition-colors">
-                  Manage billing <ArrowRight size={11} />
+                <Link href="/dashboard/billing" className="text-lg font-medium text-white capitalize hover:text-signal-300">
+                  {profile?.plan ?? "No active plan"}
                 </Link>
+                <p className="text-sm text-ink-400">{profile?.plan ? "Active subscription" : "Hardware works without one"}</p>
               </>
             )}
-          </div>
+          </dd>
         </div>
+      </dl>
 
-        {/* Modules list */}
-        <div className="rounded-xl border border-zinc-800 mb-8">
-          <div className="flex items-center justify-between px-6 py-4 border-b border-zinc-800">
-            <h2 className="font-medium text-white flex items-center gap-2">
-              <Cpu size={15} className="text-zinc-500" />
-              Modules
-            </h2>
-            <Link href="/dashboard/modules/register" className="text-xs text-orange-500 hover:text-orange-400 transition-colors">
-              + Register module
-            </Link>
+      <div className="grid lg:grid-cols-[1fr_20rem] gap-8">
+        {/* Products */}
+        <section aria-labelledby="products-heading">
+          <h2 id="products-heading" className="text-lg font-semibold text-white mb-4">Your products</h2>
+
+          <div className="border border-ink-800 rounded-lg">
+            <div className="flex items-center justify-between gap-4 px-5 py-4 border-b border-ink-800">
+              <div>
+                <p className="font-medium text-white">{macula.name}</p>
+                <p className="text-sm text-ink-400">{macula.category}</p>
+              </div>
+              <div className="flex gap-4 text-sm">
+                {macula.dashboard.map((item) => (
+                  <Link key={item.href} href={item.href} className="text-ink-300 hover:text-white">
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+            {modules.length === 0 ? (
+              <div className="px-5 py-10">
+                <p className="text-sm text-ink-300 mb-1">No modules registered yet.</p>
+                <p className="text-sm text-ink-400 mb-4">
+                  The serial starts with MAC- and is printed on the label on the back of the module.
+                </p>
+                <Link href="/dashboard/modules/register" className={buttonClasses({ variant: "secondary", size: "sm" })}>
+                  Register your Macula module
+                </Link>
+              </div>
+            ) : (
+              <ul className="divide-y divide-ink-800">
+                {modules.slice(0, 5).map((m) => (
+                  <li key={m.serial} className="flex items-center justify-between gap-4 px-5 py-3.5">
+                    <div className="min-w-0">
+                      <p className="text-sm font-medium text-white truncate">{m.nickname ?? m.serial}</p>
+                      <p className="text-xs text-ink-400 font-mono">{m.serial}</p>
+                    </div>
+                    <Badge variant={m.status === "active" ? "success" : "default"}>{m.status ?? "unknown"}</Badge>
+                  </li>
+                ))}
+                {modules.length > 5 && (
+                  <li className="px-5 py-3">
+                    <Link href="/dashboard/modules" className="text-sm text-ink-300 hover:text-white">
+                      View all {modules.length} modules
+                    </Link>
+                  </li>
+                )}
+              </ul>
+            )}
           </div>
-          {modules.length === 0 ? (
-            <div className="px-6 py-10 text-center">
-              <p className="text-sm text-zinc-600 mb-3">No modules registered yet.</p>
-              <Link href="/dashboard/modules/register" className="inline-flex items-center gap-1.5 text-sm text-zinc-400 hover:text-white transition-colors">
-                Register your Macula module <ArrowRight size={13} />
-              </Link>
-            </div>
-          ) : (
-            <div className="divide-y divide-zinc-800">
-              {modules.map((m) => (
-                <div key={m.serial} className="flex items-center justify-between px-6 py-4">
-                  <div>
-                    <p className="text-sm font-medium text-white">{m.nickname ?? m.serial}</p>
-                    <p className="text-xs text-zinc-600 font-mono mt-0.5">{m.serial}</p>
-                  </div>
-                  <Badge variant={m.status === "active" ? "success" : "default"}>{m.status ?? "unknown"}</Badge>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
 
-        {/* Quick links */}
-        <div className="grid sm:grid-cols-3 gap-3">
-          {[
-            { href: "/dashboard/usage", icon: BarChart3, label: "Usage history" },
-            { href: "/dashboard/organizations", icon: Building2, label: "Organization" },
-            { href: "/dashboard/settings", icon: Settings, label: "Account settings" },
-          ].map(({ href, icon: Icon, label }) => (
-            <Link
-              key={href}
-              href={href}
-              className="flex items-center gap-3 rounded-lg border border-zinc-800 bg-zinc-900/30 px-5 py-4 text-sm text-zinc-400 hover:border-orange-500/30 hover:text-white transition-all"
-            >
-              <Icon size={15} />
-              {label}
-              <ArrowRight size={13} className="ml-auto" />
-            </Link>
+          {otherProducts.map((p) => (
+            <div key={p.slug} className="border border-ink-800 rounded-lg mt-4 px-5 py-4 flex items-center justify-between">
+              <div>
+                <p className="font-medium text-white">{p.name}</p>
+                <p className="text-sm text-ink-400">{p.category}</p>
+              </div>
+              <Link href={p.href} className="text-sm text-ink-300 hover:text-white">{STATUS_LABEL[p.status]}</Link>
+            </div>
           ))}
-        </div>
 
-        {profile?.is_admin && (
           <Link
-            href="/admin"
-            className="mt-3 flex items-center gap-3 rounded-lg border border-orange-500/20 bg-orange-500/5 px-5 py-4 text-sm text-orange-400 hover:border-orange-500/40 hover:bg-orange-500/10 transition-all"
+            href="/platform"
+            className="mt-4 flex items-center justify-between gap-4 rounded-lg border border-dashed border-ink-700 px-5 py-4 text-sm text-ink-400 hover:text-white hover:border-ink-500"
           >
-            <ShieldCheck size={15} />
-            Admin dashboard
-            <ArrowRight size={13} className="ml-auto" />
+            More products are coming to the Proxigo platform
+            <ArrowRight size={14} />
           </Link>
-        )}
+        </section>
+
+        <aside className="space-y-8">
+          <section aria-labelledby="support-heading">
+            <div className="flex items-baseline justify-between mb-4">
+              <h2 id="support-heading" className="text-lg font-semibold text-white">Support</h2>
+              <Link href="/dashboard/support" className="text-sm text-ink-300 hover:text-white">All tickets</Link>
+            </div>
+            {tickets.length === 0 ? (
+              <p className="text-sm text-ink-400 border-t border-ink-800 pt-4">
+                No open conversations.{" "}
+                <Link href="/dashboard/support#new" className="text-signal-400 hover:text-signal-300">Open a ticket</Link>
+              </p>
+            ) : (
+              <ul className="border-t border-ink-800">
+                {tickets.map((t) => (
+                  <li key={t.ticket_id} className="border-b border-ink-800">
+                    <Link href={`/dashboard/support/${t.ticket_id}`} className="block py-3 group">
+                      <div className="flex items-center justify-between gap-3 mb-0.5">
+                        <span className="text-xs font-mono text-ink-400">#{t.ticket_id}</span>
+                        <TicketStatusBadge status={t.status} />
+                      </div>
+                      <p className="text-sm text-ink-200 truncate group-hover:text-white">{t.subject}</p>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </section>
+
+          <section aria-labelledby="desktop-heading" className="border-t border-ink-800 pt-6">
+            <h2 id="desktop-heading" className="font-semibold text-white mb-1">Proxigo Desktop</h2>
+            <p className="text-sm text-ink-400 mb-4">
+              Download maps, configure modules, and install firmware updates.
+            </p>
+            <Link href="/platform#download" className={buttonClasses({ variant: "secondary", size: "sm" })}>
+              <Download size={14} /> Get the app
+            </Link>
+          </section>
+        </aside>
       </div>
-    </div>
+    </>
   );
 }

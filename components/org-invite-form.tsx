@@ -41,18 +41,18 @@ export function OrgInviteForm() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="teammate@example.com"
-          className="flex-1 px-3 py-2 rounded-lg border border-zinc-700 bg-zinc-900 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-orange-500/50"
+          className="flex-1 px-3 py-2 rounded-lg border border-ink-700 bg-ink-900 text-sm text-white placeholder:text-ink-500 focus:outline-none focus:border-signal-500/50"
         />
         <button
           type="submit"
           disabled={loading || !email.trim()}
-          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-orange-500 hover:bg-orange-400 text-white text-sm font-medium transition-colors disabled:opacity-40"
+          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-signal-500 hover:bg-signal-400 text-white text-sm font-medium transition-colors disabled:opacity-40"
         >
           <UserPlus size={14} />
           {loading ? "Adding…" : "Add member"}
         </button>
       </div>
-      <p className="text-xs text-zinc-600">The user must already have a Proxigo account. They will receive a notification email.</p>
+      <p className="text-xs text-ink-500">The user must already have a Proxigo account. They will receive a notification email.</p>
       {error && <p className="text-xs text-red-400">{error}</p>}
       {success && <p className="text-xs text-emerald-400">{success}</p>}
     </form>

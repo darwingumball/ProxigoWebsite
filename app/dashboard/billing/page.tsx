@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, ExternalLink, Receipt, Package, ArrowRight } from "lucide-react";
+import { ExternalLink, Receipt, Package, ArrowRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { createClient } from "@/lib/supabase/client";
+import { PageHeader } from "@/components/dashboard/page-header";
 
 interface Order {
   id: string;
@@ -47,26 +48,21 @@ export default function BillingPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen pt-20 flex items-center justify-center">
-        <div className="w-4 h-4 rounded-full border-2 border-zinc-700 border-t-white animate-spin" />
+      <div className="py-24 flex items-center justify-center" role="status" aria-label="Loading">
+        <div className="w-4 h-4 rounded-full border-2 border-ink-700 border-t-white animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen pt-20 pb-24">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
-        <Link href="/dashboard" className="inline-flex items-center gap-1.5 text-sm text-zinc-500 hover:text-white transition-colors mb-8">
-          <ArrowLeft size={13} /> Dashboard
-        </Link>
-
-        <h1 className="text-2xl font-semibold text-white mb-8">Billing & Orders</h1>
+    <div className="max-w-4xl">
+        <PageHeader title="Billing" description="Your map plan and hardware orders." />
 
         {/* Subscription */}
-        <div className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-6 mb-6">
+        <div className="rounded-lg border border-ink-800 bg-ink-900/40 p-6 mb-6">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <h2 className="text-sm font-medium text-zinc-400 mb-2">Map download plan</h2>
+              <h2 className="text-sm font-medium text-ink-400 mb-2">Map download plan</h2>
               <div className="flex items-center gap-3">
                 <span className="text-2xl font-bold text-white capitalize">{profile?.plan ?? "None"}</span>
                 <Badge variant={profile?.plan ? "success" : "default"}>
@@ -76,7 +72,7 @@ export default function BillingPage() {
                 <div className="flex flex-wrap gap-2 mt-3">
                 <Link
                   href="/pricing"
-                  className="inline-flex items-center gap-1.5 text-xs border border-zinc-700 text-zinc-300 px-3 py-1.5 rounded-lg hover:border-zinc-500 hover:text-white transition-colors"
+                  className="inline-flex items-center gap-1.5 text-xs border border-ink-700 text-ink-300 px-3 py-1.5 rounded-lg hover:border-ink-500 hover:text-white transition-colors"
                 >
                   {profile?.plan ? "Change plan" : "Choose a plan"}
                   <ArrowRight size={11} />
@@ -87,30 +83,30 @@ export default function BillingPage() {
         </div>
 
         {/* Hardware orders */}
-        <div className="rounded-xl border border-zinc-800">
-          <div className="flex items-center gap-2 px-5 py-4 border-b border-zinc-800">
-            <Package size={15} className="text-zinc-500" />
+        <div className="rounded-lg border border-ink-800">
+          <div className="flex items-center gap-2 px-5 py-4 border-b border-ink-800">
+            <Package size={15} className="text-ink-500" />
             <h2 className="text-sm font-medium text-white">Order history</h2>
           </div>
 
           {orders.length === 0 ? (
             <div className="px-5 py-10 text-center">
-              <p className="text-sm text-zinc-600 mb-3">No hardware orders yet.</p>
-              <Link href="/pricing" className="text-sm text-zinc-400 hover:text-white transition-colors underline underline-offset-2">
+              <p className="text-sm text-ink-500 mb-3">No hardware orders yet.</p>
+              <Link href="/pricing" className="text-sm text-ink-400 hover:text-white transition-colors underline underline-offset-2">
                 Pre-order the Macula module
               </Link>
             </div>
           ) : (
-            <div className="divide-y divide-zinc-800">
+            <div className="divide-y divide-ink-800">
               {orders.map((order) => (
                 <div key={order.id} className="flex items-center justify-between px-5 py-4 gap-4">
                   <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-zinc-800 flex items-center justify-center shrink-0 mt-0.5">
-                      <Receipt size={14} className="text-zinc-400" />
+                    <div className="w-8 h-8 rounded-lg bg-ink-800 flex items-center justify-center shrink-0 mt-0.5">
+                      <Receipt size={14} className="text-ink-400" />
                     </div>
                     <div>
                       <p className="text-sm font-medium text-white">{order.product_name}</p>
-                      <p className="text-xs text-zinc-600 mt-0.5">
+                      <p className="text-xs text-ink-500 mt-0.5">
                         {new Date(order.created_at).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
                       </p>
                     </div>
@@ -127,7 +123,7 @@ export default function BillingPage() {
                         href={order.receipt_url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 text-xs text-zinc-400 hover:text-white transition-colors"
+                        className="inline-flex items-center gap-1 text-xs text-ink-400 hover:text-white transition-colors"
                       >
                         Receipt <ExternalLink size={10} />
                       </a>
@@ -138,7 +134,6 @@ export default function BillingPage() {
             </div>
           )}
         </div>
-      </div>
     </div>
   );
 }

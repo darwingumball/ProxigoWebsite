@@ -1,50 +1,79 @@
 @import "tailwindcss";
 
+/*
+ * Proxigo palette
+ *  ink    — warm graphite neutrals. 500 is the dimmest step allowed for text
+ *           (≥ 4.5:1 on ink-950 and ink-900); 600+ are for borders and fills only.
+ *  signal — brand orange. Filled signal surfaces take dark (ink-950) text;
+ *           white on orange does not meet AA.
+ */
 @theme {
-  --color-bg: #09090b;
-  --color-surface: #111113;
-  --color-surface-2: #1a1a1d;
-  --color-border: #27272a;
-  --color-border-subtle: #1c1c1f;
-  --color-text: #fafafa;
-  --color-muted: #a1a1aa;
-  --color-dim: #52525b;
-  --color-accent: #ea580c;
-  --color-accent-light: #fb923c;
+  --color-ink-50:  #f6f5f2;
+  --color-ink-100: #ecebe6;
+  --color-ink-200: #d9d7cf;
+  --color-ink-300: #bdbab0;
+  --color-ink-400: #a19e93;
+  --color-ink-500: #8a877c;
+  --color-ink-600: #5e5c55;
+  --color-ink-700: #403f3a;
+  --color-ink-800: #2a2926;
+  --color-ink-900: #1a1a18;
+  --color-ink-950: #0f0f0e;
 
-  --font-sans: "Manrope", system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+  --color-signal-50:  #fff4ec;
+  --color-signal-100: #ffe4d1;
+  --color-signal-200: #ffc49d;
+  --color-signal-300: #ff9f63;
+  --color-signal-400: #ff8236;
+  --color-signal-500: #ff6b17;
+  --color-signal-600: #e55408;
+  --color-signal-700: #b8420a;
+  --color-signal-800: #8c340d;
+  --color-signal-900: #5e250c;
+  --color-signal-950: #351406;
+
+  --font-sans: var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, "SFMono-Regular", monospace;
+
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 
 body {
-  background-color: var(--color-bg);
-  color: var(--color-text);
+  background-color: var(--color-ink-950);
+  color: var(--color-ink-100);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--color-bg); }
-::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 3px; }
+h1, h2, h3 { text-wrap: balance; }
+p, li { text-wrap: pretty; }
 
-.grid-pattern {
-  background-image:
-    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-  background-size: 60px 60px;
+::selection { background: var(--color-signal-500); color: var(--color-ink-950); }
+
+:focus-visible {
+  outline: 2px solid var(--color-signal-400);
+  outline-offset: 2px;
 }
 
-.radial-fade {
-  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(234,88,12,0.06) 0%, transparent 70%);
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--color-ink-800); border-radius: 4px; }
+
+/* Map / measurement surfaces only — a survey grid, not page decoration. */
+.survey-grid {
+  background-image:
+    linear-gradient(color-mix(in oklab, var(--color-ink-100) 5%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in oklab, var(--color-ink-100) 5%, transparent) 1px, transparent 1px);
+  background-size: 32px 32px;
 }
 
 /* ── Animations ── */
 @keyframes fade-in-up {
-  from { opacity: 0; transform: translateY(24px); }
+  from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
@@ -85,16 +114,20 @@ body {
   to   { opacity: 1; transform: translateY(0); }
 }
 
-.hero-a1 { animation: fade-in-up 0.7s cubic-bezier(.22,.68,0,1.2) 0.05s both; }
-.hero-a2 { animation: fade-in-up 0.7s cubic-bezier(.22,.68,0,1.2) 0.2s  both; }
-.hero-a3 { animation: fade-in-up 0.7s cubic-bezier(.22,.68,0,1.2) 0.35s both; }
-.hero-a4 { animation: fade-in-up 0.7s cubic-bezier(.22,.68,0,1.2) 0.5s  both; }
-.hero-a5 { animation: fade-in-up 0.7s cubic-bezier(.22,.68,0,1.2) 0.65s both; }
+@keyframes route-draw {
+  from { stroke-dashoffset: var(--route-length, 600); }
+  to   { stroke-dashoffset: 0; }
+}
+
+.hero-a1 { animation: fade-in-up 0.6s var(--ease-out-quart) 0.05s both; }
+.hero-a2 { animation: fade-in-up 0.6s var(--ease-out-quart) 0.15s both; }
+.hero-a3 { animation: fade-in-up 0.6s var(--ease-out-quart) 0.25s both; }
+.hero-a4 { animation: fade-in-up 0.6s var(--ease-out-quart) 0.35s both; }
+.hero-a5 { animation: fade-in-up 0.6s var(--ease-out-quart) 0.45s both; }
 
 .scanline {
   position: absolute; left: 0; right: 0; height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(234,88,12,0.9), transparent);
-  box-shadow: 0 0 8px rgba(234,88,12,0.6);
+  background: linear-gradient(90deg, transparent, var(--color-signal-500), transparent);
   animation: scan-line 3.5s linear infinite;
   pointer-events: none;
 }
@@ -104,8 +137,22 @@ body {
 
 .data-flicker { animation: data-flicker 4s ease-in-out infinite; }
 
+.route-draw {
+  stroke-dasharray: var(--route-length, 600);
+  animation: route-draw 2.4s var(--ease-out-quart) 0.4s both;
+}
+
 @keyframes drone-float {
   0%, 100% { transform: translateY(0px); }
   50%       { transform: translateY(-8px); }
 }
 .drone-float { animation: drone-float 3.2s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -17,7 +17,7 @@ export function DocsSidebar() {
         href="/docs"
         className={cn(
           "flex items-center gap-2 text-sm font-medium mb-2 transition-colors",
-          pathname === "/docs" ? "text-white" : "text-zinc-400 hover:text-white"
+          pathname === "/docs" ? "text-white" : "text-ink-400 hover:text-white"
         )}
       >
         <BookOpen size={14} />
@@ -26,7 +26,7 @@ export function DocsSidebar() {
 
       {DOCS_NAV.map(({ section, pages }) => (
         <div key={section}>
-          <p className="text-xs font-semibold uppercase tracking-widest text-zinc-600 mb-2.5">
+          <p className="text-xs font-semibold uppercase tracking-widest text-ink-500 mb-2.5">
             {section}
           </p>
           <ul className="space-y-1">
@@ -40,8 +40,8 @@ export function DocsSidebar() {
                     className={cn(
                       "block text-sm py-1.5 px-3 rounded-lg transition-colors",
                       active
-                        ? "bg-zinc-800 text-white"
-                        : "text-zinc-400 hover:text-white hover:bg-zinc-900"
+                        ? "bg-ink-800 text-white"
+                        : "text-ink-400 hover:text-white hover:bg-ink-900"
                     )}
                   >
                     {title}
@@ -58,10 +58,10 @@ export function DocsSidebar() {
   return (
     <>
       {/* Mobile toggle */}
-      <div className="lg:hidden border-b border-zinc-800 px-4 py-3">
+      <div className="lg:hidden border-b border-ink-800 px-4 py-3">
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="flex items-center gap-2 text-sm text-zinc-400 hover:text-white transition-colors w-full"
+          className="flex items-center gap-2 text-sm text-ink-400 hover:text-white transition-colors w-full"
         >
           <BookOpen size={14} />
           Documentation

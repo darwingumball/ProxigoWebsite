@@ -38,9 +38,9 @@ export function AdminAddSerials() {
   }
 
   return (
-    <div className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-5">
+    <div className="rounded-lg border border-ink-800 bg-ink-900/40 p-5">
       <h2 className="text-sm font-medium text-white mb-1">Add serials to inventory</h2>
-      <p className="text-xs text-zinc-600 mb-4">
+      <p className="text-xs text-ink-500 mb-4">
         Enter one or more serials (MAC-XXXX-XXXX-XXXX). Paste multiple separated by newlines or commas.
       </p>
       <form onSubmit={handleSubmit} className="space-y-3">
@@ -49,7 +49,7 @@ export function AdminAddSerials() {
           onChange={e => { setInput(e.target.value); setResult(null); }}
           rows={4}
           placeholder={"MAC-A1B2-C3D4-E5F6\nMAC-G7H8-I9J0-K1L2"}
-          className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-700 bg-zinc-900 text-white text-xs font-mono placeholder:text-zinc-700 focus:outline-none focus:border-orange-500/50 focus:ring-1 focus:ring-orange-500/20 resize-none uppercase"
+          className="w-full px-3.5 py-2.5 rounded-lg border border-ink-700 bg-ink-900 text-white text-xs font-mono placeholder:text-ink-500 focus:outline-none focus:border-signal-500/50 focus:ring-1 focus:ring-signal-500/20 resize-none uppercase"
         />
         {result && (
           <div className={`flex items-center gap-2 text-xs px-3 py-2 rounded-lg border ${
@@ -64,7 +64,7 @@ export function AdminAddSerials() {
         <button
           type="submit"
           disabled={loading || !input.trim()}
-          className="inline-flex items-center gap-1.5 text-sm bg-orange-600 text-white font-medium px-4 py-2 rounded-lg hover:bg-orange-500 transition-colors disabled:opacity-50"
+          className="inline-flex items-center gap-1.5 text-sm bg-signal-500 text-ink-950 font-medium px-4 py-2 rounded-lg hover:bg-signal-400 transition-colors disabled:opacity-50"
         >
           <Plus size={14} />
           {loading ? "Adding…" : "Add to inventory"}

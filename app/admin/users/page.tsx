@@ -53,32 +53,32 @@ export default async function AdminUsersPage({
   const PLAN_COLORS: Record<string, string> = {
     starter:    "text-sky-400 bg-sky-500/10 border-sky-500/20",
     pro:        "text-violet-400 bg-violet-500/10 border-violet-500/20",
-    enterprise: "text-orange-400 bg-orange-500/10 border-orange-500/20",
+    enterprise: "text-signal-400 bg-signal-500/10 border-signal-500/20",
   };
 
   return (
     <div className="p-8">
       <div className="mb-6">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-orange-500 mb-1">Admin</p>
+        <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-signal-500 mb-1">Admin</p>
         <h1 className="text-2xl font-semibold text-white">Users</h1>
-        <p className="text-sm text-zinc-500 mt-0.5">{(count ?? 0).toLocaleString()} total</p>
+        <p className="text-sm text-ink-500 mt-0.5">{(count ?? 0).toLocaleString()} total</p>
       </div>
 
       {/* Filters */}
       <form method="GET" className="flex items-center gap-3 mb-6">
         <div className="relative flex-1 max-w-sm">
-          <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" />
+          <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-500" />
           <input
             name="search"
             defaultValue={search}
             placeholder="Search by name or email…"
-            className="w-full pl-8 pr-3.5 py-2 rounded-lg border border-zinc-700 bg-zinc-900 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-zinc-500"
+            className="w-full pl-8 pr-3.5 py-2 rounded-lg border border-ink-700 bg-ink-900 text-sm text-white placeholder:text-ink-500 focus:outline-none focus:border-ink-500"
           />
         </div>
         <select
           name="plan"
           defaultValue={planFilter}
-          className="px-3 py-2 rounded-lg border border-zinc-700 bg-zinc-900 text-sm text-zinc-300 focus:outline-none"
+          className="px-3 py-2 rounded-lg border border-ink-700 bg-ink-900 text-sm text-ink-300 focus:outline-none"
         >
           <option value="">All plans</option>
           <option value="free">Free</option>
@@ -88,50 +88,50 @@ export default async function AdminUsersPage({
         </select>
         <button
           type="submit"
-          className="px-4 py-2 rounded-lg bg-zinc-800 text-sm text-zinc-300 hover:bg-zinc-700 transition-colors"
+          className="px-4 py-2 rounded-lg bg-ink-800 text-sm text-ink-300 hover:bg-ink-700 transition-colors"
         >
           Filter
         </button>
         {(search || planFilter) && (
-          <a href="/admin/users" className="text-xs text-zinc-600 hover:text-zinc-400 transition-colors">
+          <a href="/admin/users" className="text-xs text-ink-500 hover:text-ink-400 transition-colors">
             Clear
           </a>
         )}
       </form>
 
       {/* Table */}
-      <div className="rounded-xl border border-zinc-800 overflow-hidden">
+      <div className="rounded-lg border border-ink-800 overflow-hidden">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-zinc-800 bg-zinc-900/50">
+            <tr className="border-b border-ink-800 bg-ink-900/50">
               {["Name / Email", "Plan", "Modules", "Joined", "Admin", ""].map((h) => (
-                <th key={h} className="text-left px-5 py-3 text-[10px] font-semibold uppercase tracking-[0.15em] text-zinc-500">
+                <th key={h} className="text-left px-5 py-3 text-[10px] font-semibold uppercase tracking-[0.15em] text-ink-500">
                   {h}
                 </th>
               ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-zinc-800">
+          <tbody className="divide-y divide-ink-800">
             {(profiles ?? []).length === 0 && (
               <tr>
-                <td colSpan={4} className="px-5 py-10 text-center text-sm text-zinc-600">
+                <td colSpan={4} className="px-5 py-10 text-center text-sm text-ink-500">
                   No users found.
                 </td>
               </tr>
             )}
             {(profiles ?? []).map((u) => (
-              <tr key={u.id} className="hover:bg-zinc-900/40 transition-colors">
+              <tr key={u.id} className="hover:bg-ink-900/40 transition-colors">
                 <td className="px-5 py-3.5">
                   <p className="text-white font-medium">{u.full_name ?? "—"}</p>
-                  <p className="text-xs text-zinc-600 mt-0.5">{u.email ?? u.id.slice(0, 16) + "…"}</p>
+                  <p className="text-xs text-ink-500 mt-0.5">{u.email ?? u.id.slice(0, 16) + "…"}</p>
                 </td>
                 <td className="px-5 py-3.5">
                   <AdminSetPlanButton userId={u.id} currentPlan={u.plan ?? null} />
                 </td>
-                <td className="px-5 py-3.5 font-mono text-zinc-400">
+                <td className="px-5 py-3.5 font-mono text-ink-400">
                   {modulesByUser[u.id] ?? 0}
                 </td>
-                <td className="px-5 py-3.5 text-xs text-zinc-600 tabular-nums">
+                <td className="px-5 py-3.5 text-xs text-ink-500 tabular-nums">
                   {new Date(u.created_at).toLocaleDateString()}
                 </td>
                 <td className="px-5 py-3.5">
@@ -146,14 +146,14 @@ export default async function AdminUsersPage({
       {/* Pagination */}
       {totalPages > 1 && (
         <div className="flex items-center justify-between mt-4">
-          <p className="text-xs text-zinc-600">
+          <p className="text-xs text-ink-500">
             Page {page} of {totalPages}
           </p>
           <div className="flex gap-2">
             {page > 1 && (
               <a
                 href={`/admin/users?search=${search}&plan=${planFilter}&page=${page - 1}`}
-                className="px-3 py-1.5 rounded-lg border border-zinc-700 text-xs text-zinc-400 hover:text-white hover:border-zinc-500 transition-colors"
+                className="px-3 py-1.5 rounded-lg border border-ink-700 text-xs text-ink-400 hover:text-white hover:border-ink-500 transition-colors"
               >
                 Previous
               </a>
@@ -161,7 +161,7 @@ export default async function AdminUsersPage({
             {page < totalPages && (
               <a
                 href={`/admin/users?search=${search}&plan=${planFilter}&page=${page + 1}`}
-                className="px-3 py-1.5 rounded-lg border border-zinc-700 text-xs text-zinc-400 hover:text-white hover:border-zinc-500 transition-colors"
+                className="px-3 py-1.5 rounded-lg border border-ink-700 text-xs text-ink-400 hover:text-white hover:border-ink-500 transition-colors"
               >
                 Next
               </a>

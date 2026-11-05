@@ -12,7 +12,7 @@ const PLANS = [
 const COLORS: Record<string, string> = {
   starter:    "text-sky-400    bg-sky-500/10    border-sky-500/20",
   pro:        "text-violet-400 bg-violet-500/10 border-violet-500/20",
-  enterprise: "text-orange-400 bg-orange-500/10 border-orange-500/20",
+  enterprise: "text-signal-400 bg-signal-500/10 border-signal-500/20",
 };
 
 export function AdminSetPlanButton({ userId, currentPlan }: { userId: string; currentPlan: string | null }) {
@@ -41,7 +41,7 @@ export function AdminSetPlanButton({ userId, currentPlan }: { userId: string; cu
           onChange={(e) => setUserPlan(e.target.value)}
           onBlur={() => setOpen(false)}
           disabled={loading}
-          className="text-[10px] px-1.5 py-0.5 rounded border border-zinc-600 bg-zinc-900 text-zinc-200 focus:outline-none focus:border-orange-500"
+          className="text-[10px] px-1.5 py-0.5 rounded border border-ink-600 bg-ink-900 text-ink-200 focus:outline-none focus:border-signal-500"
         >
           {PLANS.map((p) => (
             <option key={p.value} value={p.value}>{p.label}</option>
@@ -57,7 +57,7 @@ export function AdminSetPlanButton({ userId, currentPlan }: { userId: string; cu
       disabled={loading}
       title="Change plan"
       className={`text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full border transition-colors hover:opacity-80 disabled:opacity-40 ${
-        plan ? (COLORS[plan] ?? "text-zinc-400 bg-zinc-800 border-zinc-700") : "text-zinc-600 border-zinc-800 hover:border-zinc-600"
+        plan ? (COLORS[plan] ?? "text-ink-400 bg-ink-800 border-ink-700") : "text-ink-500 border-ink-800 hover:border-ink-600"
       }`}
     >
       {loading ? "…" : (plan || "free")}

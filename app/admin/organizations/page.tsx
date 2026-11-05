@@ -43,35 +43,35 @@ export default async function AdminOrganizationsPage() {
   const PLAN_COLORS: Record<string, string> = {
     starter: "text-sky-400 bg-sky-500/10 border-sky-500/20",
     pro: "text-violet-400 bg-violet-500/10 border-violet-500/20",
-    enterprise: "text-orange-400 bg-orange-500/10 border-orange-500/20",
+    enterprise: "text-signal-400 bg-signal-500/10 border-signal-500/20",
   };
 
   return (
     <div className="p-8">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-orange-500 mb-1">Admin</p>
+          <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-signal-500 mb-1">Admin</p>
           <h1 className="text-2xl font-semibold text-white">Organizations</h1>
-          <p className="text-sm text-zinc-500 mt-0.5">{(orgs ?? []).length} total</p>
+          <p className="text-sm text-ink-500 mt-0.5">{(orgs ?? []).length} total</p>
         </div>
         <AdminCreateOrg />
       </div>
 
-      <div className="rounded-xl border border-zinc-800 overflow-hidden mb-6">
+      <div className="rounded-lg border border-ink-800 overflow-hidden mb-6">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-zinc-800 bg-zinc-900/50">
+            <tr className="border-b border-ink-800 bg-ink-900/50">
               {["Name", "Plan", "Status", "km² Pool", "Members", "Created", ""].map((h) => (
-                <th key={h} className="text-left px-5 py-3 text-[10px] font-semibold uppercase tracking-[0.15em] text-zinc-500">
+                <th key={h} className="text-left px-5 py-3 text-[10px] font-semibold uppercase tracking-[0.15em] text-ink-500">
                   {h}
                 </th>
               ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-zinc-800">
+          <tbody className="divide-y divide-ink-800">
             {(orgs ?? []).length === 0 && (
               <tr>
-                <td colSpan={7} className="px-5 py-10 text-center text-sm text-zinc-600">
+                <td colSpan={7} className="px-5 py-10 text-center text-sm text-ink-500">
                   No organizations yet. Create one above.
                 </td>
               </tr>
@@ -79,10 +79,10 @@ export default async function AdminOrganizationsPage() {
             {(orgs ?? []).map((org) => {
               const status = getOrgStatus(org.id);
               return (
-                <tr key={org.id} className="hover:bg-zinc-900/40 transition-colors">
+                <tr key={org.id} className="hover:bg-ink-900/40 transition-colors">
                   <td className="px-5 py-3.5 font-medium text-white">{org.name}</td>
                   <td className="px-5 py-3.5">
-                    <span className={`text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full border capitalize ${PLAN_COLORS[org.plan] ?? "text-zinc-400 border-zinc-700"}`}>
+                    <span className={`text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full border capitalize ${PLAN_COLORS[org.plan] ?? "text-ink-400 border-ink-700"}`}>
                       {org.plan}
                     </span>
                   </td>
@@ -91,15 +91,15 @@ export default async function AdminOrganizationsPage() {
                       {status.label}
                     </span>
                   </td>
-                  <td className="px-5 py-3.5 font-mono text-zinc-400">{(org.km2_limit ?? 0).toLocaleString()}</td>
-                  <td className="px-5 py-3.5 text-xs text-zinc-400">{memberCountByOrg[org.id] ?? 0}</td>
-                  <td className="px-5 py-3.5 text-xs text-zinc-600 tabular-nums">
+                  <td className="px-5 py-3.5 font-mono text-ink-400">{(org.km2_limit ?? 0).toLocaleString()}</td>
+                  <td className="px-5 py-3.5 text-xs text-ink-400">{memberCountByOrg[org.id] ?? 0}</td>
+                  <td className="px-5 py-3.5 text-xs text-ink-500 tabular-nums">
                     {new Date(org.created_at).toLocaleDateString()}
                   </td>
                   <td className="px-5 py-3.5">
                     <Link
                       href={`/admin/organizations/${org.id}`}
-                      className="text-xs text-orange-500 hover:text-orange-400 transition-colors"
+                      className="text-xs text-signal-500 hover:text-signal-400 transition-colors"
                     >
                       Manage →
                     </Link>

@@ -27,7 +27,7 @@ export function CheckoutSuccessBanner() {
   if (!message) return null;
 
   return (
-    <div className="mb-6 flex items-start gap-3 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">
+    <div className="mb-6 flex items-start gap-3 rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">
       <CheckCircle size={16} className="mt-0.5 shrink-0 text-emerald-600" />
       <span className="flex-1">{message}</span>
       <button onClick={() => setMessage(null)} className="shrink-0 text-emerald-600 hover:text-emerald-800 transition-colors">

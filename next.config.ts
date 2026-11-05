@@ -7,7 +7,8 @@ const CSP = [
   "font-src 'self' https://fonts.gstatic.com",
   "img-src 'self' data: blob: https://*.supabase.co",
   "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://api.stripe.com",
-  "frame-src https://js.stripe.com https://hooks.stripe.com",
+  // Stripe, plus the hosts ProductDemo can embed (interactive demos and video)
+  "frame-src https://js.stripe.com https://hooks.stripe.com https://demo.arcade.software https://app.storylane.io https://app.supademo.com https://www.youtube-nocookie.com https://player.vimeo.com",
   "object-src 'none'",
   "base-uri 'self'",
   "form-action 'self'",
@@ -28,6 +29,11 @@ const SECURITY_HEADERS = [
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [],
+  },
+  async redirects() {
+    return [
+      { source: "/desktop", destination: "/platform", permanent: true },
+    ];
   },
   async headers() {
     return [

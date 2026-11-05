@@ -90,28 +90,28 @@ export default async function AdminAnalyticsPage() {
   const maxVA = Math.max(...vaByDay.map((d) => d.value), 1);
 
   const CHARTS = [
-    { label: "km² downloaded (30d)",  total: `${totalKm2.toFixed(1)} km²`, data: usageByDay,   max: maxKm2,    color: "#f97316" },
+    { label: "km² downloaded (30d)",  total: `${totalKm2.toFixed(1)} km²`, data: usageByDay,   max: maxKm2,    color: "var(--color-signal-500)" },
     { label: "New signups (30d)",     total: `${totalSignups} users`,        data: signupsByDay, max: maxSignups, color: "#818cf8" },
   ];
 
   return (
     <div className="p-8">
       <div className="mb-8">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-orange-500 mb-1">Admin</p>
+        <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-signal-500 mb-1">Admin</p>
         <h1 className="text-2xl font-semibold text-white">Analytics</h1>
-        <p className="text-sm text-zinc-500 mt-0.5">Last 30 days.</p>
+        <p className="text-sm text-ink-500 mt-0.5">Last 30 days.</p>
       </div>
 
       {/* Supabase charts */}
       <div className="space-y-4 mb-8">
         {CHARTS.map(({ label, total, data, max, color }) => (
-          <div key={label} className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-5">
+          <div key={label} className="rounded-lg border border-ink-800 bg-ink-900/40 p-5">
             <div className="flex items-baseline justify-between mb-4">
-              <p className="text-sm font-medium text-zinc-400">{label}</p>
+              <p className="text-sm font-medium text-ink-400">{label}</p>
               <p className="text-lg font-bold text-white font-mono">{total}</p>
             </div>
             <Sparkline data={data} max={max} color={color} />
-            <div className="flex justify-between text-[10px] text-zinc-700 mt-1">
+            <div className="flex justify-between text-[10px] text-ink-500 mt-1">
               <span>{data[0]?.date}</span>
               <span>{data[data.length - 1]?.date}</span>
             </div>
@@ -121,21 +121,21 @@ export default async function AdminAnalyticsPage() {
 
       {/* Top locations */}
       {topLocations.length > 0 && (
-        <div className="rounded-xl border border-zinc-800 overflow-hidden mb-4">
-          <div className="px-5 py-3.5 border-b border-zinc-800">
+        <div className="rounded-lg border border-ink-800 overflow-hidden mb-4">
+          <div className="px-5 py-3.5 border-b border-ink-800">
             <p className="text-sm font-medium text-white">Top areas downloaded (30d)</p>
           </div>
-          <div className="divide-y divide-zinc-800/60">
+          <div className="divide-y divide-ink-800/60">
             {topLocations.map(([label, km2]) => {
               const maxKm2loc = topLocations[0]?.[1] ?? 1;
               const pct = (km2 / maxKm2loc) * 100;
               return (
                 <div key={label} className="flex items-center gap-4 px-5 py-2.5">
-                  <p className="text-xs text-zinc-300 truncate flex-1">{label}</p>
-                  <div className="w-28 h-1.5 bg-zinc-800 rounded-full overflow-hidden shrink-0">
-                    <div className="h-full bg-orange-500 rounded-full" style={{ width: `${pct}%` }} />
+                  <p className="text-xs text-ink-300 truncate flex-1">{label}</p>
+                  <div className="w-28 h-1.5 bg-ink-800 rounded-full overflow-hidden shrink-0">
+                    <div className="h-full bg-signal-500 rounded-full" style={{ width: `${pct}%` }} />
                   </div>
-                  <p className="text-xs text-zinc-400 font-mono tabular-nums w-16 text-right shrink-0">
+                  <p className="text-xs text-ink-400 font-mono tabular-nums w-16 text-right shrink-0">
                     {km2.toFixed(1)} km²
                   </p>
                 </div>
@@ -147,29 +147,29 @@ export default async function AdminAnalyticsPage() {
 
       {/* Recent downloads */}
       {(recentDownloads ?? []).length > 0 && (
-        <div className="rounded-xl border border-zinc-800 overflow-hidden mb-8">
-          <div className="px-5 py-3.5 border-b border-zinc-800">
+        <div className="rounded-lg border border-ink-800 overflow-hidden mb-8">
+          <div className="px-5 py-3.5 border-b border-ink-800">
             <p className="text-sm font-medium text-white">Recent downloads (30d)</p>
           </div>
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-zinc-800 bg-zinc-900/30">
+              <tr className="border-b border-ink-800 bg-ink-900/30">
                 {["Location", "km²", "Bbox", "Date"].map((h) => (
-                  <th key={h} className="text-left px-5 py-2 text-[10px] font-semibold uppercase tracking-[0.15em] text-zinc-500">{h}</th>
+                  <th key={h} className="text-left px-5 py-2 text-[10px] font-semibold uppercase tracking-[0.15em] text-ink-500">{h}</th>
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-zinc-800">
+            <tbody className="divide-y divide-ink-800">
               {(recentDownloads ?? []).map((r, i) => (
-                <tr key={i} className="hover:bg-zinc-900/30 transition-colors">
-                  <td className="px-5 py-2.5 text-xs text-zinc-300 max-w-[200px] truncate">{r.location_label ?? "—"}</td>
-                  <td className="px-5 py-2.5 font-mono text-xs text-orange-300">{Number(r.km2).toFixed(1)}</td>
-                  <td className="px-5 py-2.5 font-mono text-[10px] text-zinc-600">
+                <tr key={i} className="hover:bg-ink-900/30 transition-colors">
+                  <td className="px-5 py-2.5 text-xs text-ink-300 max-w-[200px] truncate">{r.location_label ?? "—"}</td>
+                  <td className="px-5 py-2.5 font-mono text-xs text-signal-300">{Number(r.km2).toFixed(1)}</td>
+                  <td className="px-5 py-2.5 font-mono text-[10px] text-ink-500">
                     {r.lat_min != null
                       ? `${r.lat_min.toFixed(3)},${r.lon_min.toFixed(3)} → ${r.lat_max.toFixed(3)},${r.lon_max.toFixed(3)}`
                       : "—"}
                   </td>
-                  <td className="px-5 py-2.5 text-xs text-zinc-600 tabular-nums whitespace-nowrap">
+                  <td className="px-5 py-2.5 text-xs text-ink-500 tabular-nums whitespace-nowrap">
                     {new Date(r.created_at).toLocaleDateString()}
                   </td>
                 </tr>
@@ -183,16 +183,16 @@ export default async function AdminAnalyticsPage() {
       {va ? (
         <div className="space-y-4">
           {/* Page views sparkline */}
-          <div className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-5">
+          <div className="rounded-lg border border-ink-800 bg-ink-900/40 p-5">
             <div className="flex items-baseline justify-between mb-4">
-              <p className="text-sm font-medium text-zinc-400">Page views (30d)</p>
+              <p className="text-sm font-medium text-ink-400">Page views (30d)</p>
               <div className="flex items-center gap-3">
                 <p className="text-lg font-bold text-white font-mono">{va.pageViews.toLocaleString()}</p>
                 <a
                   href="https://vercel.com/analytics"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[10px] text-zinc-600 hover:text-orange-400 transition-colors flex items-center gap-1"
+                  className="text-[10px] text-ink-500 hover:text-signal-400 transition-colors flex items-center gap-1"
                 >
                   Vercel <ExternalLink size={9} />
                 </a>
@@ -201,32 +201,32 @@ export default async function AdminAnalyticsPage() {
             {vaByDay.length >= 2 ? (
               <>
                 <Sparkline data={vaByDay} max={maxVA} color="#34d399" />
-                <div className="flex justify-between text-[10px] text-zinc-700 mt-1">
+                <div className="flex justify-between text-[10px] text-ink-500 mt-1">
                   <span>{vaByDay[0]?.date}</span>
                   <span>{vaByDay[vaByDay.length - 1]?.date}</span>
                 </div>
               </>
             ) : (
-              <p className="text-xs text-zinc-600">Not enough data yet.</p>
+              <p className="text-xs text-ink-500">Not enough data yet.</p>
             )}
           </div>
 
           {/* Top pages */}
           {va.topPages.length > 0 && (
-            <div className="rounded-xl border border-zinc-800 bg-zinc-900/40 overflow-hidden">
-              <div className="px-5 py-3.5 border-b border-zinc-800">
+            <div className="rounded-lg border border-ink-800 bg-ink-900/40 overflow-hidden">
+              <div className="px-5 py-3.5 border-b border-ink-800">
                 <p className="text-sm font-medium text-white">Top pages (30d)</p>
               </div>
-              <div className="divide-y divide-zinc-800/60">
+              <div className="divide-y divide-ink-800/60">
                 {va.topPages.map((p) => {
                   const pct = va.pageViews > 0 ? (p.total / va.pageViews) * 100 : 0;
                   return (
                     <div key={p.key} className="flex items-center gap-4 px-5 py-2.5">
-                      <p className="text-xs text-zinc-400 font-mono truncate flex-1">{p.key || "/"}</p>
-                      <div className="w-24 h-1 bg-zinc-800 rounded-full overflow-hidden shrink-0">
+                      <p className="text-xs text-ink-400 font-mono truncate flex-1">{p.key || "/"}</p>
+                      <div className="w-24 h-1 bg-ink-800 rounded-full overflow-hidden shrink-0">
                         <div className="h-full bg-emerald-500 rounded-full" style={{ width: `${pct}%` }} />
                       </div>
-                      <p className="text-xs text-zinc-300 font-mono tabular-nums w-12 text-right shrink-0">
+                      <p className="text-xs text-ink-300 font-mono tabular-nums w-12 text-right shrink-0">
                         {p.total.toLocaleString()}
                       </p>
                     </div>
@@ -237,10 +237,10 @@ export default async function AdminAnalyticsPage() {
           )}
         </div>
       ) : (
-        <div className="rounded-xl border border-zinc-800 border-dashed p-6">
-          <p className="text-sm font-medium text-zinc-500 mb-2">Web traffic</p>
-          <ol className="text-xs text-zinc-700 leading-relaxed space-y-1 list-decimal list-inside max-w-lg">
-            <li>Go to your Vercel project → <span className="text-zinc-500">Analytics</span> tab → click <span className="text-zinc-500">Enable</span></li>
+        <div className="rounded-lg border border-ink-800 border-dashed p-6">
+          <p className="text-sm font-medium text-ink-500 mb-2">Web traffic</p>
+          <ol className="text-xs text-ink-500 leading-relaxed space-y-1 list-decimal list-inside max-w-lg">
+            <li>Go to your Vercel project → <span className="text-ink-500">Analytics</span> tab → click <span className="text-ink-500">Enable</span></li>
             <li>Deploy to Vercel — the tracking script is already in the layout</li>
             <li>Data appears here after the first page views are recorded</li>
           </ol>

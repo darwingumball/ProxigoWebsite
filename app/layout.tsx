@@ -1,16 +1,25 @@
 import type { Metadata } from "next";
-import { Manrope } from "next/font/google";
+import { IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
-import { Nav } from "@/components/nav";
-import { Footer } from "@/components/footer";
 import { Analytics } from "@vercel/analytics/next";
 
-const manrope = Manrope({ subsets: ["latin"], variable: "--font-sans" });
+const plexSans = IBM_Plex_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-plex-sans",
+});
+
+const plexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-plex-mono",
+});
 
 export const metadata: Metadata = {
-  title: { default: "Proxigo | Drone Visual Positioning", template: "%s | Proxigo" },
+  metadataBase: new URL("https://proxigo.ai"),
+  title: { default: "Proxigo | Field software and positioning hardware for drones", template: "%s | Proxigo" },
   description:
-    "The Macula VPS Module delivers centimeter-level visual positioning for drones. No GPS required.",
+    "Proxigo is a desktop platform for planning, configuring, and operating drone hardware. It ships with Macula, a GPS-independent visual positioning module.",
   icons: {
     icon: "/favicon.png",
     apple: "/favicon.png",
@@ -23,11 +32,9 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={manrope.variable}>
+    <html lang="en" className={`${plexSans.variable} ${plexMono.variable}`}>
       <body>
-        <Nav />
-        <main>{children}</main>
-        <Footer />
+        {children}
         <Analytics />
       </body>
     </html>

@@ -25,8 +25,8 @@ export function AdminPromoteButton({ userId, isAdmin }: { userId: string; isAdmi
       title={current ? "Revoke admin" : "Grant admin"}
       className={`p-1.5 rounded-md transition-colors disabled:opacity-40 ${
         current
-          ? "text-orange-400 hover:text-red-400 hover:bg-red-500/10"
-          : "text-zinc-600 hover:text-orange-400 hover:bg-orange-500/10"
+          ? "text-signal-400 hover:text-red-400 hover:bg-red-500/10"
+          : "text-ink-500 hover:text-signal-400 hover:bg-signal-400/10"
       }`}
     >
       {current ? <Shield size={13} /> : <ShieldOff size={13} />}

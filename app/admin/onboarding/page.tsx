@@ -33,9 +33,9 @@ export default async function AdminOnboardingPage() {
   return (
     <div className="p-8">
       <div className="mb-8">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-orange-500 mb-1">Admin</p>
+        <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-signal-500 mb-1">Admin</p>
         <h1 className="text-2xl font-semibold text-white">Onboarding Funnel</h1>
-        <p className="text-sm text-zinc-500 mt-0.5">Conversion from signup to active usage.</p>
+        <p className="text-sm text-ink-500 mt-0.5">Conversion from signup to active usage.</p>
       </div>
 
       <div className="max-w-2xl space-y-3">
@@ -45,23 +45,23 @@ export default async function AdminOnboardingPage() {
           const dropPct = dropFrom && dropFrom > 0 ? ((dropFrom - step.count) / dropFrom) * 100 : null;
 
           return (
-            <div key={step.label} className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-5">
+            <div key={step.label} className="rounded-lg border border-ink-800 bg-ink-900/40 p-5">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-3">
-                  <span className="text-[10px] font-bold text-zinc-700 font-mono w-5">{i + 1}</span>
+                  <span className="text-[10px] font-bold text-ink-500 font-mono w-5">{i + 1}</span>
                   <div>
                     <p className="text-sm font-medium text-white">{step.label}</p>
-                    <p className="text-xs text-zinc-600">{step.desc}</p>
+                    <p className="text-xs text-ink-500">{step.desc}</p>
                   </div>
                 </div>
                 <div className="text-right">
                   <p className="text-xl font-bold text-white font-mono">{step.count.toLocaleString()}</p>
-                  <p className="text-xs text-zinc-600">{pct.toFixed(1)}% of signups</p>
+                  <p className="text-xs text-ink-500">{pct.toFixed(1)}% of signups</p>
                 </div>
               </div>
-              <div className="w-full h-2 bg-zinc-800 rounded-full overflow-hidden">
+              <div className="w-full h-2 bg-ink-800 rounded-full overflow-hidden">
                 <div
-                  className="h-full rounded-full transition-all bg-orange-500"
+                  className="h-full rounded-full transition-all bg-signal-500"
                   style={{ width: `${pct}%`, opacity: 1 - i * 0.15 }}
                 />
               </div>
@@ -85,11 +85,11 @@ export default async function AdminOnboardingPage() {
         }, { label: "", pct: 0 });
 
         return (
-          <div className="mt-6 max-w-2xl rounded-xl border border-orange-500/20 bg-orange-500/5 p-5">
-            <p className="text-xs font-semibold text-orange-400 uppercase tracking-widest mb-1">Biggest drop-off</p>
-            <p className="text-sm text-zinc-300">
+          <div className="mt-6 max-w-2xl rounded-lg border border-signal-500/20 bg-signal-500/5 p-5">
+            <p className="text-xs font-semibold text-signal-400 uppercase tracking-widest mb-1">Biggest drop-off</p>
+            <p className="text-sm text-ink-300">
               <span className="text-white font-medium">{worstDrop.label}</span> has the highest drop-off at{" "}
-              <span className="text-orange-400 font-semibold">{worstDrop.pct.toFixed(0)}%</span>. Focus onboarding improvements here.
+              <span className="text-signal-400 font-semibold">{worstDrop.pct.toFixed(0)}%</span>. Focus onboarding improvements here.
             </p>
           </div>
         );

@@ -5,7 +5,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   const { profile } = await requireAdmin();
 
   return (
-    <div className="flex h-screen overflow-hidden bg-zinc-950">
+    <div className="flex h-screen overflow-hidden bg-ink-950">
       <AdminSidebar email={profile?.email} />
       <main className="flex-1 overflow-y-auto">
         {children}

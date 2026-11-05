@@ -2,10 +2,10 @@ import { requireAdmin } from "@/lib/admin";
 import { MessageSquare } from "lucide-react";
 
 const STATUS_COLORS: Record<string, string> = {
-  open:        "text-orange-400 bg-orange-500/10 border-orange-500/20",
+  open:        "text-signal-400 bg-signal-500/10 border-signal-500/20",
   in_progress: "text-blue-400 bg-blue-500/10 border-blue-500/20",
   resolved:    "text-emerald-400 bg-emerald-500/10 border-emerald-500/20",
-  closed:      "text-zinc-500 bg-zinc-800 border-zinc-700",
+  closed:      "text-ink-500 bg-ink-800 border-ink-700",
 };
 
 export default async function AdminTicketsPage({
@@ -52,9 +52,9 @@ export default async function AdminTicketsPage({
   return (
     <div className="p-8">
       <div className="mb-6">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-orange-500 mb-1">Admin</p>
+        <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-signal-500 mb-1">Admin</p>
         <h1 className="text-2xl font-semibold text-white">Support Tickets</h1>
-        <p className="text-sm text-zinc-500 mt-0.5">{(count ?? 0).toLocaleString()} matching</p>
+        <p className="text-sm text-ink-500 mt-0.5">{(count ?? 0).toLocaleString()} matching</p>
       </div>
 
       {/* Status tabs */}
@@ -65,12 +65,12 @@ export default async function AdminTicketsPage({
             href={`/admin/tickets?status=${value}&category=${category}`}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
               status === value
-                ? "bg-zinc-800 text-white"
-                : "text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/60"
+                ? "bg-ink-800 text-white"
+                : "text-ink-500 hover:text-ink-300 hover:bg-ink-800/60"
             }`}
           >
             {label}
-            <span className="text-[10px] font-mono text-zinc-600">{c}</span>
+            <span className="text-[10px] font-mono text-ink-500">{c}</span>
           </a>
         ))}
 
@@ -80,61 +80,61 @@ export default async function AdminTicketsPage({
           <select
             name="category"
             defaultValue={category}
-            className="px-3 py-1.5 rounded-lg border border-zinc-700 bg-zinc-900 text-xs text-zinc-300 focus:outline-none"
+            className="px-3 py-1.5 rounded-lg border border-ink-700 bg-ink-900 text-xs text-ink-300 focus:outline-none"
           >
             <option value="">All categories</option>
             {["Sales", "Development", "Account", "Billing", "Desktop App", "Maps / Downloads", "Hardware Issue", "Other"].map((c) => (
               <option key={c} value={c}>{c}</option>
             ))}
           </select>
-          <button type="submit" className="px-3 py-1.5 rounded-lg bg-zinc-800 text-xs text-zinc-300 hover:bg-zinc-700 transition-colors">
+          <button type="submit" className="px-3 py-1.5 rounded-lg bg-ink-800 text-xs text-ink-300 hover:bg-ink-700 transition-colors">
             Filter
           </button>
           {(status || category) && (
-            <a href="/admin/tickets" className="text-xs text-zinc-600 hover:text-zinc-400 transition-colors">Clear</a>
+            <a href="/admin/tickets" className="text-xs text-ink-500 hover:text-ink-400 transition-colors">Clear</a>
           )}
         </form>
       </div>
 
       {/* Table */}
-      <div className="rounded-xl border border-zinc-800 overflow-hidden">
+      <div className="rounded-lg border border-ink-800 overflow-hidden">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-zinc-800 bg-zinc-900/50">
+            <tr className="border-b border-ink-800 bg-ink-900/50">
               {["Ticket", "From", "Subject", "Category", "Status", "Date"].map((h) => (
-                <th key={h} className="text-left px-5 py-3 text-[10px] font-semibold uppercase tracking-[0.15em] text-zinc-500">
+                <th key={h} className="text-left px-5 py-3 text-[10px] font-semibold uppercase tracking-[0.15em] text-ink-500">
                   {h}
                 </th>
               ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-zinc-800">
+          <tbody className="divide-y divide-ink-800">
             {(tickets ?? []).length === 0 && (
               <tr>
-                <td colSpan={6} className="px-5 py-10 text-center text-sm text-zinc-600">No tickets found.</td>
+                <td colSpan={6} className="px-5 py-10 text-center text-sm text-ink-500">No tickets found.</td>
               </tr>
             )}
             {(tickets ?? []).map((t) => (
-              <tr key={t.id} className="hover:bg-zinc-900/40 transition-colors">
+              <tr key={t.id} className="hover:bg-ink-900/40 transition-colors">
                 <td className="px-5 py-3.5">
-                  <span className="text-xs font-mono text-zinc-500">{t.ticket_id}</span>
+                  <span className="text-xs font-mono text-ink-500">{t.ticket_id}</span>
                 </td>
                 <td className="px-5 py-3.5">
                   <p className="text-white text-sm">{t.name}</p>
-                  <p className="text-xs text-zinc-600">{t.email}</p>
+                  <p className="text-xs text-ink-500">{t.email}</p>
                 </td>
                 <td className="px-5 py-3.5 max-w-xs">
-                  <p className="text-sm text-zinc-300 truncate">{t.subject}</p>
+                  <p className="text-sm text-ink-300 truncate">{t.subject}</p>
                 </td>
                 <td className="px-5 py-3.5">
-                  <span className="text-xs text-zinc-500">{t.category}</span>
+                  <span className="text-xs text-ink-500">{t.category}</span>
                 </td>
                 <td className="px-5 py-3.5">
                   <span className={`text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full border ${STATUS_COLORS[t.status] ?? STATUS_COLORS.closed}`}>
                     {t.status.replace("_", " ")}
                   </span>
                 </td>
-                <td className="px-5 py-3.5 text-xs text-zinc-600 tabular-nums">
+                <td className="px-5 py-3.5 text-xs text-ink-500 tabular-nums">
                   {new Date(t.created_at).toLocaleDateString()}
                 </td>
               </tr>
@@ -145,17 +145,17 @@ export default async function AdminTicketsPage({
 
       {totalPages > 1 && (
         <div className="flex items-center justify-between mt-4">
-          <p className="text-xs text-zinc-600">Page {page} of {totalPages}</p>
+          <p className="text-xs text-ink-500">Page {page} of {totalPages}</p>
           <div className="flex gap-2">
             {page > 1 && (
               <a href={`/admin/tickets?status=${status}&category=${category}&page=${page - 1}`}
-                className="px-3 py-1.5 rounded-lg border border-zinc-700 text-xs text-zinc-400 hover:text-white hover:border-zinc-500 transition-colors">
+                className="px-3 py-1.5 rounded-lg border border-ink-700 text-xs text-ink-400 hover:text-white hover:border-ink-500 transition-colors">
                 Previous
               </a>
             )}
             {page < totalPages && (
               <a href={`/admin/tickets?status=${status}&category=${category}&page=${page + 1}`}
-                className="px-3 py-1.5 rounded-lg border border-zinc-700 text-xs text-zinc-400 hover:text-white hover:border-zinc-500 transition-colors">
+                className="px-3 py-1.5 rounded-lg border border-ink-700 text-xs text-ink-400 hover:text-white hover:border-ink-500 transition-colors">
                 Next
               </a>
             )}

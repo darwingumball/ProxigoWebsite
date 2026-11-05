@@ -43,22 +43,22 @@ export function AdminOrgMemberRow({ orgId, member }: { orgId: string; member: Me
   }
 
   return (
-    <tr className="hover:bg-zinc-900/30 transition-colors">
+    <tr className="hover:bg-ink-900/30 transition-colors">
       <td className="px-5 py-3.5">
         <div className="flex items-center gap-2.5">
-          <div className="w-7 h-7 rounded-full bg-zinc-800 flex items-center justify-center shrink-0">
+          <div className="w-7 h-7 rounded-full bg-ink-800 flex items-center justify-center shrink-0">
             {member.role === "admin"
-              ? <Crown size={12} className="text-orange-400" />
-              : <User size={12} className="text-zinc-500" />}
+              ? <Crown size={12} className="text-signal-400" />
+              : <User size={12} className="text-ink-500" />}
           </div>
           <div>
             <p className="text-sm text-white font-medium">{member.name ?? "—"}</p>
-            <p className="text-xs text-zinc-600">{member.email ?? member.user_id.slice(0, 20) + "…"}</p>
+            <p className="text-xs text-ink-500">{member.email ?? member.user_id.slice(0, 20) + "…"}</p>
           </div>
         </div>
       </td>
-      <td className="px-5 py-3.5 text-xs text-zinc-400 capitalize">{member.role}</td>
-      <td className="px-5 py-3.5 font-mono text-sm text-zinc-300">{member.km2_used.toFixed(1)}</td>
+      <td className="px-5 py-3.5 text-xs text-ink-400 capitalize">{member.role}</td>
+      <td className="px-5 py-3.5 font-mono text-sm text-ink-300">{member.km2_used.toFixed(1)}</td>
       <td className="px-5 py-3.5">
         <div className="flex items-center gap-1.5">
           <input
@@ -66,12 +66,12 @@ export function AdminOrgMemberRow({ orgId, member }: { orgId: string; member: Me
             value={cap}
             onChange={(e) => setCap(e.target.value)}
             placeholder="no cap"
-            className="w-20 px-2 py-1 rounded border border-zinc-700 bg-zinc-900 text-xs text-zinc-200 focus:outline-none focus:border-orange-500/50"
+            className="w-20 px-2 py-1 rounded border border-ink-700 bg-ink-900 text-xs text-ink-200 focus:outline-none focus:border-signal-500/50"
           />
           <button
             onClick={saveCap}
             disabled={savingCap}
-            className="text-[10px] px-2 py-1 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-300 transition-colors disabled:opacity-40"
+            className="text-[10px] px-2 py-1 rounded bg-ink-800 hover:bg-ink-700 text-ink-300 transition-colors disabled:opacity-40"
           >
             {savingCap ? "…" : "Set"}
           </button>
@@ -81,7 +81,7 @@ export function AdminOrgMemberRow({ orgId, member }: { orgId: string; member: Me
         <button
           onClick={remove}
           disabled={removing}
-          className="p-1.5 rounded text-zinc-600 hover:text-red-400 hover:bg-red-500/10 transition-colors disabled:opacity-40"
+          className="p-1.5 rounded text-ink-500 hover:text-red-400 hover:bg-red-500/10 transition-colors disabled:opacity-40"
           title="Remove member"
         >
           <Trash2 size={13} />

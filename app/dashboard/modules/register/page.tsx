@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, Cpu, CheckCircle2, AlertCircle } from "lucide-react";
+import { ArrowLeft, CheckCircle2, AlertCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { PageHeader } from "@/components/dashboard/page-header";
 
 export default function RegisterModulePage() {
   const router = useRouter();
@@ -46,37 +47,27 @@ export default function RegisterModulePage() {
 
   if (success) {
     return (
-      <div className="min-h-screen pt-20 flex items-center justify-center bg-zinc-950">
+      <div className="py-24 flex items-center justify-center" role="status">
         <div className="text-center">
           <CheckCircle2 size={40} className="text-emerald-500 mx-auto mb-4" />
           <h2 className="text-xl font-semibold text-white mb-2">Module registered</h2>
-          <p className="text-zinc-400 text-sm">Redirecting to dashboard…</p>
+          <p className="text-ink-400 text-sm">Redirecting to dashboard…</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen pt-20 pb-24 bg-zinc-950">
-      <div className="max-w-lg mx-auto px-4 sm:px-6 pt-8">
-        <Link href="/dashboard" className="inline-flex items-center gap-1.5 text-sm text-zinc-500 hover:text-white transition-colors mb-8">
-          <ArrowLeft size={13} /> Dashboard
+    <div className="max-w-lg">
+        <Link href="/dashboard/modules" className="inline-flex items-center gap-1.5 text-sm text-ink-400 hover:text-white mb-6">
+          <ArrowLeft size={14} /> Modules
         </Link>
+        <PageHeader title="Register a module" description="Bind a Macula module to your account." />
 
-        <div className="flex items-center gap-3 mb-8">
-          <div className="w-10 h-10 rounded-xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center">
-            <Cpu size={18} className="text-orange-500" />
-          </div>
-          <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-orange-500">Modules</p>
-            <h1 className="text-xl font-semibold text-white">Register a Module</h1>
-          </div>
-        </div>
-
-        <div className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-6 mb-6">
+        <div className="rounded-lg border border-ink-800 bg-ink-900/40 p-6 mb-6">
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="block text-xs font-medium text-zinc-400 mb-1.5" htmlFor="serial">
+              <label className="block text-xs font-medium text-ink-400 mb-1.5" htmlFor="serial">
                 Module serial number <span className="text-red-400">*</span>
               </label>
               <input
@@ -84,27 +75,27 @@ export default function RegisterModulePage() {
                 type="text"
                 value={serial}
                 onChange={e => setSerial(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-700 bg-zinc-900 text-white text-sm font-mono placeholder:text-zinc-600 focus:outline-none focus:border-orange-500/60 focus:ring-1 focus:ring-orange-500/20 uppercase"
+                className="w-full px-3.5 py-2.5 rounded-lg border border-ink-700 bg-ink-900 text-white text-sm font-mono placeholder:text-ink-500 focus:outline-none focus:border-signal-500/60 focus:ring-1 focus:ring-signal-500/20 uppercase"
                 placeholder="MAC-XXXX-XXXX-XXXX"
                 autoComplete="off"
                 spellCheck={false}
                 required
               />
-              <p className="text-xs text-zinc-600 mt-1.5">
+              <p className="text-xs text-ink-500 mt-1.5">
                 Found on the label on the back of your Macula module.
               </p>
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-zinc-400 mb-1.5" htmlFor="nickname">
-                Nickname <span className="text-zinc-600">(optional)</span>
+              <label className="block text-xs font-medium text-ink-400 mb-1.5" htmlFor="nickname">
+                Nickname <span className="text-ink-500">(optional)</span>
               </label>
               <input
                 id="nickname"
                 type="text"
                 value={nickname}
                 onChange={e => setNickname(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-lg border border-zinc-700 bg-zinc-900 text-white text-sm placeholder:text-zinc-600 focus:outline-none focus:border-orange-500/60 focus:ring-1 focus:ring-orange-500/20"
+                className="w-full px-3.5 py-2.5 rounded-lg border border-ink-700 bg-ink-900 text-white text-sm placeholder:text-ink-500 focus:outline-none focus:border-signal-500/60 focus:ring-1 focus:ring-signal-500/20"
                 placeholder="e.g. Survey Drone #1"
                 maxLength={64}
               />
@@ -120,7 +111,7 @@ export default function RegisterModulePage() {
             <button
               type="submit"
               disabled={loading || !serial.trim()}
-              className="w-full inline-flex items-center justify-center gap-2 bg-orange-600 text-white text-sm font-semibold py-3 rounded-lg hover:bg-orange-500 transition-colors disabled:opacity-60"
+              className="w-full inline-flex items-center justify-center gap-2 bg-signal-500 text-ink-950 text-sm font-semibold py-3 rounded-lg hover:bg-signal-400 transition-colors disabled:opacity-60"
             >
               {loading ? (
                 <>
@@ -128,24 +119,20 @@ export default function RegisterModulePage() {
                   Registering…
                 </>
               ) : (
-                <>
-                  <Cpu size={14} />
-                  Register module
-                </>
+                "Register module"
               )}
             </button>
           </form>
         </div>
 
-        <div className="rounded-xl border border-zinc-800 bg-zinc-900/20 p-5">
-          <h3 className="text-xs font-semibold text-zinc-400 uppercase tracking-widest mb-3">Where to find your serial</h3>
-          <ol className="space-y-2 text-sm text-zinc-500">
-            <li className="flex gap-2.5"><span className="text-orange-500 font-mono font-bold shrink-0">1.</span>Flip your Macula module over.</li>
-            <li className="flex gap-2.5"><span className="text-orange-500 font-mono font-bold shrink-0">2.</span>The serial is printed on the white label on the back of the PCB.</li>
-            <li className="flex gap-2.5"><span className="text-orange-500 font-mono font-bold shrink-0">3.</span>It begins with <span className="font-mono text-zinc-300">MAC-</span> followed by 12 characters.</li>
+        <div className="rounded-lg border border-ink-800 bg-ink-900/20 p-5">
+          <h2 className="text-sm font-medium text-white mb-3">Where to find your serial</h2>
+          <ol className="space-y-2 text-sm text-ink-300">
+            <li className="flex gap-2.5"><span className="text-signal-400 font-mono shrink-0">1.</span>Flip your Macula module over.</li>
+            <li className="flex gap-2.5"><span className="text-signal-400 font-mono shrink-0">2.</span>The serial is printed on the white label on the back of the PCB.</li>
+            <li className="flex gap-2.5"><span className="text-signal-400 font-mono shrink-0">3.</span>It begins with <span className="font-mono text-ink-300">MAC-</span> followed by 12 characters.</li>
           </ol>
         </div>
-      </div>
     </div>
   );
 }

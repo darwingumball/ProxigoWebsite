@@ -64,21 +64,21 @@ export function AdminOrgAddMember({ orgId, orgName }: { orgId: string; orgName?:
     <form onSubmit={submit} className="space-y-3">
       <div className="flex gap-3">
         <div className="flex-1">
-          <label className="block text-xs text-zinc-500 mb-1.5">Email address</label>
+          <label className="block text-xs text-ink-500 mb-1.5">Email address</label>
           <input
             type="email"
             value={email}
             onChange={(e) => { setEmail(e.target.value); setInviteNeeded(false); setError(null); setSuccess(null); }}
             placeholder="user@example.com"
-            className="w-full px-3 py-2 rounded-lg border border-zinc-700 bg-zinc-900 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-orange-500/50"
+            className="w-full px-3 py-2 rounded-lg border border-ink-700 bg-ink-900 text-sm text-white placeholder:text-ink-500 focus:outline-none focus:border-signal-500/50"
           />
         </div>
         <div>
-          <label className="block text-xs text-zinc-500 mb-1.5">Role</label>
+          <label className="block text-xs text-ink-500 mb-1.5">Role</label>
           <select
             value={role}
             onChange={(e) => setRole(e.target.value)}
-            className="px-3 py-2 rounded-lg border border-zinc-700 bg-zinc-900 text-sm text-zinc-300 focus:outline-none h-[38px]"
+            className="px-3 py-2 rounded-lg border border-ink-700 bg-ink-900 text-sm text-ink-300 focus:outline-none h-[38px]"
           >
             <option value="member">Member</option>
             <option value="admin">Admin</option>
@@ -88,7 +88,7 @@ export function AdminOrgAddMember({ orgId, orgName }: { orgId: string; orgName?:
           <button
             type="submit"
             disabled={loading || !email.trim()}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-orange-500 hover:bg-orange-400 text-white text-sm font-medium transition-colors disabled:opacity-40 h-[38px]"
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-signal-500 hover:bg-signal-400 text-white text-sm font-medium transition-colors disabled:opacity-40 h-[38px]"
           >
             <UserPlus size={14} />
             {loading ? "Adding…" : "Add"}

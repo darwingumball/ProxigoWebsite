@@ -109,9 +109,9 @@ export default async function AdminOverviewPage() {
     <div className="p-8">
       {/* Header */}
       <div className="mb-8">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-orange-500 mb-1">Admin</p>
+        <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-signal-500 mb-1">Admin</p>
         <h1 className="text-2xl font-semibold text-white">Overview</h1>
-        <p className="text-sm text-zinc-500 mt-0.5">
+        <p className="text-sm text-ink-500 mt-0.5">
           {now.toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}
         </p>
       </div>
@@ -120,9 +120,9 @@ export default async function AdminOverviewPage() {
       <div className="grid grid-cols-2 xl:grid-cols-5 gap-4 mb-8">
         {METRICS.map(({ label, value, sub, delta, icon: Icon, href }) => (
           <Link key={label} href={href}
-            className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-5 hover:border-zinc-700 transition-colors group">
+            className="rounded-lg border border-ink-800 bg-ink-900/40 p-5 hover:border-ink-700 transition-colors group">
             <div className="flex items-center justify-between mb-3">
-              <Icon size={15} className="text-zinc-500" />
+              <Icon size={15} className="text-ink-500" />
               {delta !== null && (
                 <span className={`text-[10px] font-medium px-1.5 py-0.5 rounded ${
                   delta >= 0 ? "text-emerald-400 bg-emerald-500/10" : "text-red-400 bg-red-500/10"
@@ -132,41 +132,41 @@ export default async function AdminOverviewPage() {
               )}
             </div>
             <p className="text-2xl font-bold text-white font-mono mb-0.5">{value}</p>
-            <p className="text-xs text-zinc-600">{label}</p>
-            <p className="text-[10px] text-zinc-700 mt-1">{sub}</p>
+            <p className="text-xs text-ink-500">{label}</p>
+            <p className="text-[10px] text-ink-500 mt-1">{sub}</p>
           </Link>
         ))}
       </div>
 
       <div className="grid lg:grid-cols-3 gap-6">
         {/* Recent signups */}
-        <div className="lg:col-span-2 rounded-xl border border-zinc-800 overflow-hidden">
-          <div className="flex items-center justify-between px-5 py-3.5 border-b border-zinc-800">
+        <div className="lg:col-span-2 rounded-lg border border-ink-800 overflow-hidden">
+          <div className="flex items-center justify-between px-5 py-3.5 border-b border-ink-800">
             <h2 className="text-sm font-medium text-white">Recent signups</h2>
-            <Link href="/admin/users" className="text-xs text-zinc-500 hover:text-orange-400 transition-colors flex items-center gap-1">
+            <Link href="/admin/users" className="text-xs text-ink-500 hover:text-signal-400 transition-colors flex items-center gap-1">
               View all <ArrowRight size={11} />
             </Link>
           </div>
-          <div className="divide-y divide-zinc-800">
+          <div className="divide-y divide-ink-800">
             {recentSignups.length === 0 && (
-              <p className="px-5 py-6 text-sm text-zinc-600">No users yet.</p>
+              <p className="px-5 py-6 text-sm text-ink-500">No users yet.</p>
             )}
             {recentSignups.map((u) => (
               <Link key={u.id} href={`/admin/users?search=${encodeURIComponent(u.email ?? "")}`}
-                className="flex items-center justify-between px-5 py-3 hover:bg-zinc-900/60 transition-colors">
+                className="flex items-center justify-between px-5 py-3 hover:bg-ink-900/60 transition-colors">
                 <div className="min-w-0">
                   <p className="text-sm text-white truncate">{u.full_name ?? "—"}</p>
-                  <p className="text-xs text-zinc-600 truncate">{u.email ?? u.id.slice(0, 12)}</p>
+                  <p className="text-xs text-ink-500 truncate">{u.email ?? u.id.slice(0, 12)}</p>
                 </div>
                 <div className="flex items-center gap-3 shrink-0 ml-4">
                   {u.plan ? (
-                    <span className="text-[10px] font-medium uppercase tracking-wider text-orange-400 bg-orange-500/10 border border-orange-500/20 px-2 py-0.5 rounded-full">
+                    <span className="text-[10px] font-medium uppercase tracking-wider text-signal-400 bg-signal-500/10 border border-signal-500/20 px-2 py-0.5 rounded-full">
                       {u.plan}
                     </span>
                   ) : (
-                    <span className="text-[10px] text-zinc-700">no plan</span>
+                    <span className="text-[10px] text-ink-500">no plan</span>
                   )}
-                  <span className="text-[10px] text-zinc-700 tabular-nums">
+                  <span className="text-[10px] text-ink-500 tabular-nums">
                     {new Date(u.created_at).toLocaleDateString()}
                   </span>
                 </div>
@@ -177,38 +177,38 @@ export default async function AdminOverviewPage() {
 
         {/* Plan breakdown + quick stats */}
         <div className="space-y-4">
-          <div className="rounded-xl border border-zinc-800 overflow-hidden">
-            <div className="px-5 py-3.5 border-b border-zinc-800">
+          <div className="rounded-lg border border-ink-800 overflow-hidden">
+            <div className="px-5 py-3.5 border-b border-ink-800">
               <h2 className="text-sm font-medium text-white">Plans</h2>
             </div>
             <div className="p-5 space-y-3">
               {Object.entries(planBreakdown).length === 0 && (
-                <p className="text-xs text-zinc-600">No subscribers yet.</p>
+                <p className="text-xs text-ink-500">No subscribers yet.</p>
               )}
               {Object.entries(planBreakdown).map(([plan, count]) => {
                 const pct = subscriberCount > 0 ? (count / subscriberCount) * 100 : 0;
                 return (
                   <div key={plan}>
                     <div className="flex items-center justify-between mb-1">
-                      <span className="text-xs text-zinc-400 capitalize">{plan}</span>
-                      <span className="text-xs text-zinc-300 font-mono">{count}</span>
+                      <span className="text-xs text-ink-400 capitalize">{plan}</span>
+                      <span className="text-xs text-ink-300 font-mono">{count}</span>
                     </div>
-                    <div className="w-full h-1.5 bg-zinc-800 rounded-full overflow-hidden">
-                      <div className="h-full bg-orange-500 rounded-full" style={{ width: `${pct}%` }} />
+                    <div className="w-full h-1.5 bg-ink-800 rounded-full overflow-hidden">
+                      <div className="h-full bg-signal-500 rounded-full" style={{ width: `${pct}%` }} />
                     </div>
                   </div>
                 );
               })}
-              <div className="pt-2 border-t border-zinc-800">
+              <div className="pt-2 border-t border-ink-800">
                 <div className="flex justify-between text-[10px]">
-                  <span className="text-zinc-600">Free (no plan)</span>
-                  <span className="text-zinc-500">{totalUsers - subscriberCount}</span>
+                  <span className="text-ink-500">Free (no plan)</span>
+                  <span className="text-ink-500">{totalUsers - subscriberCount}</span>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="rounded-xl border border-zinc-800 p-5 space-y-3">
+          <div className="rounded-lg border border-ink-800 p-5 space-y-3">
             <h2 className="text-sm font-medium text-white mb-3">Quick stats</h2>
             {[
               ["Organizations", orgCount ?? 0],
@@ -216,8 +216,8 @@ export default async function AdminOverviewPage() {
               ["Modules registered", totalModules ?? 0],
             ].map(([label, val]) => (
               <div key={String(label)} className="flex justify-between text-xs">
-                <span className="text-zinc-500">{label}</span>
-                <span className="text-zinc-200 font-mono">{String(val)}</span>
+                <span className="text-ink-500">{label}</span>
+                <span className="text-ink-200 font-mono">{String(val)}</span>
               </div>
             ))}
           </div>
@@ -225,24 +225,24 @@ export default async function AdminOverviewPage() {
       </div>
       {/* Recent open tickets */}
       {(recentTickets ?? []).length > 0 && (
-        <div className="mt-6 rounded-xl border border-zinc-800 overflow-hidden">
-          <div className="flex items-center justify-between px-5 py-3.5 border-b border-zinc-800">
+        <div className="mt-6 rounded-lg border border-ink-800 overflow-hidden">
+          <div className="flex items-center justify-between px-5 py-3.5 border-b border-ink-800">
             <h2 className="text-sm font-medium text-white">Open tickets</h2>
-            <Link href="/admin/tickets?status=open" className="text-xs text-zinc-500 hover:text-orange-400 transition-colors flex items-center gap-1">
+            <Link href="/admin/tickets?status=open" className="text-xs text-ink-500 hover:text-signal-400 transition-colors flex items-center gap-1">
               View all <ArrowRight size={11} />
             </Link>
           </div>
-          <div className="divide-y divide-zinc-800">
+          <div className="divide-y divide-ink-800">
             {(recentTickets ?? []).map((t) => (
               <Link key={t.id} href={`/admin/tickets?status=open`}
-                className="flex items-center justify-between px-5 py-3 hover:bg-zinc-900/60 transition-colors">
+                className="flex items-center justify-between px-5 py-3 hover:bg-ink-900/60 transition-colors">
                 <div className="min-w-0 flex-1">
                   <p className="text-sm text-white truncate">{t.subject}</p>
-                  <p className="text-xs text-zinc-600">{t.name} · {t.category}</p>
+                  <p className="text-xs text-ink-500">{t.name} · {t.category}</p>
                 </div>
                 <div className="flex items-center gap-3 shrink-0 ml-4">
-                  <span className="text-[10px] font-mono text-zinc-600">{t.ticket_id}</span>
-                  <span className="text-[10px] text-zinc-700 tabular-nums">
+                  <span className="text-[10px] font-mono text-ink-500">{t.ticket_id}</span>
+                  <span className="text-[10px] text-ink-500 tabular-nums">
                     {new Date(t.created_at).toLocaleDateString()}
                   </span>
                 </div>

@@ -40,7 +40,7 @@ export default async function AdminModulesPage({
   return (
     <div className="p-8">
       <div className="mb-6">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-orange-500 mb-1">Admin</p>
+        <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-signal-500 mb-1">Admin</p>
         <h1 className="text-2xl font-semibold text-white">Module Inventory</h1>
       </div>
 
@@ -49,11 +49,11 @@ export default async function AdminModulesPage({
         {[
           { label: "Total inventory", value: allRows.length },
           { label: "Claimed", value: claimedCount, color: "text-emerald-400" },
-          { label: "Unclaimed", value: unclaimedCount, color: "text-zinc-400" },
+          { label: "Unclaimed", value: unclaimedCount, color: "text-ink-400" },
         ].map(({ label, value, color }) => (
-          <div key={label} className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-4">
+          <div key={label} className="rounded-lg border border-ink-800 bg-ink-900/40 p-4">
             <p className={`text-2xl font-bold font-mono mb-0.5 ${color ?? "text-white"}`}>{value}</p>
-            <p className="text-xs text-zinc-600">{label}</p>
+            <p className="text-xs text-ink-500">{label}</p>
           </div>
         ))}
       </div>
@@ -61,11 +61,11 @@ export default async function AdminModulesPage({
       {/* Claim rate bar */}
       {allRows.length > 0 && (
         <div className="mb-6">
-          <div className="flex justify-between text-xs text-zinc-600 mb-1.5">
+          <div className="flex justify-between text-xs text-ink-500 mb-1.5">
             <span>Claim rate</span>
             <span>{claimPct.toFixed(1)}%</span>
           </div>
-          <div className="w-full h-2 bg-zinc-800 rounded-full overflow-hidden">
+          <div className="w-full h-2 bg-ink-800 rounded-full overflow-hidden">
             <div className="h-full bg-emerald-500 rounded-full transition-all" style={{ width: `${claimPct}%` }} />
           </div>
         </div>
@@ -82,8 +82,8 @@ export default async function AdminModulesPage({
                 href={`/admin/modules?filter=${f}`}
                 className={`px-3 py-1.5 rounded-lg text-xs font-medium capitalize transition-colors ${
                   filter === f
-                    ? "bg-orange-500/10 text-orange-400 border border-orange-500/20"
-                    : "text-zinc-500 hover:text-zinc-300"
+                    ? "bg-signal-500/10 text-signal-400 border border-signal-500/20"
+                    : "text-ink-500 hover:text-ink-300"
                 }`}
               >
                 {f} {f === "all" ? `(${allRows.length})` : f === "claimed" ? `(${claimedCount})` : `(${unclaimedCount})`}
@@ -91,21 +91,21 @@ export default async function AdminModulesPage({
             ))}
           </div>
 
-          <div className="rounded-xl border border-zinc-800 overflow-hidden">
+          <div className="rounded-lg border border-ink-800 overflow-hidden">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-zinc-800 bg-zinc-900/50">
+                <tr className="border-b border-ink-800 bg-ink-900/50">
                   {["Serial", "Status", "Registered by", "Date"].map((h) => (
-                    <th key={h} className="text-left px-4 py-3 text-[10px] font-semibold uppercase tracking-[0.15em] text-zinc-500">
+                    <th key={h} className="text-left px-4 py-3 text-[10px] font-semibold uppercase tracking-[0.15em] text-ink-500">
                       {h}
                     </th>
                   ))}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-zinc-800">
+              <tbody className="divide-y divide-ink-800">
                 {filtered.length === 0 && (
                   <tr>
-                    <td colSpan={4} className="px-4 py-8 text-center text-sm text-zinc-600">
+                    <td colSpan={4} className="px-4 py-8 text-center text-sm text-ink-500">
                       No serials in this view.
                     </td>
                   </tr>
@@ -113,24 +113,24 @@ export default async function AdminModulesPage({
                 {filtered.map(({ serial, claimed, module }) => {
                   const profile = module?.profiles as { email?: string; full_name?: string } | null;
                   return (
-                    <tr key={serial} className="hover:bg-zinc-900/40 transition-colors">
-                      <td className="px-4 py-3 font-mono text-xs text-zinc-300">{serial}</td>
+                    <tr key={serial} className="hover:bg-ink-900/40 transition-colors">
+                      <td className="px-4 py-3 font-mono text-xs text-ink-300">{serial}</td>
                       <td className="px-4 py-3">
                         <span className={`text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full border ${
                           claimed
                             ? "text-emerald-400 bg-emerald-500/10 border-emerald-500/20"
-                            : "text-zinc-500 bg-zinc-800 border-zinc-700"
+                            : "text-ink-500 bg-ink-800 border-ink-700"
                         }`}>
                           {claimed ? "claimed" : "unclaimed"}
                         </span>
                       </td>
-                      <td className="px-4 py-3 text-xs text-zinc-500">
+                      <td className="px-4 py-3 text-xs text-ink-500">
                         {profile?.full_name ?? profile?.email ?? (claimed ? "unknown" : "—")}
                         {module?.nickname && (
-                          <span className="text-zinc-700 ml-1">· {module.nickname}</span>
+                          <span className="text-ink-500 ml-1">· {module.nickname}</span>
                         )}
                       </td>
-                      <td className="px-4 py-3 text-xs text-zinc-700 tabular-nums">
+                      <td className="px-4 py-3 text-xs text-ink-500 tabular-nums">
                         {module?.registered_at ? new Date(module.registered_at).toLocaleDateString() : "—"}
                       </td>
                     </tr>
