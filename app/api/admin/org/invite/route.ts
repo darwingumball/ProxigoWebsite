@@ -25,7 +25,7 @@ export async function POST(req: Request) {
       : `You've been invited to join Proxigo, a geospatial data platform.`;
 
     await resend.emails.send({
-      from: "Proxigo <no-reply@proxigo.us>",
+      from: "Proxigo <no-reply@proxigo.ai>",
       to: email.trim(),
       subject: "You've been invited to Proxigo",
       text: [
@@ -33,7 +33,7 @@ export async function POST(req: Request) {
         "",
         orgLine,
         "",
-        "Sign up at https://proxigo.us/signup to get started. Once you've created your account, your organization will be configured for you.",
+        "Sign up at https://proxigo.ai/signup to get started. Once you've created your account, your organization will be configured for you.",
         "",
         "Thanks,",
         "The Proxigo Team",
