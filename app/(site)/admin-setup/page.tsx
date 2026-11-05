@@ -35,7 +35,7 @@ export default function AdminBootstrapPage() {
           <button
             onClick={handleGrant}
             disabled={status === "loading"}
-            className="w-full bg-signal-500 text-ink-950 font-semibold py-2.5 rounded-lg hover:bg-signal-400 transition-colors disabled:opacity-50 text-sm"
+            className="w-full bg-brand-600 text-white font-semibold py-2.5 rounded-lg hover:bg-brand-700 transition-colors disabled:opacity-50 text-sm"
           >
             {status === "loading" ? "Granting…" : "Grant me admin"}
           </button>
@@ -44,7 +44,7 @@ export default function AdminBootstrapPage() {
             <p className="text-sm text-emerald-400">{message}</p>
             <a
               href="/admin"
-              className="inline-flex w-full items-center justify-center gap-2 bg-signal-500 text-ink-950 font-semibold py-2.5 rounded-lg hover:bg-signal-400 transition-colors text-sm"
+              className="inline-flex w-full items-center justify-center gap-2 bg-brand-600 text-white font-semibold py-2.5 rounded-lg hover:bg-brand-700 transition-colors text-sm"
             >
               Go to admin dashboard
             </a>

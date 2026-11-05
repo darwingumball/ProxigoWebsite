@@ -64,7 +64,7 @@ export function AdminAddSerials() {
         <button
           type="submit"
           disabled={loading || !input.trim()}
-          className="inline-flex items-center gap-1.5 text-sm bg-signal-500 text-ink-950 font-medium px-4 py-2 rounded-lg hover:bg-signal-400 transition-colors disabled:opacity-50"
+          className="inline-flex items-center gap-1.5 text-sm bg-brand-600 text-white font-medium px-4 py-2 rounded-lg hover:bg-brand-700 transition-colors disabled:opacity-50"
         >
           <Plus size={14} />
           {loading ? "Adding…" : "Add to inventory"}

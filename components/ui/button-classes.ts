@@ -12,7 +12,7 @@ export function buttonClasses({
   return cn(
     "inline-flex items-center justify-center font-medium whitespace-nowrap transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer",
     {
-      "bg-signal-500 text-ink-950 hover:bg-signal-400 active:bg-signal-600": variant === "primary",
+      "bg-brand-600 text-white hover:bg-brand-700 active:bg-brand-700": variant === "primary",
       "border border-ink-700 text-ink-200 hover:border-ink-500 hover:text-ink-50": variant === "secondary",
       "text-ink-400 hover:text-ink-50": variant === "ghost",
       "bg-red-600 text-white hover:bg-red-500": variant === "danger",

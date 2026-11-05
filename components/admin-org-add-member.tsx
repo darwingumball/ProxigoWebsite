@@ -88,7 +88,7 @@ export function AdminOrgAddMember({ orgId, orgName }: { orgId: string; orgName?:
           <button
             type="submit"
             disabled={loading || !email.trim()}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-signal-500 hover:bg-signal-400 text-ink-50 text-sm font-medium transition-colors disabled:opacity-40 h-[38px]"
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-sm font-medium transition-colors disabled:opacity-40 h-[38px]"
           >
             <UserPlus size={14} />
             {loading ? "Adding…" : "Add"}

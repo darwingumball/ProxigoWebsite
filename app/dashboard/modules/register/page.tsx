@@ -111,7 +111,7 @@ export default function RegisterModulePage() {
             <button
               type="submit"
               disabled={loading || !serial.trim()}
-              className="w-full inline-flex items-center justify-center gap-2 bg-signal-500 text-ink-950 text-sm font-semibold py-3 rounded-lg hover:bg-signal-400 transition-colors disabled:opacity-60"
+              className="w-full inline-flex items-center justify-center gap-2 bg-brand-600 text-white text-sm font-semibold py-3 rounded-lg hover:bg-brand-700 transition-colors disabled:opacity-60"
             >
               {loading ? (
                 <>

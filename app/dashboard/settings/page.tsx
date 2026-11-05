@@ -108,7 +108,7 @@ export default function SettingsPage() {
             <button
               type="submit"
               disabled={saving}
-              className="inline-flex items-center gap-2 bg-signal-500 text-ink-950 text-sm font-medium px-4 py-2 rounded-lg hover:bg-signal-400 transition-colors disabled:opacity-60"
+              className="inline-flex items-center gap-2 bg-brand-600 text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-brand-700 transition-colors disabled:opacity-60"
             >
               <Save size={13} />
               {saving ? "Saving…" : "Save name"}

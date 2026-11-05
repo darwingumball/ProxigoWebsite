@@ -155,8 +155,8 @@ export function HeroVisual() {
       // ── Cone of vision (terrain-following) ───────────────────
       const maxGY  = Math.max(leftGY, rightGY) + 8;
       const cGrad  = ctx.createLinearGradient(droneX, camY, droneX, maxGY);
-      cGrad.addColorStop(0, "rgba(255,107,23,0.22)");
-      cGrad.addColorStop(1, "rgba(255,107,23,0.03)");
+      cGrad.addColorStop(0, "rgba(234,88,12,0.22)");
+      cGrad.addColorStop(1, "rgba(234,88,12,0.03)");
 
       // Cone fill — bottom traces terrain
       ctx.beginPath();
@@ -171,7 +171,7 @@ export function HeroVisual() {
       ctx.fill();
 
       // Cone edge dashes
-      ctx.strokeStyle = "rgba(255,107,23,0.50)";
+      ctx.strokeStyle = "rgba(234,88,12,0.50)";
       ctx.lineWidth = 1;
       ctx.setLineDash([5, 5]);
       ctx.beginPath(); ctx.moveTo(droneX, camY); ctx.lineTo(coneL, leftGY);  ctx.stroke();
@@ -179,7 +179,7 @@ export function HeroVisual() {
       ctx.setLineDash([]);
 
       // Terrain-following footprint highlight
-      ctx.strokeStyle = "rgba(255,107,23,0.80)";
+      ctx.strokeStyle = "rgba(234,88,12,0.80)";
       ctx.lineWidth = 2;
       ctx.beginPath();
       ctx.moveTo(coneL, leftGY);
@@ -200,14 +200,14 @@ export function HeroVisual() {
       ctx.lineTo(coneL, H);
       ctx.closePath();
       const pGrad = ctx.createLinearGradient(coneL, 0, coneR, 0);
-      pGrad.addColorStop(0,   "rgba(255,107,23,0)");
-      pGrad.addColorStop(0.5, "rgba(255,107,23,0.05)");
-      pGrad.addColorStop(1,   "rgba(255,107,23,0)");
+      pGrad.addColorStop(0,   "rgba(234,88,12,0)");
+      pGrad.addColorStop(0.5, "rgba(234,88,12,0.05)");
+      pGrad.addColorStop(1,   "rgba(234,88,12,0)");
       ctx.fillStyle = pGrad;
       ctx.fill();
 
       // FOV label
-      ctx.fillStyle = "rgba(255,107,23,0.38)";
+      ctx.fillStyle = "rgba(234,88,12,0.38)";
       ctx.font = "8px monospace";
       ctx.textAlign = "center";
       ctx.fillText("100° FOV", droneX + fpHalf * 0.65, (camY + groundY) * 0.5 + 4);
@@ -222,7 +222,7 @@ export function HeroVisual() {
         // Detection flash ring
         if (f.flashT >= 0) {
           const fr = f.flashT;
-          ctx.strokeStyle = `rgba(255,107,23,${(1 - fr) * 0.65})`;
+          ctx.strokeStyle = `rgba(234,88,12,${(1 - fr) * 0.65})`;
           ctx.lineWidth = 1;
           ctx.beginPath();
           ctx.arc(sx, sy, 4 + fr * 16, 0, Math.PI * 2);
@@ -237,7 +237,7 @@ export function HeroVisual() {
           const ang   = Math.atan2(fy, fx);
           const ah    = 5;
 
-          ctx.strokeStyle = `rgba(255,107,23,${0.52 * op})`;
+          ctx.strokeStyle = `rgba(234,88,12,${0.52 * op})`;
           ctx.lineWidth = 1;
           ctx.beginPath();
           ctx.moveTo(sx, sy);
@@ -252,14 +252,14 @@ export function HeroVisual() {
           ctx.stroke();
 
           const cs = 3.5;
-          ctx.strokeStyle = `rgba(255,107,23,${0.9 * op})`;
+          ctx.strokeStyle = `rgba(234,88,12,${0.9 * op})`;
           ctx.lineWidth = 1.2;
           ctx.beginPath();
           ctx.moveTo(sx - cs, sy); ctx.lineTo(sx + cs, sy);
           ctx.moveTo(sx, sy - cs); ctx.lineTo(sx, sy + cs);
           ctx.stroke();
 
-          ctx.fillStyle = `rgba(255,107,23,${op})`;
+          ctx.fillStyle = `rgba(234,88,12,${op})`;
           ctx.beginPath();
           ctx.arc(sx, sy, 2, 0, Math.PI * 2);
           ctx.fill();
@@ -273,7 +273,7 @@ export function HeroVisual() {
       // altitude in metres derived from visual pixel geometry
       const altMeters = altitude * 0.036;
       const bm = 18, bs = 16;
-      ctx.strokeStyle = "rgba(255,107,23,0.70)";
+      ctx.strokeStyle = "rgba(234,88,12,0.70)";
       ctx.lineWidth = 2;
       for (const [bx, by, dx, dy] of [
         [bm,     bm,     1, 1],
@@ -379,7 +379,7 @@ export function HeroVisual() {
       // Connector wires between FC and Macula
       ctx.lineWidth = 1;
       ctx.setLineDash([2, 3]);
-      ctx.strokeStyle = "rgba(255,107,23,0.45)";
+      ctx.strokeStyle = "rgba(234,88,12,0.45)";
       ctx.beginPath();
       ctx.moveTo(x - 8, y + 8);
       ctx.lineTo(x - 8, y + 14);
@@ -393,25 +393,25 @@ export function HeroVisual() {
 
       // Macula VPS module
       ctx.fillStyle  = "#0f0f0d";
-      ctx.strokeStyle = "#ff6b17";
+      ctx.strokeStyle = "#ea580c";
       ctx.lineWidth = 1.2;
       rrect(ctx, x - 16, y + 14, 32, 16, 3);
       ctx.fill();
       ctx.stroke();
-      ctx.fillStyle = "#ff6b17";
+      ctx.fillStyle = "#ea580c";
       ctx.font = "6px monospace";
       ctx.textAlign = "center";
       ctx.fillText("MACULA", x, y + 24.5);
 
       // Camera lens
       ctx.fillStyle  = "#090908";
-      ctx.strokeStyle = "rgba(255,107,23,0.90)";
+      ctx.strokeStyle = "rgba(234,88,12,0.90)";
       ctx.lineWidth = 1;
       ctx.beginPath();
       ctx.arc(x, y + 32, 5, 0, Math.PI * 2);
       ctx.fill();
       ctx.stroke();
-      ctx.fillStyle = "rgba(255,107,23,0.40)";
+      ctx.fillStyle = "rgba(234,88,12,0.40)";
       ctx.beginPath();
       ctx.arc(x, y + 32, 2.2, 0, Math.PI * 2);
       ctx.fill();
@@ -434,7 +434,7 @@ export function HeroVisual() {
       ctx.font = "8px monospace";
       ctx.textAlign = "left";
       ctx.fillText("ACCURACY", 30, 110);
-      ctx.fillStyle = "#ff6b17";
+      ctx.fillStyle = "#ea580c";
       ctx.font = "13px monospace";
       ctx.fillText("<1m", 30, 127);
       ctx.fillStyle = "#21201d";

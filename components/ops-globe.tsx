@@ -132,7 +132,7 @@ export function OpsGlobe({ className }: { className?: string }) {
 
       const m = map;
       m.on("style.load", () => {
-        m.setFog({ color: "#fbfaf7", "high-color": "#dfe8ff", "space-color": "#fbfaf7", "horizon-blend": 0.04, "star-intensity": 0 });
+        m.setFog({ color: "#fbfaf7", "high-color": "#f3ece4", "space-color": "#fbfaf7", "horizon-blend": 0.04, "star-intensity": 0 });
         m.addSource("arcs", {
           type: "geojson",
           data: {
@@ -147,15 +147,15 @@ export function OpsGlobe({ className }: { className?: string }) {
             features: [HUB, ...SITES].map((s, i) => ({ type: "Feature", properties: { hub: i === 0 }, geometry: { type: "Point", coordinates: s } })),
           },
         });
-        m.addLayer({ id: "arcs", type: "line", source: "arcs", paint: { "line-color": "#1f4ed8", "line-width": 1.5, "line-opacity": 0.8 } });
+        m.addLayer({ id: "arcs", type: "line", source: "arcs", paint: { "line-color": "#ea580c", "line-width": 1.5, "line-opacity": 0.8 } });
         m.addLayer({
           id: "sites",
           type: "circle",
           source: "sites",
           paint: {
             "circle-radius": ["case", ["get", "hub"], 6, 4],
-            "circle-color": ["case", ["get", "hub"], "#1f4ed8", "#ffffff"],
-            "circle-stroke-color": "#1f4ed8",
+            "circle-color": ["case", ["get", "hub"], "#ea580c", "#ffffff"],
+            "circle-stroke-color": "#ea580c",
             "circle-stroke-width": 1.5,
           },
         });
