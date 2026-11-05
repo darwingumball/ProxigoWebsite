@@ -64,7 +64,7 @@ export default function BillingPage() {
             <div>
               <h2 className="text-sm font-medium text-ink-400 mb-2">Map download plan</h2>
               <div className="flex items-center gap-3">
-                <span className="text-2xl font-bold text-white capitalize">{profile?.plan ?? "None"}</span>
+                <span className="text-2xl font-bold text-ink-50 capitalize">{profile?.plan ?? "None"}</span>
                 <Badge variant={profile?.plan ? "success" : "default"}>
                   {profile?.plan ? "Active" : "No plan"}
                 </Badge>
@@ -72,7 +72,7 @@ export default function BillingPage() {
                 <div className="flex flex-wrap gap-2 mt-3">
                 <Link
                   href="/pricing"
-                  className="inline-flex items-center gap-1.5 text-xs border border-ink-700 text-ink-300 px-3 py-1.5 rounded-lg hover:border-ink-500 hover:text-white transition-colors"
+                  className="inline-flex items-center gap-1.5 text-xs border border-ink-700 text-ink-300 px-3 py-1.5 rounded-lg hover:border-ink-500 hover:text-ink-50 transition-colors"
                 >
                   {profile?.plan ? "Change plan" : "Choose a plan"}
                   <ArrowRight size={11} />
@@ -86,13 +86,13 @@ export default function BillingPage() {
         <div className="rounded-lg border border-ink-800">
           <div className="flex items-center gap-2 px-5 py-4 border-b border-ink-800">
             <Package size={15} className="text-ink-500" />
-            <h2 className="text-sm font-medium text-white">Order history</h2>
+            <h2 className="text-sm font-medium text-ink-50">Order history</h2>
           </div>
 
           {orders.length === 0 ? (
             <div className="px-5 py-10 text-center">
               <p className="text-sm text-ink-500 mb-3">No hardware orders yet.</p>
-              <Link href="/pricing" className="text-sm text-ink-400 hover:text-white transition-colors underline underline-offset-2">
+              <Link href="/pricing" className="text-sm text-ink-400 hover:text-ink-50 transition-colors underline underline-offset-2">
                 Pre-order the Macula module
               </Link>
             </div>
@@ -105,14 +105,14 @@ export default function BillingPage() {
                       <Receipt size={14} className="text-ink-400" />
                     </div>
                     <div>
-                      <p className="text-sm font-medium text-white">{order.product_name}</p>
+                      <p className="text-sm font-medium text-ink-50">{order.product_name}</p>
                       <p className="text-xs text-ink-500 mt-0.5">
                         {new Date(order.created_at).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
                       </p>
                     </div>
                   </div>
                   <div className="flex items-center gap-4 shrink-0">
-                    <span className="text-sm font-medium text-white">
+                    <span className="text-sm font-medium text-ink-50">
                       {formatAmount(order.amount_cents, order.currency)}
                     </span>
                     <Badge variant={order.status === "paid" ? "success" : order.status === "refunded" ? "warning" : "default"}>
@@ -123,7 +123,7 @@ export default function BillingPage() {
                         href={order.receipt_url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 text-xs text-ink-400 hover:text-white transition-colors"
+                        className="inline-flex items-center gap-1 text-xs text-ink-400 hover:text-ink-50 transition-colors"
                       >
                         Receipt <ExternalLink size={10} />
                       </a>

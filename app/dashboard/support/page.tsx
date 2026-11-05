@@ -41,7 +41,7 @@ export default async function DashboardSupportPage() {
 
       <div className="grid xl:grid-cols-[1fr_26rem] gap-10">
         <section aria-labelledby="tickets-heading">
-          <h2 id="tickets-heading" className="text-lg font-semibold text-white mb-4">Your tickets</h2>
+          <h2 id="tickets-heading" className="text-lg font-semibold text-ink-50 mb-4">Your tickets</h2>
           {list.length === 0 ? (
             <p className="text-sm text-ink-400 border-t border-ink-800 pt-4">
               You haven&apos;t opened any tickets. Tickets you submit while signed in will show up here with their status.
@@ -61,10 +61,10 @@ export default async function DashboardSupportPage() {
                   {list.map((t) => (
                     <tr key={t.ticket_id} className="hover:bg-ink-900/60">
                       <td className="px-4 py-3 font-mono text-ink-400 whitespace-nowrap">
-                        <Link href={`/dashboard/support/${t.ticket_id}`} className="hover:text-white">#{t.ticket_id}</Link>
+                        <Link href={`/dashboard/support/${t.ticket_id}`} className="hover:text-ink-50">#{t.ticket_id}</Link>
                       </td>
                       <td className="px-4 py-3 max-w-[18rem]">
-                        <Link href={`/dashboard/support/${t.ticket_id}`} className="text-white hover:text-signal-300 block truncate">
+                        <Link href={`/dashboard/support/${t.ticket_id}`} className="text-ink-50 hover:text-signal-300 block truncate">
                           {t.subject}
                         </Link>
                         <span className="text-xs text-ink-400">{t.category}</span>
@@ -88,7 +88,7 @@ export default async function DashboardSupportPage() {
         </section>
 
         <section id="new" aria-labelledby="new-heading" className="scroll-mt-20 xl:border-l xl:border-ink-800 xl:pl-10">
-          <h2 id="new-heading" className="text-lg font-semibold text-white mb-4">Open a ticket</h2>
+          <h2 id="new-heading" className="text-lg font-semibold text-ink-50 mb-4">Open a ticket</h2>
           <DashboardSupportForm account={{ name: profile?.full_name ?? "", email: user.email ?? "" }} />
         </section>
       </div>

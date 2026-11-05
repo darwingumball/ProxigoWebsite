@@ -39,7 +39,7 @@ export function AdminAddSerials() {
 
   return (
     <div className="rounded-lg border border-ink-800 bg-ink-900/40 p-5">
-      <h2 className="text-sm font-medium text-white mb-1">Add serials to inventory</h2>
+      <h2 className="text-sm font-medium text-ink-50 mb-1">Add serials to inventory</h2>
       <p className="text-xs text-ink-500 mb-4">
         Enter one or more serials (MAC-XXXX-XXXX-XXXX). Paste multiple separated by newlines or commas.
       </p>
@@ -49,7 +49,7 @@ export function AdminAddSerials() {
           onChange={e => { setInput(e.target.value); setResult(null); }}
           rows={4}
           placeholder={"MAC-A1B2-C3D4-E5F6\nMAC-G7H8-I9J0-K1L2"}
-          className="w-full px-3.5 py-2.5 rounded-lg border border-ink-700 bg-ink-900 text-white text-xs font-mono placeholder:text-ink-500 focus:outline-none focus:border-signal-500/50 focus:ring-1 focus:ring-signal-500/20 resize-none uppercase"
+          className="w-full px-3.5 py-2.5 rounded-lg border border-ink-700 bg-ink-900 text-ink-50 text-xs font-mono placeholder:text-ink-500 focus:outline-none focus:border-signal-500/50 focus:ring-1 focus:ring-signal-500/20 resize-none uppercase"
         />
         {result && (
           <div className={`flex items-center gap-2 text-xs px-3 py-2 rounded-lg border ${

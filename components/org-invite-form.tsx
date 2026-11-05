@@ -41,12 +41,12 @@ export function OrgInviteForm() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="teammate@example.com"
-          className="flex-1 px-3 py-2 rounded-lg border border-ink-700 bg-ink-900 text-sm text-white placeholder:text-ink-500 focus:outline-none focus:border-signal-500/50"
+          className="flex-1 px-3 py-2 rounded-lg border border-ink-700 bg-ink-900 text-sm text-ink-50 placeholder:text-ink-500 focus:outline-none focus:border-signal-500/50"
         />
         <button
           type="submit"
           disabled={loading || !email.trim()}
-          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-signal-500 hover:bg-signal-400 text-white text-sm font-medium transition-colors disabled:opacity-40"
+          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-signal-500 hover:bg-signal-400 text-ink-50 text-sm font-medium transition-colors disabled:opacity-40"
         >
           <UserPlus size={14} />
           {loading ? "Adding…" : "Add member"}

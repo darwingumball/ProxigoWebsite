@@ -15,7 +15,7 @@ export default async function AdminDesktopPage() {
     <div className="p-8">
       <div className="mb-6">
         <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-signal-500 mb-1">Admin</p>
-        <h1 className="text-2xl font-semibold text-white">Desktop App</h1>
+        <h1 className="text-2xl font-semibold text-ink-50">Desktop App</h1>
         <p className="text-sm text-ink-500 mt-0.5">Module connections, firmware status, and OTA management.</p>
       </div>
 

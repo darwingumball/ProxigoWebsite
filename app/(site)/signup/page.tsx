@@ -93,14 +93,14 @@ function SignupForm() {
           <div className="flex justify-center mb-6">
             <CheckCircle2 className="text-signal-500" size={48} />
           </div>
-          <h2 className="text-xl font-semibold text-white mb-2">Check your email</h2>
+          <h2 className="text-xl font-semibold text-ink-50 mb-2">Check your email</h2>
           <p className="text-sm text-ink-400 leading-relaxed">
-            We sent a confirmation link to <span className="text-white">{email}</span>.
+            We sent a confirmation link to <span className="text-ink-50">{email}</span>.
             Click it to activate your account.
           </p>
           <Link
             href="/login"
-            className="inline-flex items-center justify-center mt-8 text-sm text-ink-500 hover:text-white transition-colors"
+            className="inline-flex items-center justify-center mt-8 text-sm text-ink-500 hover:text-ink-50 transition-colors"
           >
             Back to sign in
           </Link>
@@ -112,21 +112,13 @@ function SignupForm() {
   return (
     <div className="min-h-screen flex items-center justify-center px-4 bg-ink-950">
       <div className="w-full max-w-sm">
-        <div className="flex justify-center mb-8">
-          <Link href="/" className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-md bg-signal-600 flex items-center justify-center">
-              <span className="text-white font-black text-sm leading-none">P</span>
-            </div>
-          </Link>
-        </div>
-
         <div className="rounded-lg border border-ink-800 bg-ink-900/60 p-8">
-          <h1 className="text-xl font-semibold text-white mb-1.5">Create your account</h1>
+          <h1 className="text-xl font-semibold text-ink-50 mb-1.5">Create your account</h1>
           <p className="text-sm text-ink-500 mb-7">
             Already have an account?{" "}
             <Link
               href={`/login${next !== "/dashboard" ? `?next=${encodeURIComponent(next)}` : ""}`}
-              className="text-ink-300 hover:text-white transition-colors"
+              className="text-ink-300 hover:text-ink-50 transition-colors"
             >
               Sign in
             </Link>
@@ -138,7 +130,7 @@ function SignupForm() {
               type="button"
               onClick={() => handleOAuth("google")}
               disabled={!!oauthLoading || loading}
-              className="w-full flex items-center justify-center gap-3 rounded-lg border border-ink-700 bg-ink-800/50 px-4 py-2.5 text-sm text-ink-300 hover:border-ink-500 hover:text-white transition-colors disabled:opacity-50"
+              className="w-full flex items-center justify-center gap-3 rounded-lg border border-ink-700 bg-ink-800/50 px-4 py-2.5 text-sm text-ink-300 hover:border-ink-500 hover:text-ink-50 transition-colors disabled:opacity-50"
             >
               <GoogleIcon />
               {oauthLoading === "google" ? "Redirecting…" : "Continue with Google"}
@@ -147,7 +139,7 @@ function SignupForm() {
               type="button"
               onClick={() => handleOAuth("linkedin_oidc")}
               disabled={!!oauthLoading || loading}
-              className="w-full flex items-center justify-center gap-3 rounded-lg border border-ink-700 bg-ink-800/50 px-4 py-2.5 text-sm text-ink-300 hover:border-ink-500 hover:text-white transition-colors disabled:opacity-50"
+              className="w-full flex items-center justify-center gap-3 rounded-lg border border-ink-700 bg-ink-800/50 px-4 py-2.5 text-sm text-ink-300 hover:border-ink-500 hover:text-ink-50 transition-colors disabled:opacity-50"
             >
               <LinkedInIcon />
               {oauthLoading === "linkedin_oidc" ? "Redirecting…" : "Continue with LinkedIn"}
@@ -193,7 +185,7 @@ function SignupForm() {
                   required
                   minLength={8}
                   autoComplete="new-password"
-                  className="w-full rounded-lg border border-ink-700 bg-ink-900 px-3.5 py-2.5 text-sm text-white placeholder:text-ink-500 transition-colors focus:outline-none focus:border-signal-500/60 focus:ring-1 focus:ring-signal-500/20 pr-10"
+                  className="w-full rounded-lg border border-ink-700 bg-ink-900 px-3.5 py-2.5 text-sm text-ink-50 placeholder:text-ink-500 transition-colors focus:outline-none focus:border-signal-500/60 focus:ring-1 focus:ring-signal-500/20 pr-10"
                 />
                 <button
                   type="button"

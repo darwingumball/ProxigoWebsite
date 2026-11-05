@@ -54,7 +54,7 @@ export function AdminEditOrg({ orgId, name, plan, km2Limit }: Props) {
     return (
       <button
         onClick={() => setOpen(true)}
-        className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-ink-700 text-xs text-ink-400 hover:text-white hover:border-ink-500 transition-colors"
+        className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-ink-700 text-xs text-ink-400 hover:text-ink-50 hover:border-ink-500 transition-colors"
       >
         <Pencil size={12} /> Edit settings
       </button>
@@ -63,14 +63,14 @@ export function AdminEditOrg({ orgId, name, plan, km2Limit }: Props) {
 
   return (
     <form onSubmit={save} className="rounded-lg border border-ink-700 bg-ink-900/60 p-5 space-y-4">
-      <h3 className="text-sm font-semibold text-white">Edit organization</h3>
+      <h3 className="text-sm font-semibold text-ink-50">Edit organization</h3>
       <div className="grid sm:grid-cols-3 gap-4">
         <div>
           <label className="block text-xs text-ink-500 mb-1.5">Name</label>
           <input
             value={editName}
             onChange={(e) => setEditName(e.target.value)}
-            className="w-full px-3 py-2 rounded-lg border border-ink-700 bg-ink-900 text-sm text-white focus:outline-none focus:border-signal-500/50"
+            className="w-full px-3 py-2 rounded-lg border border-ink-700 bg-ink-900 text-sm text-ink-50 focus:outline-none focus:border-signal-500/50"
           />
         </div>
         <div>
@@ -91,7 +91,7 @@ export function AdminEditOrg({ orgId, name, plan, km2Limit }: Props) {
             type="number"
             value={editKm2}
             onChange={(e) => setEditKm2(parseInt(e.target.value, 10) || 0)}
-            className="w-full px-3 py-2 rounded-lg border border-ink-700 bg-ink-900 text-sm text-white focus:outline-none focus:border-signal-500/50"
+            className="w-full px-3 py-2 rounded-lg border border-ink-700 bg-ink-900 text-sm text-ink-50 focus:outline-none focus:border-signal-500/50"
           />
         </div>
       </div>
@@ -100,14 +100,14 @@ export function AdminEditOrg({ orgId, name, plan, km2Limit }: Props) {
         <button
           type="submit"
           disabled={loading || !editName.trim()}
-          className="px-4 py-2 rounded-lg bg-signal-500 hover:bg-signal-400 text-white text-sm font-medium transition-colors disabled:opacity-40"
+          className="px-4 py-2 rounded-lg bg-signal-500 hover:bg-signal-400 text-ink-50 text-sm font-medium transition-colors disabled:opacity-40"
         >
           {loading ? "Saving…" : "Save changes"}
         </button>
         <button
           type="button"
           onClick={cancel}
-          className="px-4 py-2 rounded-lg border border-ink-700 text-sm text-ink-400 hover:text-white transition-colors"
+          className="px-4 py-2 rounded-lg border border-ink-700 text-sm text-ink-400 hover:text-ink-50 transition-colors"
         >
           Cancel
         </button>

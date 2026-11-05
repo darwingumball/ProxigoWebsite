@@ -77,7 +77,7 @@ export function AdminCreateOrg() {
     return (
       <button
         onClick={() => setOpen(true)}
-        className="flex items-center gap-2 px-4 py-2 rounded-lg bg-signal-500 hover:bg-signal-400 text-white text-sm font-medium transition-colors"
+        className="flex items-center gap-2 px-4 py-2 rounded-lg bg-signal-500 hover:bg-signal-400 text-ink-50 text-sm font-medium transition-colors"
       >
         <Plus size={14} /> Create org
       </button>
@@ -86,7 +86,7 @@ export function AdminCreateOrg() {
 
   return (
     <form onSubmit={submit} className="rounded-lg border border-signal-500/20 bg-signal-500/5 p-5 space-y-4">
-      <h3 className="text-sm font-semibold text-white">New organization</h3>
+      <h3 className="text-sm font-semibold text-ink-50">New organization</h3>
       <div className="grid sm:grid-cols-2 gap-4">
         <div>
           <label className="block text-xs text-ink-500 mb-1.5">Org name</label>
@@ -94,7 +94,7 @@ export function AdminCreateOrg() {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Acme Corp"
-            className="w-full px-3 py-2 rounded-lg border border-ink-700 bg-ink-900 text-sm text-white placeholder:text-ink-500 focus:outline-none focus:border-signal-500/50"
+            className="w-full px-3 py-2 rounded-lg border border-ink-700 bg-ink-900 text-sm text-ink-50 placeholder:text-ink-500 focus:outline-none focus:border-signal-500/50"
           />
         </div>
         <div>
@@ -104,7 +104,7 @@ export function AdminCreateOrg() {
             value={ownerEmail}
             onChange={(e) => { setOwnerEmail(e.target.value); setInviteNeeded(false); setInviteSent(false); setError(null); }}
             placeholder="owner@example.com"
-            className="w-full px-3 py-2 rounded-lg border border-ink-700 bg-ink-900 text-sm text-white placeholder:text-ink-500 focus:outline-none focus:border-signal-500/50"
+            className="w-full px-3 py-2 rounded-lg border border-ink-700 bg-ink-900 text-sm text-ink-50 placeholder:text-ink-500 focus:outline-none focus:border-signal-500/50"
           />
         </div>
         <div>
@@ -125,7 +125,7 @@ export function AdminCreateOrg() {
             type="number"
             value={km2Limit}
             onChange={(e) => setKm2Limit(parseInt(e.target.value, 10) || 0)}
-            className="w-full px-3 py-2 rounded-lg border border-ink-700 bg-ink-900 text-sm text-white focus:outline-none focus:border-signal-500/50"
+            className="w-full px-3 py-2 rounded-lg border border-ink-700 bg-ink-900 text-sm text-ink-50 focus:outline-none focus:border-signal-500/50"
           />
         </div>
       </div>
@@ -133,7 +133,7 @@ export function AdminCreateOrg() {
       {inviteNeeded && (
         <div className="rounded-lg border border-amber-500/20 bg-amber-500/5 p-4 space-y-2.5">
           <p className="text-xs text-amber-300">
-            No Proxigo account found for <span className="font-medium text-white">{ownerEmail}</span>.
+            No Proxigo account found for <span className="font-medium text-ink-50">{ownerEmail}</span>.
             Send them a signup invitation so they can create their account first.
           </p>
           <button
@@ -150,7 +150,7 @@ export function AdminCreateOrg() {
 
       {inviteSent && (
         <p className="text-xs text-emerald-400">
-          Invitation sent to <span className="text-white font-medium">{ownerEmail}</span>. Once they sign up, come back and create their org.
+          Invitation sent to <span className="text-ink-50 font-medium">{ownerEmail}</span>. Once they sign up, come back and create their org.
         </p>
       )}
 
@@ -160,14 +160,14 @@ export function AdminCreateOrg() {
         <button
           type="submit"
           disabled={loading || !name.trim() || !ownerEmail.trim() || inviteSent}
-          className="px-4 py-2 rounded-lg bg-signal-500 hover:bg-signal-400 text-white text-sm font-medium transition-colors disabled:opacity-40"
+          className="px-4 py-2 rounded-lg bg-signal-500 hover:bg-signal-400 text-ink-50 text-sm font-medium transition-colors disabled:opacity-40"
         >
           {loading ? "Creating…" : "Create organization"}
         </button>
         <button
           type="button"
           onClick={reset}
-          className="px-4 py-2 rounded-lg border border-ink-700 text-sm text-ink-400 hover:text-white transition-colors"
+          className="px-4 py-2 rounded-lg border border-ink-700 text-sm text-ink-400 hover:text-ink-50 transition-colors"
         >
           Cancel
         </button>

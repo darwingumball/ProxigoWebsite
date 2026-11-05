@@ -50,7 +50,7 @@ export default function RegisterModulePage() {
       <div className="py-24 flex items-center justify-center" role="status">
         <div className="text-center">
           <CheckCircle2 size={40} className="text-emerald-500 mx-auto mb-4" />
-          <h2 className="text-xl font-semibold text-white mb-2">Module registered</h2>
+          <h2 className="text-xl font-semibold text-ink-50 mb-2">Module registered</h2>
           <p className="text-ink-400 text-sm">Redirecting to dashboard…</p>
         </div>
       </div>
@@ -59,7 +59,7 @@ export default function RegisterModulePage() {
 
   return (
     <div className="max-w-lg">
-        <Link href="/dashboard/modules" className="inline-flex items-center gap-1.5 text-sm text-ink-400 hover:text-white mb-6">
+        <Link href="/dashboard/modules" className="inline-flex items-center gap-1.5 text-sm text-ink-400 hover:text-ink-50 mb-6">
           <ArrowLeft size={14} /> Modules
         </Link>
         <PageHeader title="Register a module" description="Bind a Macula module to your account." />
@@ -75,7 +75,7 @@ export default function RegisterModulePage() {
                 type="text"
                 value={serial}
                 onChange={e => setSerial(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-lg border border-ink-700 bg-ink-900 text-white text-sm font-mono placeholder:text-ink-500 focus:outline-none focus:border-signal-500/60 focus:ring-1 focus:ring-signal-500/20 uppercase"
+                className="w-full px-3.5 py-2.5 rounded-lg border border-ink-700 bg-ink-900 text-ink-50 text-sm font-mono placeholder:text-ink-500 focus:outline-none focus:border-signal-500/60 focus:ring-1 focus:ring-signal-500/20 uppercase"
                 placeholder="MAC-XXXX-XXXX-XXXX"
                 autoComplete="off"
                 spellCheck={false}
@@ -95,7 +95,7 @@ export default function RegisterModulePage() {
                 type="text"
                 value={nickname}
                 onChange={e => setNickname(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-lg border border-ink-700 bg-ink-900 text-white text-sm placeholder:text-ink-500 focus:outline-none focus:border-signal-500/60 focus:ring-1 focus:ring-signal-500/20"
+                className="w-full px-3.5 py-2.5 rounded-lg border border-ink-700 bg-ink-900 text-ink-50 text-sm placeholder:text-ink-500 focus:outline-none focus:border-signal-500/60 focus:ring-1 focus:ring-signal-500/20"
                 placeholder="e.g. Survey Drone #1"
                 maxLength={64}
               />
@@ -126,7 +126,7 @@ export default function RegisterModulePage() {
         </div>
 
         <div className="rounded-lg border border-ink-800 bg-ink-900/20 p-5">
-          <h2 className="text-sm font-medium text-white mb-3">Where to find your serial</h2>
+          <h2 className="text-sm font-medium text-ink-50 mb-3">Where to find your serial</h2>
           <ol className="space-y-2 text-sm text-ink-300">
             <li className="flex gap-2.5"><span className="text-signal-400 font-mono shrink-0">1.</span>Flip your Macula module over.</li>
             <li className="flex gap-2.5"><span className="text-signal-400 font-mono shrink-0">2.</span>The serial is printed on the white label on the back of the PCB.</li>

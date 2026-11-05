@@ -42,9 +42,9 @@ export function AdminSidebar({ email }: { email?: string | null }) {
       <div className="px-4 py-5 border-b border-ink-800">
         <div className="flex items-center gap-2 mb-0.5">
           <div className="w-5 h-5 rounded bg-signal-600 flex items-center justify-center shrink-0">
-            <span className="text-[9px] font-black text-white">P</span>
+            <span className="text-[9px] font-black text-ink-950">P</span>
           </div>
-          <span className="text-sm font-semibold text-white">Proxigo</span>
+          <span className="text-sm font-semibold text-ink-50">Proxigo</span>
         </div>
         <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-signal-500 ml-7">Admin</span>
       </div>

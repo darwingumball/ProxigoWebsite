@@ -110,7 +110,7 @@ export default async function AdminOverviewPage() {
       {/* Header */}
       <div className="mb-8">
         <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-signal-500 mb-1">Admin</p>
-        <h1 className="text-2xl font-semibold text-white">Overview</h1>
+        <h1 className="text-2xl font-semibold text-ink-50">Overview</h1>
         <p className="text-sm text-ink-500 mt-0.5">
           {now.toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}
         </p>
@@ -131,7 +131,7 @@ export default async function AdminOverviewPage() {
                 </span>
               )}
             </div>
-            <p className="text-2xl font-bold text-white font-mono mb-0.5">{value}</p>
+            <p className="text-2xl font-bold text-ink-50 font-mono mb-0.5">{value}</p>
             <p className="text-xs text-ink-500">{label}</p>
             <p className="text-[10px] text-ink-500 mt-1">{sub}</p>
           </Link>
@@ -142,7 +142,7 @@ export default async function AdminOverviewPage() {
         {/* Recent signups */}
         <div className="lg:col-span-2 rounded-lg border border-ink-800 overflow-hidden">
           <div className="flex items-center justify-between px-5 py-3.5 border-b border-ink-800">
-            <h2 className="text-sm font-medium text-white">Recent signups</h2>
+            <h2 className="text-sm font-medium text-ink-50">Recent signups</h2>
             <Link href="/admin/users" className="text-xs text-ink-500 hover:text-signal-400 transition-colors flex items-center gap-1">
               View all <ArrowRight size={11} />
             </Link>
@@ -155,7 +155,7 @@ export default async function AdminOverviewPage() {
               <Link key={u.id} href={`/admin/users?search=${encodeURIComponent(u.email ?? "")}`}
                 className="flex items-center justify-between px-5 py-3 hover:bg-ink-900/60 transition-colors">
                 <div className="min-w-0">
-                  <p className="text-sm text-white truncate">{u.full_name ?? "—"}</p>
+                  <p className="text-sm text-ink-50 truncate">{u.full_name ?? "—"}</p>
                   <p className="text-xs text-ink-500 truncate">{u.email ?? u.id.slice(0, 12)}</p>
                 </div>
                 <div className="flex items-center gap-3 shrink-0 ml-4">
@@ -179,7 +179,7 @@ export default async function AdminOverviewPage() {
         <div className="space-y-4">
           <div className="rounded-lg border border-ink-800 overflow-hidden">
             <div className="px-5 py-3.5 border-b border-ink-800">
-              <h2 className="text-sm font-medium text-white">Plans</h2>
+              <h2 className="text-sm font-medium text-ink-50">Plans</h2>
             </div>
             <div className="p-5 space-y-3">
               {Object.entries(planBreakdown).length === 0 && (
@@ -209,7 +209,7 @@ export default async function AdminOverviewPage() {
           </div>
 
           <div className="rounded-lg border border-ink-800 p-5 space-y-3">
-            <h2 className="text-sm font-medium text-white mb-3">Quick stats</h2>
+            <h2 className="text-sm font-medium text-ink-50 mb-3">Quick stats</h2>
             {[
               ["Organizations", orgCount ?? 0],
               ["Inventory serials", inventoryTotal ?? 0],
@@ -227,7 +227,7 @@ export default async function AdminOverviewPage() {
       {(recentTickets ?? []).length > 0 && (
         <div className="mt-6 rounded-lg border border-ink-800 overflow-hidden">
           <div className="flex items-center justify-between px-5 py-3.5 border-b border-ink-800">
-            <h2 className="text-sm font-medium text-white">Open tickets</h2>
+            <h2 className="text-sm font-medium text-ink-50">Open tickets</h2>
             <Link href="/admin/tickets?status=open" className="text-xs text-ink-500 hover:text-signal-400 transition-colors flex items-center gap-1">
               View all <ArrowRight size={11} />
             </Link>
@@ -237,7 +237,7 @@ export default async function AdminOverviewPage() {
               <Link key={t.id} href={`/admin/tickets?status=open`}
                 className="flex items-center justify-between px-5 py-3 hover:bg-ink-900/60 transition-colors">
                 <div className="min-w-0 flex-1">
-                  <p className="text-sm text-white truncate">{t.subject}</p>
+                  <p className="text-sm text-ink-50 truncate">{t.subject}</p>
                   <p className="text-xs text-ink-500">{t.name} · {t.category}</p>
                 </div>
                 <div className="flex items-center gap-3 shrink-0 ml-4">

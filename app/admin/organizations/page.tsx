@@ -51,7 +51,7 @@ export default async function AdminOrganizationsPage() {
       <div className="flex items-center justify-between mb-6">
         <div>
           <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-signal-500 mb-1">Admin</p>
-          <h1 className="text-2xl font-semibold text-white">Organizations</h1>
+          <h1 className="text-2xl font-semibold text-ink-50">Organizations</h1>
           <p className="text-sm text-ink-500 mt-0.5">{(orgs ?? []).length} total</p>
         </div>
         <AdminCreateOrg />
@@ -80,7 +80,7 @@ export default async function AdminOrganizationsPage() {
               const status = getOrgStatus(org.id);
               return (
                 <tr key={org.id} className="hover:bg-ink-900/40 transition-colors">
-                  <td className="px-5 py-3.5 font-medium text-white">{org.name}</td>
+                  <td className="px-5 py-3.5 font-medium text-ink-50">{org.name}</td>
                   <td className="px-5 py-3.5">
                     <span className={`text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full border capitalize ${PLAN_COLORS[org.plan] ?? "text-ink-400 border-ink-700"}`}>
                       {org.plan}

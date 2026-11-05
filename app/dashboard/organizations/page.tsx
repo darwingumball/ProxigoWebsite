@@ -85,14 +85,14 @@ export default async function OrganizationsPage() {
 
         {/* Pool usage */}
         <div className="rounded-lg border border-ink-800 bg-ink-900/40 p-6 mb-6">
-          <h2 className="text-sm font-medium text-white mb-4">Shared pool this month</h2>
+          <h2 className="text-sm font-medium text-ink-50 mb-4">Shared pool this month</h2>
           <div className="grid grid-cols-3 gap-4 mb-4">
             <div>
-              <div className="text-xl font-mono text-white">{orgKm2Used.toFixed(1)}</div>
+              <div className="text-xl font-mono text-ink-50">{orgKm2Used.toFixed(1)}</div>
               <div className="text-xs text-ink-400 mt-0.5">Used km²</div>
             </div>
             <div>
-              <div className="text-xl font-mono text-white">{orgKm2Limit.toLocaleString()}</div>
+              <div className="text-xl font-mono text-ink-50">{orgKm2Limit.toLocaleString()}</div>
               <div className="text-xs text-ink-400 mt-0.5">Plan limit</div>
             </div>
             <div>
@@ -111,7 +111,7 @@ export default async function OrganizationsPage() {
         {/* Member list */}
         <div className="rounded-lg border border-ink-800 mb-6">
           <div className="px-6 py-4 border-b border-ink-800">
-            <h2 className="font-medium text-white">Members</h2>
+            <h2 className="font-medium text-ink-50">Members</h2>
           </div>
           <div className="divide-y divide-ink-800">
             {(allMembers ?? []).map((m) => {
@@ -127,14 +127,14 @@ export default async function OrganizationsPage() {
                         : <User size={13} className="text-ink-500" />}
                     </div>
                     <div className="min-w-0">
-                      <p className="text-sm font-medium text-white truncate">
+                      <p className="text-sm font-medium text-ink-50 truncate">
                         {profile?.name ?? "—"}{isMe && <span className="text-ink-500 ml-1">(you)</span>}
                       </p>
                       <p className="text-xs text-ink-500">{profile?.email ?? m.user_id.slice(0, 16) + "…"}</p>
                     </div>
                   </div>
                   <div className="text-right shrink-0">
-                    <p className="text-sm font-medium text-white">{km2Used.toFixed(1)} km²</p>
+                    <p className="text-sm font-medium text-ink-50">{km2Used.toFixed(1)} km²</p>
                     {m.km2_allowance != null
                       ? <p className="text-[10px] text-ink-500">cap: {m.km2_allowance} km²</p>
                       : <p className="text-[10px] text-ink-500">no individual cap</p>}
@@ -148,7 +148,7 @@ export default async function OrganizationsPage() {
         {/* Org admin: invite by email */}
         {isOrgAdmin && (
           <div className="rounded-lg border border-ink-800 p-6">
-            <h2 className="font-medium text-white mb-1">Add team member</h2>
+            <h2 className="font-medium text-ink-50 mb-1">Add team member</h2>
             <p className="text-xs text-ink-500 mb-4">
               Add a member by email. They will be notified and appear in the member list immediately.
             </p>

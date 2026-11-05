@@ -28,7 +28,7 @@ export default async function TicketPage({ params }: { params: Promise<{ ticketI
 
   return (
     <article className="max-w-3xl">
-      <Link href="/dashboard/support" className="inline-flex items-center gap-1.5 text-sm text-ink-400 hover:text-white mb-6">
+      <Link href="/dashboard/support" className="inline-flex items-center gap-1.5 text-sm text-ink-400 hover:text-ink-50 mb-6">
         <ArrowLeft size={14} /> All tickets
       </Link>
 
@@ -37,21 +37,21 @@ export default async function TicketPage({ params }: { params: Promise<{ ticketI
           <span className="font-mono text-sm text-ink-400">#{ticket.ticket_id}</span>
           <TicketStatusBadge status={ticket.status} />
         </div>
-        <h1 className="text-2xl font-semibold text-white tracking-tight">{ticket.subject}</h1>
+        <h1 className="text-2xl font-semibold text-ink-50 tracking-tight">{ticket.subject}</h1>
       </header>
 
       <dl className="grid sm:grid-cols-3 gap-4 border-y border-ink-800 py-4 mb-8 text-sm">
         <div>
           <dt className="text-ink-400">Category</dt>
-          <dd className="text-white">{ticket.category}</dd>
+          <dd className="text-ink-50">{ticket.category}</dd>
         </div>
         <div>
           <dt className="text-ink-400">Opened</dt>
-          <dd className="text-white">{formatDateTime(ticket.created_at)}</dd>
+          <dd className="text-ink-50">{formatDateTime(ticket.created_at)}</dd>
         </div>
         <div>
           <dt className="text-ink-400">Last update</dt>
-          <dd className="text-white">{formatDateTime(ticket.updated_at ?? ticket.created_at)}</dd>
+          <dd className="text-ink-50">{formatDateTime(ticket.updated_at ?? ticket.created_at)}</dd>
         </div>
       </dl>
 

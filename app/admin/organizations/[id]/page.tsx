@@ -55,7 +55,7 @@ export default async function AdminOrgDetailPage({ params }: { params: Promise<{
     <div className="p-8">
       <Link
         href="/admin/organizations"
-        className="inline-flex items-center gap-1.5 text-sm text-ink-500 hover:text-white transition-colors mb-6"
+        className="inline-flex items-center gap-1.5 text-sm text-ink-500 hover:text-ink-50 transition-colors mb-6"
       >
         <ArrowLeft size={14} /> Organizations
       </Link>
@@ -63,7 +63,7 @@ export default async function AdminOrgDetailPage({ params }: { params: Promise<{
       <div className="flex items-start justify-between mb-8">
         <div>
           <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-signal-500 mb-1">Admin · Org</p>
-          <h1 className="text-2xl font-semibold text-white">{org.name}</h1>
+          <h1 className="text-2xl font-semibold text-ink-50">{org.name}</h1>
           <p className="text-sm text-ink-500 mt-0.5">
             {memberIds.length} member{memberIds.length !== 1 ? "s" : ""} · Created {new Date(org.created_at).toLocaleDateString()}
           </p>
@@ -79,7 +79,7 @@ export default async function AdminOrgDetailPage({ params }: { params: Promise<{
       {/* Stats */}
       <div className="grid grid-cols-3 gap-4 mb-8">
         <div className="rounded-lg border border-ink-800 bg-ink-900/40 p-5 text-center">
-          <p className="text-2xl font-bold text-white font-mono">{orgKm2Used.toFixed(1)}</p>
+          <p className="text-2xl font-bold text-ink-50 font-mono">{orgKm2Used.toFixed(1)}</p>
           <p className="text-[10px] text-ink-500 uppercase tracking-wider mt-1">Used km²</p>
         </div>
         <div className="rounded-lg border border-ink-800 bg-ink-900/40 p-5 text-center">
@@ -98,7 +98,7 @@ export default async function AdminOrgDetailPage({ params }: { params: Promise<{
       <div className="rounded-lg border border-ink-800 mb-6">
         <div className="flex items-center gap-2 px-5 py-3.5 border-b border-ink-800">
           <Users size={14} className="text-ink-500" />
-          <h2 className="font-medium text-white">Members</h2>
+          <h2 className="font-medium text-ink-50">Members</h2>
           <span className="ml-1 text-xs text-ink-500">{memberIds.length}</span>
         </div>
         {memberIds.length === 0 ? (
@@ -139,7 +139,7 @@ export default async function AdminOrgDetailPage({ params }: { params: Promise<{
 
       {/* Add member */}
       <div className="rounded-lg border border-ink-800 p-5">
-        <h2 className="font-medium text-white mb-4">Add member by email</h2>
+        <h2 className="font-medium text-ink-50 mb-4">Add member by email</h2>
         <AdminOrgAddMember orgId={id} orgName={org.name} />
       </div>
     </div>

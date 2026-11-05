@@ -53,7 +53,7 @@ export default async function AdminTicketsPage({
     <div className="p-8">
       <div className="mb-6">
         <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-signal-500 mb-1">Admin</p>
-        <h1 className="text-2xl font-semibold text-white">Support Tickets</h1>
+        <h1 className="text-2xl font-semibold text-ink-50">Support Tickets</h1>
         <p className="text-sm text-ink-500 mt-0.5">{(count ?? 0).toLocaleString()} matching</p>
       </div>
 
@@ -65,7 +65,7 @@ export default async function AdminTicketsPage({
             href={`/admin/tickets?status=${value}&category=${category}`}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
               status === value
-                ? "bg-ink-800 text-white"
+                ? "bg-ink-800 text-ink-50"
                 : "text-ink-500 hover:text-ink-300 hover:bg-ink-800/60"
             }`}
           >
@@ -83,7 +83,7 @@ export default async function AdminTicketsPage({
             className="px-3 py-1.5 rounded-lg border border-ink-700 bg-ink-900 text-xs text-ink-300 focus:outline-none"
           >
             <option value="">All categories</option>
-            {["Sales", "Development", "Account", "Billing", "Desktop App", "Maps / Downloads", "Hardware Issue", "Other"].map((c) => (
+            {["Consulting", "Sales", "Development", "Account", "Billing", "Desktop App", "Maps / Downloads", "Hardware Issue", "Other"].map((c) => (
               <option key={c} value={c}>{c}</option>
             ))}
           </select>
@@ -120,7 +120,7 @@ export default async function AdminTicketsPage({
                   <span className="text-xs font-mono text-ink-500">{t.ticket_id}</span>
                 </td>
                 <td className="px-5 py-3.5">
-                  <p className="text-white text-sm">{t.name}</p>
+                  <p className="text-ink-50 text-sm">{t.name}</p>
                   <p className="text-xs text-ink-500">{t.email}</p>
                 </td>
                 <td className="px-5 py-3.5 max-w-xs">
@@ -149,13 +149,13 @@ export default async function AdminTicketsPage({
           <div className="flex gap-2">
             {page > 1 && (
               <a href={`/admin/tickets?status=${status}&category=${category}&page=${page - 1}`}
-                className="px-3 py-1.5 rounded-lg border border-ink-700 text-xs text-ink-400 hover:text-white hover:border-ink-500 transition-colors">
+                className="px-3 py-1.5 rounded-lg border border-ink-700 text-xs text-ink-400 hover:text-ink-50 hover:border-ink-500 transition-colors">
                 Previous
               </a>
             )}
             {page < totalPages && (
               <a href={`/admin/tickets?status=${status}&category=${category}&page=${page + 1}`}
-                className="px-3 py-1.5 rounded-lg border border-ink-700 text-xs text-ink-400 hover:text-white hover:border-ink-500 transition-colors">
+                className="px-3 py-1.5 rounded-lg border border-ink-700 text-xs text-ink-400 hover:text-ink-50 hover:border-ink-500 transition-colors">
                 Next
               </a>
             )}

@@ -41,7 +41,7 @@ export default async function DocPage({ params }: Props) {
       <p className="text-xs text-ink-500 mb-6">{section?.section}</p>
 
       {/* Title */}
-      <h1 className="text-4xl font-bold text-white tracking-tight mb-3">{page.title}</h1>
+      <h1 className="text-4xl font-bold text-ink-50 tracking-tight mb-3">{page.title}</h1>
       <p className="text-ink-400 text-lg leading-relaxed mb-10">{page.description}</p>
 
       {/* Coming soon placeholder */}
@@ -50,10 +50,10 @@ export default async function DocPage({ params }: Props) {
           <Clock size={18} className="text-ink-500" />
         </div>
         <div>
-          <p className="font-medium text-white mb-1">Content coming soon</p>
+          <p className="font-medium text-ink-50 mb-1">Content coming soon</p>
           <p className="text-sm text-ink-500 max-w-xs">
             This page is being written ahead of the October 2026 launch. Check back soon or{" "}
-            <Link href="/support" className="text-ink-300 hover:text-white transition-colors underline underline-offset-2">
+            <Link href="/support" className="text-ink-300 hover:text-ink-50 transition-colors underline underline-offset-2">
               open a ticket
             </Link>{" "}
             if you need help now.
@@ -66,7 +66,7 @@ export default async function DocPage({ params }: Props) {
         {prev ? (
           <Link
             href={`/docs/${prev.path}`}
-            className="flex items-center gap-2 text-sm text-ink-400 hover:text-white transition-colors group"
+            className="flex items-center gap-2 text-sm text-ink-400 hover:text-ink-50 transition-colors group"
           >
             <ArrowLeft size={14} className="group-hover:-translate-x-0.5 transition-transform" />
             <span>{prev.title}</span>
@@ -75,7 +75,7 @@ export default async function DocPage({ params }: Props) {
         {next ? (
           <Link
             href={`/docs/${next.path}`}
-            className="flex items-center gap-2 text-sm text-ink-400 hover:text-white transition-colors group ml-auto"
+            className="flex items-center gap-2 text-sm text-ink-400 hover:text-ink-50 transition-colors group ml-auto"
           >
             <span>{next.title}</span>
             <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />

@@ -5,7 +5,7 @@ import { buttonClasses } from "@/components/ui/button-classes";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "Pricing",
+  title: "Macula pricing",
   description: "Macula VPS Module pricing for commercial drone operations. Contact us for a custom quote.",
 };
 
@@ -116,8 +116,8 @@ export default function PricingPage() {
     <>
       {/* Hero */}
       <section className="pt-32 sm:pt-40 pb-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-4xl sm:text-5xl font-semibold text-white tracking-tight mb-5 max-w-2xl">
-          Pricing that scales with your operation
+        <h1 className="text-4xl sm:text-5xl font-semibold text-ink-50 tracking-tight mb-5 max-w-2xl">
+          Macula pricing
         </h1>
         <p className="text-lg text-ink-300 max-w-xl mb-8">
           One-time hardware, plus a coverage plan sized to the area you map each month. Contact us for a quote
@@ -136,7 +136,7 @@ export default function PricingPage() {
       {/* Plan tiers */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-3 mb-8">
-          <h2 className="text-2xl font-semibold text-white tracking-tight">Coverage plans</h2>
+          <h2 className="text-2xl font-semibold text-ink-50 tracking-tight">Coverage plans</h2>
           <p className="text-sm text-ink-400 max-w-md">
             Priced on monthly km² of satellite imagery. All plans require a module purchase.
           </p>
@@ -146,12 +146,12 @@ export default function PricingPage() {
           {PLANS.map((plan) => (
             <div key={plan.id} className={cn("p-6 lg:p-8 flex flex-col", plan.highlight && "bg-ink-900")}>
               <div className="flex items-baseline justify-between gap-2 mb-1">
-                <h3 className="text-lg font-semibold text-white">{plan.name}</h3>
+                <h3 className="text-lg font-semibold text-ink-50">{plan.name}</h3>
                 {plan.highlight && <span className="text-xs text-signal-400">Recommended</span>}
               </div>
               <p className="text-sm text-ink-400 mb-6">{plan.desc}</p>
 
-              <p className="font-mono text-3xl text-white">{plan.km2 ? `${plan.km2} km²` : "Custom"}</p>
+              <p className="font-mono text-3xl text-ink-50">{plan.km2 ? `${plan.km2} km²` : "Custom"}</p>
               <p className="text-xs text-ink-400 mt-1 mb-6">{plan.km2 ? "map allocation / month" : "coverage area"}</p>
 
               <ul className="space-y-2.5 mb-8 flex-1">
@@ -179,9 +179,9 @@ export default function PricingPage() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
         <div className="grid lg:grid-cols-2 gap-10 border-t border-ink-800 pt-12">
           <div>
-            <h2 className="text-2xl font-semibold text-white tracking-tight mb-3">{HARDWARE.name}</h2>
+            <h2 className="text-2xl font-semibold text-ink-50 tracking-tight mb-3">{HARDWARE.name}</h2>
             <p className="text-ink-300 mb-6 leading-relaxed max-w-lg">{HARDWARE.desc}</p>
-            <p className="text-xl font-medium text-white mb-1">From the low thousands</p>
+            <p className="text-xl font-medium text-ink-50 mb-1">From the low thousands</p>
             <p className="text-sm text-ink-400 mb-8">Volume pricing available for 10+ units.</p>
             <Link href="/support?type=sales#contact" className={buttonClasses()}>
               Talk to sales <ArrowRight size={15} />
@@ -205,7 +205,7 @@ export default function PricingPage() {
       <section className="border-y border-ink-800 bg-ink-900/40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 grid lg:grid-cols-[1fr_2fr] gap-10">
           <div>
-            <h2 className="text-2xl font-semibold text-white tracking-tight mb-3">For teams that operate at scale</h2>
+            <h2 className="text-2xl font-semibold text-ink-50 tracking-tight mb-3">For teams that operate at scale</h2>
             <p className="text-ink-400 text-sm leading-relaxed mb-6">
               Proxigo Enterprise is for organizations running multiple modules across multiple operators. Custom
               km² pools, team management, dedicated support, and volume hardware pricing.
@@ -217,7 +217,7 @@ export default function PricingPage() {
           <dl className="grid sm:grid-cols-2 gap-x-10 gap-y-8">
             {ENTERPRISE_INDUSTRIES.map(({ name, desc }) => (
               <div key={name} className="border-l-2 border-signal-500/70 pl-5">
-                <dt className="font-medium text-white mb-1.5">{name}</dt>
+                <dt className="font-medium text-ink-50 mb-1.5">{name}</dt>
                 <dd className="text-sm text-ink-400 leading-relaxed">{desc}</dd>
               </div>
             ))}
@@ -227,11 +227,11 @@ export default function PricingPage() {
 
       {/* FAQ */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 grid lg:grid-cols-[1fr_2fr] gap-10">
-        <h2 className="text-2xl font-semibold text-white tracking-tight">Common questions</h2>
+        <h2 className="text-2xl font-semibold text-ink-50 tracking-tight">Common questions</h2>
         <div className="border-t border-ink-800">
           {FAQ.map(({ q, a }) => (
             <details key={q} className="group border-b border-ink-800">
-              <summary className="flex items-center justify-between gap-4 py-5 cursor-pointer list-none font-medium text-white [&::-webkit-details-marker]:hidden">
+              <summary className="flex items-center justify-between gap-4 py-5 cursor-pointer list-none font-medium text-ink-50 [&::-webkit-details-marker]:hidden">
                 {q}
                 <span className="text-ink-400 text-xl leading-none group-open:rotate-45 transition-transform" aria-hidden>+</span>
               </summary>

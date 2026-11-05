@@ -98,7 +98,7 @@ export default async function AdminAnalyticsPage() {
     <div className="p-8">
       <div className="mb-8">
         <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-signal-500 mb-1">Admin</p>
-        <h1 className="text-2xl font-semibold text-white">Analytics</h1>
+        <h1 className="text-2xl font-semibold text-ink-50">Analytics</h1>
         <p className="text-sm text-ink-500 mt-0.5">Last 30 days.</p>
       </div>
 
@@ -108,7 +108,7 @@ export default async function AdminAnalyticsPage() {
           <div key={label} className="rounded-lg border border-ink-800 bg-ink-900/40 p-5">
             <div className="flex items-baseline justify-between mb-4">
               <p className="text-sm font-medium text-ink-400">{label}</p>
-              <p className="text-lg font-bold text-white font-mono">{total}</p>
+              <p className="text-lg font-bold text-ink-50 font-mono">{total}</p>
             </div>
             <Sparkline data={data} max={max} color={color} />
             <div className="flex justify-between text-[10px] text-ink-500 mt-1">
@@ -123,7 +123,7 @@ export default async function AdminAnalyticsPage() {
       {topLocations.length > 0 && (
         <div className="rounded-lg border border-ink-800 overflow-hidden mb-4">
           <div className="px-5 py-3.5 border-b border-ink-800">
-            <p className="text-sm font-medium text-white">Top areas downloaded (30d)</p>
+            <p className="text-sm font-medium text-ink-50">Top areas downloaded (30d)</p>
           </div>
           <div className="divide-y divide-ink-800/60">
             {topLocations.map(([label, km2]) => {
@@ -149,7 +149,7 @@ export default async function AdminAnalyticsPage() {
       {(recentDownloads ?? []).length > 0 && (
         <div className="rounded-lg border border-ink-800 overflow-hidden mb-8">
           <div className="px-5 py-3.5 border-b border-ink-800">
-            <p className="text-sm font-medium text-white">Recent downloads (30d)</p>
+            <p className="text-sm font-medium text-ink-50">Recent downloads (30d)</p>
           </div>
           <table className="w-full text-sm">
             <thead>
@@ -187,7 +187,7 @@ export default async function AdminAnalyticsPage() {
             <div className="flex items-baseline justify-between mb-4">
               <p className="text-sm font-medium text-ink-400">Page views (30d)</p>
               <div className="flex items-center gap-3">
-                <p className="text-lg font-bold text-white font-mono">{va.pageViews.toLocaleString()}</p>
+                <p className="text-lg font-bold text-ink-50 font-mono">{va.pageViews.toLocaleString()}</p>
                 <a
                   href="https://vercel.com/analytics"
                   target="_blank"
@@ -215,7 +215,7 @@ export default async function AdminAnalyticsPage() {
           {va.topPages.length > 0 && (
             <div className="rounded-lg border border-ink-800 bg-ink-900/40 overflow-hidden">
               <div className="px-5 py-3.5 border-b border-ink-800">
-                <p className="text-sm font-medium text-white">Top pages (30d)</p>
+                <p className="text-sm font-medium text-ink-50">Top pages (30d)</p>
               </div>
               <div className="divide-y divide-ink-800/60">
                 {va.topPages.map((p) => {

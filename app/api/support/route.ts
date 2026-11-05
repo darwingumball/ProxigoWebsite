@@ -23,10 +23,13 @@ export async function POST(req: Request) {
     companyName?: string;
     companySize?: string;
     industry?: string;
+    services?: string[];
+    timeline?: string;
+    budget?: string;
     website?: string;
   };
 
-  const { name, email, category, subject, message, companyName, companySize, industry, website } = body;
+  const { name, email, category, subject, message, companyName, companySize, industry, services, timeline, budget, website } = body;
 
   // Honeypot — bots fill hidden fields, humans don't
   if (website) {
@@ -44,6 +47,24 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Company name, size, and industry are required for sales inquiries." }, { status: 400 });
     }
     fullMessage = `Company: ${companyName}\nSize: ${companySize}\nIndustry: ${industry}\n\n---\n\n${message}`;
+  }
+
+  // Consulting inquiries from /contact
+  if (category === "Consulting") {
+    if (!companyName) {
+      return NextResponse.json({ error: "Company name is required." }, { status: 400 });
+    }
+    const serviceList = Array.isArray(services) ? services.filter((s) => typeof s === "string").slice(0, 10) : [];
+    fullMessage = [
+      `Company: ${companyName}`,
+      `Services: ${serviceList.length ? serviceList.join(", ") : "Not specified"}`,
+      `Timeline: ${timeline || "Not specified"}`,
+      `Budget: ${budget || "Not specified"}`,
+      "",
+      "---",
+      "",
+      message,
+    ].join("\n");
   }
 
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {

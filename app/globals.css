@@ -4,8 +4,8 @@
  * Proxigo palette
  *  ink    — warm graphite neutrals. 500 is the dimmest step allowed for text
  *           (≥ 4.5:1 on ink-950 and ink-900); 600+ are for borders and fills only.
- *  signal — brand orange. Filled signal surfaces take dark (ink-950) text;
- *           white on orange does not meet AA.
+ *  signal — brand blue. Filled signal surfaces take dark (ink-950) text
+ *           in the dark theme and paper text in the light theme.
  */
 @theme {
   --color-ink-50:  #f6f5f2;
@@ -20,23 +20,92 @@
   --color-ink-900: #1a1a18;
   --color-ink-950: #0f0f0e;
 
-  --color-signal-50:  #fff4ec;
-  --color-signal-100: #ffe4d1;
-  --color-signal-200: #ffc49d;
-  --color-signal-300: #ff9f63;
-  --color-signal-400: #ff8236;
-  --color-signal-500: #ff6b17;
-  --color-signal-600: #e55408;
-  --color-signal-700: #b8420a;
-  --color-signal-800: #8c340d;
-  --color-signal-900: #5e250c;
-  --color-signal-950: #351406;
+  --color-signal-50:  #eef3ff;
+  --color-signal-100: #dfe8ff;
+  --color-signal-200: #c3d3fe;
+  --color-signal-300: #9db5fb;
+  --color-signal-400: #7c9cf8;
+  --color-signal-500: #5b82f5;
+  --color-signal-600: #3f68e6;
+  --color-signal-700: #2f55c9;
+  --color-signal-800: #22409a;
+  --color-signal-900: #172c6b;
+  --color-signal-950: #0e1b42;
 
   --font-sans: var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-plex-mono), ui-monospace, "SFMono-Regular", monospace;
 
   --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
 }
+
+/*
+ * Light theme for the marketing site. The ink scale is inverted rather than
+ * renamed, so a utility keeps its role in both themes: ink-950 is the page,
+ * ink-800 a border, ink-400 secondary text, ink-50 the strongest text. Signal
+ * becomes the firm's blue and is inverted the same way (signal-400/300 are the
+ * darker, link-weight steps). The dashboard and admin stay on the dark defaults.
+ */
+.theme-light {
+  --color-ink-50:  #111110;
+  --color-ink-100: #1c1b19;
+  --color-ink-200: #2b2a27;
+  --color-ink-300: #3f3e3a;
+  --color-ink-400: #55534e;
+  --color-ink-500: #6b6963;
+  --color-ink-600: #a8a6a0;
+  --color-ink-700: #cfcdc7;
+  --color-ink-800: #e4e2dc;
+  --color-ink-900: #f1f0ec;
+  --color-ink-950: #fbfaf7;
+
+  --color-signal-50:  #0a1a46;
+  --color-signal-100: #0e2462;
+  --color-signal-200: #122f80;
+  --color-signal-300: #163a9f;
+  --color-signal-400: #1a43bd;
+  --color-signal-500: #1f4ed8;
+  --color-signal-600: #2f5fe0;
+  --color-signal-700: #9db5fb;
+  --color-signal-800: #c3d3fe;
+  --color-signal-900: #dfe8ff;
+  --color-signal-950: #eef3ff;
+
+  color-scheme: light;
+  background-color: var(--color-ink-950);
+  color: var(--color-ink-100);
+}
+
+/* Restores the dark palette inside a light page, e.g. for app screenshots. */
+.theme-dark {
+  --color-ink-50:  #f6f5f2;
+  --color-ink-100: #ecebe6;
+  --color-ink-200: #d9d7cf;
+  --color-ink-300: #bdbab0;
+  --color-ink-400: #a19e93;
+  --color-ink-500: #8a877c;
+  --color-ink-600: #5e5c55;
+  --color-ink-700: #403f3a;
+  --color-ink-800: #2a2926;
+  --color-ink-900: #1a1a18;
+  --color-ink-950: #0f0f0e;
+
+  --color-signal-50:  #eef3ff;
+  --color-signal-100: #dfe8ff;
+  --color-signal-200: #c3d3fe;
+  --color-signal-300: #9db5fb;
+  --color-signal-400: #7c9cf8;
+  --color-signal-500: #5b82f5;
+  --color-signal-600: #3f68e6;
+  --color-signal-700: #2f55c9;
+  --color-signal-800: #22409a;
+  --color-signal-900: #172c6b;
+  --color-signal-950: #0e1b42;
+
+  color-scheme: dark;
+  color: var(--color-ink-100);
+}
+
+body:has(> .theme-light) { background-color: #fbfaf7; }
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }

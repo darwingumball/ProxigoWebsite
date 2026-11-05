@@ -41,7 +41,7 @@ export default async function AdminModulesPage({
     <div className="p-8">
       <div className="mb-6">
         <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-signal-500 mb-1">Admin</p>
-        <h1 className="text-2xl font-semibold text-white">Module Inventory</h1>
+        <h1 className="text-2xl font-semibold text-ink-50">Module Inventory</h1>
       </div>
 
       {/* Stats */}
@@ -52,7 +52,7 @@ export default async function AdminModulesPage({
           { label: "Unclaimed", value: unclaimedCount, color: "text-ink-400" },
         ].map(({ label, value, color }) => (
           <div key={label} className="rounded-lg border border-ink-800 bg-ink-900/40 p-4">
-            <p className={`text-2xl font-bold font-mono mb-0.5 ${color ?? "text-white"}`}>{value}</p>
+            <p className={`text-2xl font-bold font-mono mb-0.5 ${color ?? "text-ink-50"}`}>{value}</p>
             <p className="text-xs text-ink-500">{label}</p>
           </div>
         ))}

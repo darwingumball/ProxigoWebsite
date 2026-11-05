@@ -17,7 +17,7 @@ export function DocsSidebar() {
         href="/docs"
         className={cn(
           "flex items-center gap-2 text-sm font-medium mb-2 transition-colors",
-          pathname === "/docs" ? "text-white" : "text-ink-400 hover:text-white"
+          pathname === "/docs" ? "text-ink-50" : "text-ink-400 hover:text-ink-50"
         )}
       >
         <BookOpen size={14} />
@@ -40,8 +40,8 @@ export function DocsSidebar() {
                     className={cn(
                       "block text-sm py-1.5 px-3 rounded-lg transition-colors",
                       active
-                        ? "bg-ink-800 text-white"
-                        : "text-ink-400 hover:text-white hover:bg-ink-900"
+                        ? "bg-ink-800 text-ink-50"
+                        : "text-ink-400 hover:text-ink-50 hover:bg-ink-900"
                     )}
                   >
                     {title}
@@ -61,7 +61,7 @@ export function DocsSidebar() {
       <div className="lg:hidden border-b border-ink-800 px-4 py-3">
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="flex items-center gap-2 text-sm text-ink-400 hover:text-white transition-colors w-full"
+          className="flex items-center gap-2 text-sm text-ink-400 hover:text-ink-50 transition-colors w-full"
         >
           <BookOpen size={14} />
           Documentation

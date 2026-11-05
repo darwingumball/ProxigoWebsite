@@ -70,7 +70,7 @@ export function AdminOrgAddMember({ orgId, orgName }: { orgId: string; orgName?:
             value={email}
             onChange={(e) => { setEmail(e.target.value); setInviteNeeded(false); setError(null); setSuccess(null); }}
             placeholder="user@example.com"
-            className="w-full px-3 py-2 rounded-lg border border-ink-700 bg-ink-900 text-sm text-white placeholder:text-ink-500 focus:outline-none focus:border-signal-500/50"
+            className="w-full px-3 py-2 rounded-lg border border-ink-700 bg-ink-900 text-sm text-ink-50 placeholder:text-ink-500 focus:outline-none focus:border-signal-500/50"
           />
         </div>
         <div>
@@ -88,7 +88,7 @@ export function AdminOrgAddMember({ orgId, orgName }: { orgId: string; orgName?:
           <button
             type="submit"
             disabled={loading || !email.trim()}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-signal-500 hover:bg-signal-400 text-white text-sm font-medium transition-colors disabled:opacity-40 h-[38px]"
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-signal-500 hover:bg-signal-400 text-ink-50 text-sm font-medium transition-colors disabled:opacity-40 h-[38px]"
           >
             <UserPlus size={14} />
             {loading ? "Adding…" : "Add"}
@@ -99,7 +99,7 @@ export function AdminOrgAddMember({ orgId, orgName }: { orgId: string; orgName?:
       {inviteNeeded && (
         <div className="rounded-lg border border-amber-500/20 bg-amber-500/5 p-3 flex items-center justify-between gap-3">
           <p className="text-xs text-amber-300">
-            No account found for <span className="font-medium text-white">{email}</span>. Send them a signup invite?
+            No account found for <span className="font-medium text-ink-50">{email}</span>. Send them a signup invite?
           </p>
           <button
             type="button"

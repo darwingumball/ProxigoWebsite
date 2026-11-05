@@ -26,7 +26,7 @@ export default function AdminBootstrapPage() {
         <div className="w-12 h-12 rounded-lg bg-signal-500/10 border border-signal-500/20 flex items-center justify-center mx-auto mb-5">
           <Shield size={22} className="text-signal-500" />
         </div>
-        <h1 className="text-lg font-semibold text-white mb-2">Admin setup</h1>
+        <h1 className="text-lg font-semibold text-ink-50 mb-2">Admin setup</h1>
         <p className="text-sm text-ink-500 mb-6 leading-relaxed">
           Grants admin access to your currently logged-in account. Only works if no admin exists yet.
         </p>

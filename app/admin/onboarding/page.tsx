@@ -34,7 +34,7 @@ export default async function AdminOnboardingPage() {
     <div className="p-8">
       <div className="mb-8">
         <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-signal-500 mb-1">Admin</p>
-        <h1 className="text-2xl font-semibold text-white">Onboarding Funnel</h1>
+        <h1 className="text-2xl font-semibold text-ink-50">Onboarding Funnel</h1>
         <p className="text-sm text-ink-500 mt-0.5">Conversion from signup to active usage.</p>
       </div>
 
@@ -50,12 +50,12 @@ export default async function AdminOnboardingPage() {
                 <div className="flex items-center gap-3">
                   <span className="text-[10px] font-bold text-ink-500 font-mono w-5">{i + 1}</span>
                   <div>
-                    <p className="text-sm font-medium text-white">{step.label}</p>
+                    <p className="text-sm font-medium text-ink-50">{step.label}</p>
                     <p className="text-xs text-ink-500">{step.desc}</p>
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className="text-xl font-bold text-white font-mono">{step.count.toLocaleString()}</p>
+                  <p className="text-xl font-bold text-ink-50 font-mono">{step.count.toLocaleString()}</p>
                   <p className="text-xs text-ink-500">{pct.toFixed(1)}% of signups</p>
                 </div>
               </div>
@@ -88,7 +88,7 @@ export default async function AdminOnboardingPage() {
           <div className="mt-6 max-w-2xl rounded-lg border border-signal-500/20 bg-signal-500/5 p-5">
             <p className="text-xs font-semibold text-signal-400 uppercase tracking-widest mb-1">Biggest drop-off</p>
             <p className="text-sm text-ink-300">
-              <span className="text-white font-medium">{worstDrop.label}</span> has the highest drop-off at{" "}
+              <span className="text-ink-50 font-medium">{worstDrop.label}</span> has the highest drop-off at{" "}
               <span className="text-signal-400 font-semibold">{worstDrop.pct.toFixed(0)}%</span>. Focus onboarding improvements here.
             </p>
           </div>

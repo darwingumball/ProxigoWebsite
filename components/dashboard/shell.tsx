@@ -44,7 +44,7 @@ function NavLink({ href, label, icon: Icon, active }: NavItem & { active: boolea
       aria-current={active ? "page" : undefined}
       className={cn(
         "flex items-center gap-2.5 px-2.5 py-2 rounded text-sm transition-colors",
-        active ? "bg-ink-800 text-white" : "text-ink-300 hover:text-white hover:bg-ink-900"
+        active ? "bg-ink-800 text-ink-50" : "text-ink-300 hover:text-ink-50 hover:bg-ink-900"
       )}
     >
       {Icon ? <Icon size={15} className={active ? "text-signal-400" : "text-ink-400"} /> : <span className="w-[15px]" />}
@@ -80,7 +80,7 @@ export function DashboardShell({ account, children }: { account: Account; childr
           <Logo />
         </Link>
         <button
-          className="lg:hidden p-2 -mr-2 text-ink-300 hover:text-white rounded"
+          className="lg:hidden p-2 -mr-2 text-ink-300 hover:text-ink-50 rounded"
           onClick={() => setOpen(false)}
           aria-label="Close menu"
         >
@@ -110,7 +110,7 @@ export function DashboardShell({ account, children }: { account: Account; childr
           ))}
           <Link
             href="/platform"
-            className="flex items-center gap-2.5 px-2.5 py-2 rounded text-sm text-ink-400 hover:text-white hover:bg-ink-900"
+            className="flex items-center gap-2.5 px-2.5 py-2 rounded text-sm text-ink-400 hover:text-ink-50 hover:bg-ink-900"
           >
             <Plus size={15} /> Explore products
           </Link>
@@ -138,7 +138,7 @@ export function DashboardShell({ account, children }: { account: Account; childr
       </nav>
 
       <div className="border-t border-ink-800 px-4 py-3 shrink-0">
-        {account.name && <p className="text-sm text-white truncate">{account.name}</p>}
+        {account.name && <p className="text-sm text-ink-50 truncate">{account.name}</p>}
         <p className="text-xs text-ink-400 truncate mb-1">{account.email}</p>
         <SignOutButton />
       </div>
@@ -158,7 +158,7 @@ export function DashboardShell({ account, children }: { account: Account; childr
           <Logo suffix="Dashboard" />
         </Link>
         <button
-          className="p-2 -mr-2 text-ink-300 hover:text-white rounded"
+          className="p-2 -mr-2 text-ink-300 hover:text-ink-50 rounded"
           onClick={() => setOpen(true)}
           aria-label="Open menu"
           aria-expanded={open}

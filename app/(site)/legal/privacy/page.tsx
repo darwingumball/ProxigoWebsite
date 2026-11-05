@@ -24,7 +24,7 @@ export default function PrivacyPolicyPage() {
   return (
     <section className="pt-32 pb-28 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
       <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-signal-500 mb-4">Legal</p>
-      <h1 className="text-4xl font-bold text-white tracking-tight mb-3">Privacy Policy</h1>
+      <h1 className="text-4xl font-bold text-ink-50 tracking-tight mb-3">Privacy Policy</h1>
       <p className="text-sm text-ink-500 mb-10">Last updated: August 24, 2026</p>
 
       <div className="rounded-lg border border-ink-800 bg-ink-900/30 p-6 mb-12">
@@ -45,7 +45,7 @@ export default function PrivacyPolicyPage() {
         <ul className="grid sm:grid-cols-2 gap-1.5">
           {SECTIONS.map((s) => (
             <li key={s.id}>
-              <a href={`#${s.id}`} className="text-sm text-ink-400 hover:text-white transition-colors">
+              <a href={`#${s.id}`} className="text-sm text-ink-400 hover:text-ink-50 transition-colors">
                 {s.title}
               </a>
             </li>
@@ -55,7 +55,7 @@ export default function PrivacyPolicyPage() {
 
       <div className="text-ink-400 leading-relaxed text-[15px] [&>div]:pt-10 [&>div]:border-t [&>div]:border-ink-800/60 [&>div:first-child]:pt-0 [&>div:first-child]:border-t-0">
         <div id="information-we-collect">
-          <h2 className="text-xl font-semibold text-white mb-3">1. Information we collect</h2>
+          <h2 className="text-xl font-semibold text-ink-50 mb-3">1. Information we collect</h2>
           <p className="mb-3">We collect information in a few ways:</p>
           <ul className="space-y-2 list-disc pl-5">
             <li><span className="text-ink-300">Account information</span> — name, email address, and password (stored in hashed form) when you create an account, or your name, email, and profile information from Google or LinkedIn if you sign in with one of those providers.</li>
@@ -67,7 +67,7 @@ export default function PrivacyPolicyPage() {
         </div>
 
         <div id="how-we-use-it">
-          <h2 className="text-xl font-semibold text-white mb-3">2. How we use your information</h2>
+          <h2 className="text-xl font-semibold text-ink-50 mb-3">2. How we use your information</h2>
           <p className="mb-3">We use the information above to:</p>
           <ul className="space-y-2 list-disc pl-5">
             <li>Create and maintain your account, and authenticate you when you sign in.</li>
@@ -81,7 +81,7 @@ export default function PrivacyPolicyPage() {
         </div>
 
         <div id="third-parties">
-          <h2 className="text-xl font-semibold text-white mb-3">3. Third-party service providers</h2>
+          <h2 className="text-xl font-semibold text-ink-50 mb-3">3. Third-party service providers</h2>
           <p className="mb-3">
             We rely on a small number of infrastructure providers to run the Services. Each processes
             data on our behalf under their own privacy and security terms:
@@ -97,7 +97,7 @@ export default function PrivacyPolicyPage() {
         </div>
 
         <div id="cookies">
-          <h2 className="text-xl font-semibold text-white mb-3">4. Cookies and analytics</h2>
+          <h2 className="text-xl font-semibold text-ink-50 mb-3">4. Cookies and analytics</h2>
           <p>
             We use essential cookies to keep you signed in and to protect the Services from abuse.
             Our web analytics are designed to be privacy-friendly and do not use tracking cookies or
@@ -107,7 +107,7 @@ export default function PrivacyPolicyPage() {
         </div>
 
         <div id="data-retention">
-          <h2 className="text-xl font-semibold text-white mb-3">5. Data retention</h2>
+          <h2 className="text-xl font-semibold text-ink-50 mb-3">5. Data retention</h2>
           <p>
             We retain account and billing information for as long as your account is active and as
             needed to comply with tax, accounting, and legal obligations afterward. Support ticket
@@ -117,7 +117,7 @@ export default function PrivacyPolicyPage() {
         </div>
 
         <div id="your-rights">
-          <h2 className="text-xl font-semibold text-white mb-3">6. Your rights and choices</h2>
+          <h2 className="text-xl font-semibold text-ink-50 mb-3">6. Your rights and choices</h2>
           <p className="mb-3">Depending on where you live, you may have the right to:</p>
           <ul className="space-y-2 list-disc pl-5">
             <li>Access the personal information we hold about you.</li>
@@ -134,7 +134,7 @@ export default function PrivacyPolicyPage() {
         </div>
 
         <div id="children">
-          <h2 className="text-xl font-semibold text-white mb-3">7. Children&apos;s privacy</h2>
+          <h2 className="text-xl font-semibold text-ink-50 mb-3">7. Children&apos;s privacy</h2>
           <p>
             The Services are not directed to children under 16, and we do not knowingly collect
             personal information from them. If you believe a child has provided us information,
@@ -143,7 +143,7 @@ export default function PrivacyPolicyPage() {
         </div>
 
         <div id="security">
-          <h2 className="text-xl font-semibold text-white mb-3">8. Security</h2>
+          <h2 className="text-xl font-semibold text-ink-50 mb-3">8. Security</h2>
           <p>
             We use industry-standard safeguards — encryption in transit, access controls, and hashed
             password storage — to protect your information. No system is perfectly secure, and we
@@ -152,7 +152,7 @@ export default function PrivacyPolicyPage() {
         </div>
 
         <div id="international">
-          <h2 className="text-xl font-semibold text-white mb-3">9. International users</h2>
+          <h2 className="text-xl font-semibold text-ink-50 mb-3">9. International users</h2>
           <p>
             Our infrastructure providers may process and store data in the United States and other
             countries. By using the Services, you consent to your information being transferred to
@@ -162,7 +162,7 @@ export default function PrivacyPolicyPage() {
         </div>
 
         <div id="changes">
-          <h2 className="text-xl font-semibold text-white mb-3">10. Changes to this policy</h2>
+          <h2 className="text-xl font-semibold text-ink-50 mb-3">10. Changes to this policy</h2>
           <p>
             We may update this policy from time to time. If we make material changes, we&apos;ll
             update the &quot;Last updated&quot; date above and, where appropriate, notify you directly.
@@ -170,7 +170,7 @@ export default function PrivacyPolicyPage() {
         </div>
 
         <div id="contact">
-          <h2 className="text-xl font-semibold text-white mb-3">11. Contact us</h2>
+          <h2 className="text-xl font-semibold text-ink-50 mb-3">11. Contact us</h2>
           <p>
             Questions about this policy or your data can go to{" "}
             <a href="mailto:support@proxigo.ai" className="text-signal-400 hover:text-signal-300 underline underline-offset-2">support@proxigo.ai</a>,

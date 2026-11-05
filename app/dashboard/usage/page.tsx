@@ -68,7 +68,7 @@ export default async function UsagePage() {
             <h2 className="text-sm font-medium text-ink-400">This month</h2>
             <span className="text-xs text-ink-500 capitalize">{profile?.plan ?? "no plan"} plan</span>
           </div>
-          <div className="text-3xl font-bold text-white mb-1">
+          <div className="text-3xl font-bold text-ink-50 mb-1">
             {kmThisMonth.toFixed(1)} <span className="text-lg font-normal text-ink-500">km²</span>
           </div>
           {limit > 0 && (
@@ -81,7 +81,7 @@ export default async function UsagePage() {
           )}
           {!profile?.plan && (
             <p className="text-xs text-ink-500 mt-2">
-              <Link href="/pricing" className="text-ink-400 hover:text-white transition-colors underline underline-offset-2">Choose a plan</Link> to start downloading maps.
+              <Link href="/pricing" className="text-ink-400 hover:text-ink-50 transition-colors underline underline-offset-2">Choose a plan</Link> to start downloading maps.
             </p>
           )}
         </div>
@@ -90,7 +90,7 @@ export default async function UsagePage() {
         {months.length > 0 && (
           <div className="rounded-lg border border-ink-800 mb-6">
             <div className="px-5 py-4 border-b border-ink-800">
-              <h2 className="text-sm font-medium text-white">Monthly history</h2>
+              <h2 className="text-sm font-medium text-ink-50">Monthly history</h2>
             </div>
             <div className="divide-y divide-ink-800">
               {months.map(([key, { label, km2, count }]) => {
@@ -101,7 +101,7 @@ export default async function UsagePage() {
                     <div className="flex-1 h-1.5 bg-ink-800 rounded-full overflow-hidden">
                       <div className="h-full bg-ink-500 rounded-full" style={{ width: `${pct}%` }} />
                     </div>
-                    <span className="text-sm text-white font-mono w-24 text-right shrink-0">{km2.toFixed(1)} km²</span>
+                    <span className="text-sm text-ink-50 font-mono w-24 text-right shrink-0">{km2.toFixed(1)} km²</span>
                     <span className="hidden sm:inline text-xs text-ink-400 w-16 text-right shrink-0">{count} event{count !== 1 ? "s" : ""}</span>
                   </div>
                 );
@@ -113,7 +113,7 @@ export default async function UsagePage() {
         {/* Recent events */}
         <div className="rounded-lg border border-ink-800">
           <div className="px-5 py-4 border-b border-ink-800">
-            <h2 className="text-sm font-medium text-white">Recent events</h2>
+            <h2 className="text-sm font-medium text-ink-50">Recent events</h2>
           </div>
           {recent.length === 0 ? (
             <div className="px-5 py-10 text-center text-sm text-ink-500">
@@ -126,7 +126,7 @@ export default async function UsagePage() {
                 return (
                   <div key={e.created_at + e.km2} className="flex items-center justify-between px-5 py-3.5 text-sm">
                     <div>
-                      <p className="text-white">{e.km2.toFixed(2)} km²</p>
+                      <p className="text-ink-50">{e.km2.toFixed(2)} km²</p>
                       <p className="text-xs text-ink-500 mt-0.5 font-mono">{mod?.nickname ?? mod?.serial ?? "—"}</p>
                     </div>
                     <span className="text-xs text-ink-500">

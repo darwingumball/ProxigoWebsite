@@ -17,9 +17,9 @@ const plexMono = IBM_Plex_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://proxigo.ai"),
-  title: { default: "Proxigo | Field software and positioning hardware for drones", template: "%s | Proxigo" },
+  title: { default: "Proxigo | Cloud architecture, integrations, and operations software", template: "%s | Proxigo" },
   description:
-    "Proxigo is a desktop platform for planning, configuring, and operating drone hardware. It ships with Macula, a GPS-independent visual positioning module.",
+    "Proxigo is a small, independent engineering firm. We review, fix, and build AWS backends, integrate the systems you already run, and build our own operations platform.",
   icons: {
     icon: "/favicon.png",
     apple: "/favicon.png",

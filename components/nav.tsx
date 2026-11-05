@@ -11,12 +11,10 @@ import { Logo } from "@/components/logo";
 import type { User } from "@supabase/supabase-js";
 
 const NAV_LINKS = [
+  { href: "/services", label: "Services" },
   { href: "/platform", label: "Platform" },
-  { href: "/product", label: "Macula" },
-  { href: "/integrations", label: "Integrations" },
-  { href: "/pricing", label: "Pricing" },
+  { href: "/about", label: "About" },
   { href: "/docs", label: "Docs" },
-  { href: "/support", label: "Support" },
 ];
 
 export function Nav() {
@@ -64,7 +62,7 @@ export function Nav() {
               aria-current={isActive(href) ? "page" : undefined}
               className={cn(
                 "px-3 py-2 rounded text-sm transition-colors",
-                isActive(href) ? "text-white" : "text-ink-400 hover:text-white"
+                isActive(href) ? "text-ink-50" : "text-ink-400 hover:text-ink-50"
               )}
             >
               {label}
@@ -82,15 +80,15 @@ export function Nav() {
               <Link href="/login" className={buttonClasses({ variant: "ghost", size: "sm" })}>
                 Sign in
               </Link>
-              <Link href="/pricing" className={buttonClasses({ variant: "primary", size: "sm" })}>
-                Pre-order Macula
+              <Link href="/contact" className={buttonClasses({ variant: "primary", size: "sm" })}>
+                Book a call
               </Link>
             </>
           )}
         </div>
 
         <button
-          className="md:hidden text-ink-300 hover:text-white p-2 -mr-2 rounded"
+          className="md:hidden text-ink-300 hover:text-ink-50 p-2 -mr-2 rounded"
           onClick={() => setOpen(!open)}
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
@@ -105,7 +103,7 @@ export function Nav() {
             <Link
               key={href}
               href={href}
-              className="py-3 text-base text-ink-200 hover:text-white border-b border-ink-800 last:border-0"
+              className="py-3 text-base text-ink-200 hover:text-ink-50 border-b border-ink-800 last:border-0"
             >
               {label}
             </Link>
@@ -120,8 +118,8 @@ export function Nav() {
                 <Link href="/login" className={buttonClasses({ variant: "secondary" })}>
                   Sign in
                 </Link>
-                <Link href="/pricing" className={buttonClasses({ variant: "primary" })}>
-                  Pre-order
+                <Link href="/contact" className={buttonClasses({ variant: "primary" })}>
+                  Book a call
                 </Link>
               </>
             )}

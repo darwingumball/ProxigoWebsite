@@ -27,7 +27,7 @@ export default function TermsOfServicePage() {
   return (
     <section className="pt-32 pb-28 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
       <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-signal-500 mb-4">Legal</p>
-      <h1 className="text-4xl font-bold text-white tracking-tight mb-3">Terms of Service</h1>
+      <h1 className="text-4xl font-bold text-ink-50 tracking-tight mb-3">Terms of Service</h1>
       <p className="text-sm text-ink-500 mb-10">Last updated: August 24, 2026</p>
 
       <div className="rounded-lg border border-ink-800 bg-ink-900/30 p-6 mb-12">
@@ -46,7 +46,7 @@ export default function TermsOfServicePage() {
         <ul className="grid sm:grid-cols-2 gap-1.5">
           {SECTIONS.map((s) => (
             <li key={s.id}>
-              <a href={`#${s.id}`} className="text-sm text-ink-400 hover:text-white transition-colors">
+              <a href={`#${s.id}`} className="text-sm text-ink-400 hover:text-ink-50 transition-colors">
                 {s.title}
               </a>
             </li>
@@ -56,7 +56,7 @@ export default function TermsOfServicePage() {
 
       <div className="text-ink-400 leading-relaxed text-[15px] [&>div]:pt-10 [&>div]:border-t [&>div]:border-ink-800/60 [&>div:first-child]:pt-0 [&>div:first-child]:border-t-0">
         <div id="acceptance">
-          <h2 className="text-xl font-semibold text-white mb-3">1. Acceptance of terms</h2>
+          <h2 className="text-xl font-semibold text-ink-50 mb-3">1. Acceptance of terms</h2>
           <p>
             You must be at least 18 years old, or the age of majority in your jurisdiction, to
             create an account or purchase hardware. If you use the Services on behalf of an
@@ -66,7 +66,7 @@ export default function TermsOfServicePage() {
         </div>
 
         <div id="accounts">
-          <h2 className="text-xl font-semibold text-white mb-3">2. Accounts</h2>
+          <h2 className="text-xl font-semibold text-ink-50 mb-3">2. Accounts</h2>
           <p>
             You&apos;re responsible for maintaining the confidentiality of your account credentials
             and for all activity that happens under your account. Notify us promptly at{" "}
@@ -76,7 +76,7 @@ export default function TermsOfServicePage() {
         </div>
 
         <div id="hardware">
-          <h2 className="text-xl font-semibold text-white mb-3">3. Hardware purchases</h2>
+          <h2 className="text-xl font-semibold text-ink-50 mb-3">3. Hardware purchases</h2>
           <p className="mb-3">
             The Macula VPS Module is sold as a physical product on a pre-order and, later,
             in-stock basis. Ship dates communicated on the site are estimates and may change.
@@ -90,7 +90,7 @@ export default function TermsOfServicePage() {
         </div>
 
         <div id="subscriptions">
-          <h2 className="text-xl font-semibold text-white mb-3">4. Subscriptions and coverage plans</h2>
+          <h2 className="text-xl font-semibold text-ink-50 mb-3">4. Subscriptions and coverage plans</h2>
           <p className="mb-3">
             Satellite map coverage is sold on a monthly subscription basis (Starter, Pro, or a
             custom Enterprise plan). By subscribing, you authorize us to charge your payment
@@ -105,7 +105,7 @@ export default function TermsOfServicePage() {
         </div>
 
         <div id="acceptable-use">
-          <h2 className="text-xl font-semibold text-white mb-3">5. Acceptable use</h2>
+          <h2 className="text-xl font-semibold text-ink-50 mb-3">5. Acceptable use</h2>
           <p className="mb-3">You agree not to:</p>
           <ul className="space-y-2 list-disc pl-5">
             <li>Use the Services in violation of applicable law, including drone operation and airspace regulations in your jurisdiction.</li>
@@ -117,7 +117,7 @@ export default function TermsOfServicePage() {
         </div>
 
         <div id="flight-safety">
-          <h2 className="text-xl font-semibold text-white mb-3">6. Flight safety disclaimer</h2>
+          <h2 className="text-xl font-semibold text-ink-50 mb-3">6. Flight safety disclaimer</h2>
           <p>
             The Macula VPS Module is a positioning aid, not a certified flight safety system. You
             are solely responsible for operating your drone safely, in compliance with all
@@ -128,7 +128,7 @@ export default function TermsOfServicePage() {
         </div>
 
         <div id="ip">
-          <h2 className="text-xl font-semibold text-white mb-3">7. Intellectual property and trademarks</h2>
+          <h2 className="text-xl font-semibold text-ink-50 mb-3">7. Intellectual property and trademarks</h2>
           <p className="mb-3">
             The Services, including the Proxigo Desktop App, the Proxigo dashboard, Proxigo OS,
             and the vision models running on the Macula VPS Module, are owned by Proxigo
@@ -143,7 +143,7 @@ export default function TermsOfServicePage() {
         </div>
 
         <div id="organizations">
-          <h2 className="text-xl font-semibold text-white mb-3">8. Organizations and teams</h2>
+          <h2 className="text-xl font-semibold text-ink-50 mb-3">8. Organizations and teams</h2>
           <p>
             If you create or join an organization within the Services, the organization&apos;s
             owner and admins can manage members, allocate usage, and view certain account and usage
@@ -153,7 +153,7 @@ export default function TermsOfServicePage() {
         </div>
 
         <div id="warranty">
-          <h2 className="text-xl font-semibold text-white mb-3">9. Disclaimer of warranties</h2>
+          <h2 className="text-xl font-semibold text-ink-50 mb-3">9. Disclaimer of warranties</h2>
           <p>
             Except for the limited hardware warranty described in Section 3, the Services are
             provided &quot;as is&quot; and &quot;as available,&quot; without warranties of any
@@ -165,7 +165,7 @@ export default function TermsOfServicePage() {
         </div>
 
         <div id="liability">
-          <h2 className="text-xl font-semibold text-white mb-3">10. Limitation of liability</h2>
+          <h2 className="text-xl font-semibold text-ink-50 mb-3">10. Limitation of liability</h2>
           <p>
             To the maximum extent permitted by law, Proxigo AI Inc. will not be liable
             for any indirect, incidental, special, consequential, or punitive damages, or any loss
@@ -176,7 +176,7 @@ export default function TermsOfServicePage() {
         </div>
 
         <div id="termination">
-          <h2 className="text-xl font-semibold text-white mb-3">11. Termination</h2>
+          <h2 className="text-xl font-semibold text-ink-50 mb-3">11. Termination</h2>
           <p>
             You may stop using the Services and close your account at any time. We may suspend or
             terminate your access if you violate these Terms, and will make reasonable efforts to
@@ -186,7 +186,7 @@ export default function TermsOfServicePage() {
         </div>
 
         <div id="changes">
-          <h2 className="text-xl font-semibold text-white mb-3">12. Changes to these terms</h2>
+          <h2 className="text-xl font-semibold text-ink-50 mb-3">12. Changes to these terms</h2>
           <p>
             We may update these Terms from time to time. If we make material changes, we&apos;ll
             update the &quot;Last updated&quot; date above and, where appropriate, notify you
@@ -196,7 +196,7 @@ export default function TermsOfServicePage() {
         </div>
 
         <div id="governing-law">
-          <h2 className="text-xl font-semibold text-white mb-3">13. Governing law</h2>
+          <h2 className="text-xl font-semibold text-ink-50 mb-3">13. Governing law</h2>
           <p>
             These Terms are governed by the laws of the United States and the state in which
             Proxigo AI Inc. is incorporated, without regard to conflict-of-law
@@ -205,7 +205,7 @@ export default function TermsOfServicePage() {
         </div>
 
         <div id="contact">
-          <h2 className="text-xl font-semibold text-white mb-3">14. Contact us</h2>
+          <h2 className="text-xl font-semibold text-ink-50 mb-3">14. Contact us</h2>
           <p>
             Questions about these Terms can go to{" "}
             <a href="mailto:support@proxigo.ai" className="text-signal-400 hover:text-signal-300 underline underline-offset-2">support@proxigo.ai</a>,

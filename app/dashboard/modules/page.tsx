@@ -31,7 +31,7 @@ export default async function ModulesPage() {
 
         {(modules ?? []).length === 0 ? (
           <div className="rounded-lg border border-dashed border-ink-700 px-6 py-12">
-            <p className="text-white mb-1">No modules registered yet</p>
+            <p className="text-ink-50 mb-1">No modules registered yet</p>
             <p className="text-sm text-ink-400 mb-5">
               Registering binds a module&apos;s serial to your account so it can download maps and receive updates.
             </p>
@@ -49,7 +49,7 @@ export default async function ModulesPage() {
                 }`}
               >
                 <div>
-                  <p className="text-sm font-medium text-white">
+                  <p className="text-sm font-medium text-ink-50">
                     {m.nickname ?? m.serial}
                   </p>
                   <p className="text-xs text-ink-500 font-mono mt-0.5">{m.serial}</p>

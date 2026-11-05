@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { BookOpen, Cpu, Download, Radio, Settings, Wrench, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import { buttonClasses } from "@/components/ui/button-classes";
 
 export const metadata: Metadata = {
   title: "Documentation",
@@ -9,7 +10,6 @@ export const metadata: Metadata = {
 
 const SECTIONS = [
   {
-    icon: Cpu,
     title: "Getting Started",
     desc: "Unbox, mount, and make your first position fix.",
     links: [
@@ -19,7 +19,6 @@ const SECTIONS = [
     ],
   },
   {
-    icon: Download,
     title: "Desktop App",
     desc: "Install and use the Proxigo Desktop App on Windows and macOS.",
     links: [
@@ -29,7 +28,6 @@ const SECTIONS = [
     ],
   },
   {
-    icon: Radio,
     title: "Flight Controller Integration",
     desc: "Connect Macula to ArduPilot, PX4, and Betaflight.",
     links: [
@@ -39,7 +37,6 @@ const SECTIONS = [
     ],
   },
   {
-    icon: Settings,
     title: "Configuration",
     desc: "Tune vision pipeline parameters and position filter settings.",
     links: [
@@ -49,7 +46,6 @@ const SECTIONS = [
     ],
   },
   {
-    icon: Wrench,
     title: "Troubleshooting",
     desc: "Diagnose common hardware and software issues.",
     links: [
@@ -59,7 +55,6 @@ const SECTIONS = [
     ],
   },
   {
-    icon: BookOpen,
     title: "API Reference",
     desc: "Integrate position data into your own ground control software.",
     links: [
@@ -73,35 +68,23 @@ const SECTIONS = [
 export default function DocsPage() {
   return (
     <>
-      <section className="pt-32 pb-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-5xl font-bold text-white tracking-tight mb-4">Documentation</h1>
-        <p className="text-ink-400 text-lg max-w-2xl">
-          Everything you need to set up, configure, and integrate the Macula VPS Module.
+      <section className="pt-32 sm:pt-40 pb-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 className="text-4xl sm:text-6xl font-semibold text-ink-50 tracking-tight mb-5">Documentation</h1>
+        <p className="text-ink-300 text-lg max-w-2xl">
+          Setup, configuration, and integration guides for Proxigo Desktop and the Macula VPS Module.
         </p>
       </section>
 
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-28 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-        {SECTIONS.map(({ icon: Icon, title, desc, links }) => (
-          <div
-            key={title}
-            className="rounded-lg border border-ink-800 bg-ink-900/30 p-6 flex flex-col gap-5 hover:border-ink-700 transition-colors"
-          >
-            <div>
-              <div className="w-9 h-9 rounded-lg bg-ink-800 flex items-center justify-center mb-4">
-                <Icon size={18} className="text-ink-300" />
-              </div>
-              <h2 className="font-semibold text-white mb-1.5">{title}</h2>
-              <p className="text-sm text-ink-500">{desc}</p>
-            </div>
-
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 grid sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-12">
+        {SECTIONS.map(({ title, desc, links }) => (
+          <div key={title} className="border-t-2 border-ink-50 pt-5 flex flex-col">
+            <h2 className="text-lg font-semibold text-ink-50 mb-1.5">{title}</h2>
+            <p className="text-ink-400 mb-4">{desc}</p>
             <ul className="space-y-1.5 mt-auto">
               {links.map(({ href, label }) => (
                 <li key={href}>
-                  <Link
-                    href={href}
-                    className="flex items-center gap-1.5 text-sm text-ink-400 hover:text-white transition-colors py-0.5"
-                  >
-                    <ArrowRight size={12} className="text-ink-500" />
+                  <Link href={href} className="inline-flex items-center gap-1.5 text-ink-300 hover:text-signal-400 py-0.5">
+                    <ArrowRight size={13} className="text-ink-500" />
                     {label}
                   </Link>
                 </li>
@@ -111,16 +94,15 @@ export default function DocsPage() {
         ))}
       </section>
 
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-28">
-        <div className="rounded-lg border border-ink-800 bg-ink-900/30 p-10 text-center">
-          <h2 className="text-2xl font-bold text-white mb-3">Can&apos;t find what you need?</h2>
-          <p className="text-ink-400 text-sm mb-6 max-w-md mx-auto">
-            Our documentation is still being written ahead of the August launch. Open a support ticket and we&apos;ll help directly.
-          </p>
-          <Link
-            href="/support"
-            className="inline-flex items-center gap-2 border border-ink-700 text-ink-300 font-medium px-5 py-2.5 rounded-lg hover:border-ink-500 hover:text-white transition-colors text-sm"
-          >
+      <section className="border-t border-ink-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div>
+            <h2 className="text-2xl font-semibold text-ink-50 mb-2">Can&apos;t find what you need?</h2>
+            <p className="text-ink-400 max-w-md">
+              The documentation is still being written. Open a support ticket and we&apos;ll help directly.
+            </p>
+          </div>
+          <Link href="/support" className={buttonClasses({ variant: "secondary" })}>
             Open a ticket
           </Link>
         </div>

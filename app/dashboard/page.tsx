@@ -98,7 +98,7 @@ export default async function DashboardPage() {
             )}
           </dt>
           <dd className="mt-2">
-            <span className="text-2xl font-mono text-white">{displayKm2Used.toFixed(1)}</span>
+            <span className="text-2xl font-mono text-ink-50">{displayKm2Used.toFixed(1)}</span>
             <span className="text-sm text-ink-400"> {displayKm2Limit > 0 ? `/ ${displayKm2Limit.toLocaleString()} km²` : "km²"}</span>
             {displayKm2Limit > 0 ? (
               <div
@@ -121,7 +121,7 @@ export default async function DashboardPage() {
         <div className="p-5">
           <dt className="text-sm text-ink-400">Registered modules</dt>
           <dd className="mt-2">
-            <span className="text-2xl font-mono text-white">{modules.length}</span>
+            <span className="text-2xl font-mono text-ink-50">{modules.length}</span>
             <span className="text-sm text-ink-400"> · {activeModules} active</span>
           </dd>
         </div>
@@ -130,7 +130,7 @@ export default async function DashboardPage() {
           <dd className="mt-2">
             {orgRow ? (
               <>
-                <Link href="/dashboard/organizations" className="text-lg font-medium text-white hover:text-signal-300">
+                <Link href="/dashboard/organizations" className="text-lg font-medium text-ink-50 hover:text-signal-300">
                   {orgRow.name}
                 </Link>
                 <p className="text-sm text-ink-400 capitalize">
@@ -139,7 +139,7 @@ export default async function DashboardPage() {
               </>
             ) : (
               <>
-                <Link href="/dashboard/billing" className="text-lg font-medium text-white capitalize hover:text-signal-300">
+                <Link href="/dashboard/billing" className="text-lg font-medium text-ink-50 capitalize hover:text-signal-300">
                   {profile?.plan ?? "No active plan"}
                 </Link>
                 <p className="text-sm text-ink-400">{profile?.plan ? "Active subscription" : "Hardware works without one"}</p>
@@ -152,17 +152,17 @@ export default async function DashboardPage() {
       <div className="grid lg:grid-cols-[1fr_20rem] gap-8">
         {/* Products */}
         <section aria-labelledby="products-heading">
-          <h2 id="products-heading" className="text-lg font-semibold text-white mb-4">Your products</h2>
+          <h2 id="products-heading" className="text-lg font-semibold text-ink-50 mb-4">Your products</h2>
 
           <div className="border border-ink-800 rounded-lg">
             <div className="flex items-center justify-between gap-4 px-5 py-4 border-b border-ink-800">
               <div>
-                <p className="font-medium text-white">{macula.name}</p>
+                <p className="font-medium text-ink-50">{macula.name}</p>
                 <p className="text-sm text-ink-400">{macula.category}</p>
               </div>
               <div className="flex gap-4 text-sm">
                 {macula.dashboard.map((item) => (
-                  <Link key={item.href} href={item.href} className="text-ink-300 hover:text-white">
+                  <Link key={item.href} href={item.href} className="text-ink-300 hover:text-ink-50">
                     {item.label}
                   </Link>
                 ))}
@@ -183,7 +183,7 @@ export default async function DashboardPage() {
                 {modules.slice(0, 5).map((m) => (
                   <li key={m.serial} className="flex items-center justify-between gap-4 px-5 py-3.5">
                     <div className="min-w-0">
-                      <p className="text-sm font-medium text-white truncate">{m.nickname ?? m.serial}</p>
+                      <p className="text-sm font-medium text-ink-50 truncate">{m.nickname ?? m.serial}</p>
                       <p className="text-xs text-ink-400 font-mono">{m.serial}</p>
                     </div>
                     <Badge variant={m.status === "active" ? "success" : "default"}>{m.status ?? "unknown"}</Badge>
@@ -191,7 +191,7 @@ export default async function DashboardPage() {
                 ))}
                 {modules.length > 5 && (
                   <li className="px-5 py-3">
-                    <Link href="/dashboard/modules" className="text-sm text-ink-300 hover:text-white">
+                    <Link href="/dashboard/modules" className="text-sm text-ink-300 hover:text-ink-50">
                       View all {modules.length} modules
                     </Link>
                   </li>
@@ -203,16 +203,16 @@ export default async function DashboardPage() {
           {otherProducts.map((p) => (
             <div key={p.slug} className="border border-ink-800 rounded-lg mt-4 px-5 py-4 flex items-center justify-between">
               <div>
-                <p className="font-medium text-white">{p.name}</p>
+                <p className="font-medium text-ink-50">{p.name}</p>
                 <p className="text-sm text-ink-400">{p.category}</p>
               </div>
-              <Link href={p.href} className="text-sm text-ink-300 hover:text-white">{STATUS_LABEL[p.status]}</Link>
+              <Link href={p.href} className="text-sm text-ink-300 hover:text-ink-50">{STATUS_LABEL[p.status]}</Link>
             </div>
           ))}
 
           <Link
             href="/platform"
-            className="mt-4 flex items-center justify-between gap-4 rounded-lg border border-dashed border-ink-700 px-5 py-4 text-sm text-ink-400 hover:text-white hover:border-ink-500"
+            className="mt-4 flex items-center justify-between gap-4 rounded-lg border border-dashed border-ink-700 px-5 py-4 text-sm text-ink-400 hover:text-ink-50 hover:border-ink-500"
           >
             More products are coming to the Proxigo platform
             <ArrowRight size={14} />
@@ -222,8 +222,8 @@ export default async function DashboardPage() {
         <aside className="space-y-8">
           <section aria-labelledby="support-heading">
             <div className="flex items-baseline justify-between mb-4">
-              <h2 id="support-heading" className="text-lg font-semibold text-white">Support</h2>
-              <Link href="/dashboard/support" className="text-sm text-ink-300 hover:text-white">All tickets</Link>
+              <h2 id="support-heading" className="text-lg font-semibold text-ink-50">Support</h2>
+              <Link href="/dashboard/support" className="text-sm text-ink-300 hover:text-ink-50">All tickets</Link>
             </div>
             {tickets.length === 0 ? (
               <p className="text-sm text-ink-400 border-t border-ink-800 pt-4">
@@ -239,7 +239,7 @@ export default async function DashboardPage() {
                         <span className="text-xs font-mono text-ink-400">#{t.ticket_id}</span>
                         <TicketStatusBadge status={t.status} />
                       </div>
-                      <p className="text-sm text-ink-200 truncate group-hover:text-white">{t.subject}</p>
+                      <p className="text-sm text-ink-200 truncate group-hover:text-ink-50">{t.subject}</p>
                     </Link>
                   </li>
                 ))}
@@ -248,7 +248,7 @@ export default async function DashboardPage() {
           </section>
 
           <section aria-labelledby="desktop-heading" className="border-t border-ink-800 pt-6">
-            <h2 id="desktop-heading" className="font-semibold text-white mb-1">Proxigo Desktop</h2>
+            <h2 id="desktop-heading" className="font-semibold text-ink-50 mb-1">Proxigo Desktop</h2>
             <p className="text-sm text-ink-400 mb-4">
               Download maps, configure modules, and install firmware updates.
             </p>

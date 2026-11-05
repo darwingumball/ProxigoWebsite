@@ -54,7 +54,7 @@ const DEV_DEFAULTS = {
 };
 
 const SELECT_CLASS =
-  "w-full rounded-md border border-ink-700 bg-ink-900 px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-signal-500/60 focus:ring-1 focus:ring-signal-500/20";
+  "w-full rounded-md border border-ink-700 bg-ink-900 px-3.5 py-2.5 text-sm text-ink-50 focus:outline-none focus:border-signal-500/60 focus:ring-1 focus:ring-signal-500/20";
 
 interface SupportFormProps {
   /** Prefill for signed-in users. When set, name and email are shown read-only. */
@@ -177,12 +177,12 @@ export function SupportForm({ account, readQueryType = false, onSubmitted, class
     return (
       <div className={cn("py-8", className)} role="status">
         <CheckCircle2 className="text-emerald-400 mb-4" size={32} />
-        <h2 className="text-xl font-semibold text-white mb-2">
+        <h2 className="text-xl font-semibold text-ink-50 mb-2">
           {isSales ? "Sales inquiry received" : isDev ? "Developer inquiry received" : "Ticket submitted"}
           {ticketId && <span className="ml-2 font-mono text-base text-ink-400">#{ticketId}</span>}
         </h2>
         <p className="text-sm text-ink-300 leading-relaxed max-w-md">
-          We&apos;ve sent a confirmation to <span className="text-white">{form.email}</span>.
+          We&apos;ve sent a confirmation to <span className="text-ink-50">{form.email}</span>.
           {isSales
             ? " Our sales team will be in touch within 1–2 business days."
             : isDev
@@ -202,7 +202,7 @@ export function SupportForm({ account, readQueryType = false, onSubmitted, class
     <form onSubmit={handleSubmit} className={cn("space-y-5", className)}>
       {account ? (
         <p className="text-sm text-ink-400">
-          Submitting as <span className="text-white">{account.name || account.email}</span>
+          Submitting as <span className="text-ink-50">{account.name || account.email}</span>
           {account.name && <> · {account.email}</>}
         </p>
       ) : (
@@ -222,7 +222,7 @@ export function SupportForm({ account, readQueryType = false, onSubmitted, class
 
       {isSales && (
         <fieldset className="border-l-2 border-signal-500 pl-5 space-y-5">
-          <legend className="text-sm font-medium text-white mb-4">Sales details</legend>
+          <legend className="text-sm font-medium text-ink-50 mb-4">Sales details</legend>
 
           <div className="flex flex-col gap-1.5">
             <span className="text-sm text-ink-300">Inquiry type</span>
@@ -238,7 +238,7 @@ export function SupportForm({ account, readQueryType = false, onSubmitted, class
                     "rounded-md border px-4 py-3 text-left text-sm transition-colors",
                     form.salesType === type
                       ? "border-signal-500/60 bg-signal-500/10 text-signal-200"
-                      : "border-ink-700 text-ink-300 hover:border-ink-500 hover:text-white"
+                      : "border-ink-700 text-ink-300 hover:border-ink-500 hover:text-ink-50"
                   )}
                 >
                   {type}
@@ -293,7 +293,7 @@ export function SupportForm({ account, readQueryType = false, onSubmitted, class
           onChange={handleChange}
           required
           maxLength={5000}
-          className="w-full rounded-md border border-ink-700 bg-ink-900 px-3.5 py-2.5 text-sm text-white placeholder:text-ink-500 transition-colors focus:outline-none focus:border-signal-500/60 focus:ring-1 focus:ring-signal-500/20 resize-y"
+          className="w-full rounded-md border border-ink-700 bg-ink-900 px-3.5 py-2.5 text-sm text-ink-50 placeholder:text-ink-500 transition-colors focus:outline-none focus:border-signal-500/60 focus:ring-1 focus:ring-signal-500/20 resize-y"
         />
       </div>
 

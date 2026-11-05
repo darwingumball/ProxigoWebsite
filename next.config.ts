@@ -5,8 +5,10 @@ const CSP = [
   "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.stripe.com https://static.cloudflareinsights.com",
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "font-src 'self' https://fonts.gstatic.com",
-  "img-src 'self' data: blob: https://*.supabase.co",
-  "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://api.stripe.com",
+  "img-src 'self' data: blob: https://*.supabase.co https://api.mapbox.com",
+  "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://api.stripe.com https://api.mapbox.com https://events.mapbox.com",
+  // Mapbox GL runs its renderer in blob: workers
+  "worker-src 'self' blob:",
   // Stripe, plus the hosts ProductDemo can embed (interactive demos and video)
   "frame-src https://js.stripe.com https://hooks.stripe.com https://demo.arcade.software https://app.storylane.io https://app.supademo.com https://www.youtube-nocookie.com https://player.vimeo.com",
   "object-src 'none'",

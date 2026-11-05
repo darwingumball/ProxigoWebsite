@@ -34,7 +34,7 @@ export default function IntegrationsPage() {
     <>
       {/* Hero */}
       <section className="pt-32 sm:pt-40 pb-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-4xl sm:text-5xl font-semibold text-white tracking-tight mb-5 max-w-3xl">
+        <h1 className="text-4xl sm:text-5xl font-semibold text-ink-50 tracking-tight mb-5 max-w-3xl">
           Plug into anything. No lock-in.
         </h1>
         <p className="text-lg text-ink-300 leading-relaxed mb-8 max-w-2xl">
@@ -60,7 +60,7 @@ export default function IntegrationsPage() {
               {LINKS.map(({ from, detail, via, primary }) => (
                 <div key={from} className="flex items-center gap-0">
                   <div className="flex-1 rounded border border-ink-700 bg-ink-950 px-4 py-3">
-                    <p className="text-sm font-medium text-white">{from}</p>
+                    <p className="text-sm font-medium text-ink-50">{from}</p>
                     <p className="text-xs text-ink-400">{detail}</p>
                   </div>
                   <div className={`hidden md:block w-16 h-px ${primary ? "bg-signal-500" : "bg-ink-500"}`} />
@@ -78,7 +78,7 @@ export default function IntegrationsPage() {
             <div className="hidden md:block w-px self-stretch bg-ink-700 my-6" />
             <div className="md:pl-10">
               <div className="rounded border-2 border-signal-500/70 bg-ink-950 px-5 py-5">
-                <p className="text-sm font-semibold text-white">Macula module</p>
+                <p className="text-sm font-semibold text-ink-50">Macula module</p>
                 <p className="text-xs text-ink-400 mt-1">CM5 · onboard vision model · Proxigo OS</p>
                 <p className="text-xs font-mono text-ink-400 mt-4 pt-3 border-t border-ink-800">
                   ↓ downward camera → terrain
@@ -96,7 +96,7 @@ export default function IntegrationsPage() {
       {/* Compatible platforms */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 grid lg:grid-cols-[1fr_2fr] gap-10">
         <div>
-          <h2 className="text-2xl font-semibold text-white tracking-tight mb-3">Works with your stack</h2>
+          <h2 className="text-2xl font-semibold text-ink-50 tracking-tight mb-3">Works with your stack</h2>
           <p className="text-sm text-ink-400">
             Running something not listed?{" "}
             <Link href="/support#contact" className="text-signal-400 hover:text-signal-300">Ask us.</Link>
@@ -105,7 +105,7 @@ export default function IntegrationsPage() {
         <dl className="border-t border-ink-800">
           {PLATFORMS.map(({ name, logo, desc }) => (
             <div key={name} className="grid sm:grid-cols-[12rem_1fr] gap-x-6 gap-y-1 py-5 border-b border-ink-800">
-              <dt className="font-medium text-white">
+              <dt className="font-medium text-ink-50">
                 {name} <span className="ml-1 font-mono text-xs text-ink-400">{logo}</span>
               </dt>
               <dd className="text-sm text-ink-400 leading-relaxed">{desc}</dd>
@@ -117,14 +117,14 @@ export default function IntegrationsPage() {
       {/* Developer tools */}
       <section className="border-y border-ink-800 bg-ink-900/40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <h2 className="text-2xl font-semibold text-white tracking-tight mb-3">Built for engineers</h2>
+          <h2 className="text-2xl font-semibold text-ink-50 tracking-tight mb-3">Built for engineers</h2>
           <p className="text-ink-400 mb-10 max-w-lg">
             Open message formats, local APIs, and full protocol docs. Build exactly what you need.
           </p>
           <dl className="grid sm:grid-cols-2 lg:grid-cols-4 gap-x-10 gap-y-8">
             {SDK_FEATURES.map(({ title, desc }) => (
               <div key={title} className="border-l-2 border-signal-500/70 pl-5">
-                <dt className="font-medium text-white mb-1.5">{title}</dt>
+                <dt className="font-medium text-ink-50 mb-1.5">{title}</dt>
                 <dd className="text-sm text-ink-400 leading-relaxed">{desc}</dd>
               </div>
             ))}
@@ -135,7 +135,7 @@ export default function IntegrationsPage() {
       {/* CTA */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
-          <h2 className="text-2xl font-semibold text-white mb-2">Ready to integrate?</h2>
+          <h2 className="text-2xl font-semibold text-ink-50 mb-2">Ready to integrate?</h2>
           <p className="text-ink-400 max-w-md">
             Start with the documentation, or talk to our engineering team about custom deployments.
           </p>

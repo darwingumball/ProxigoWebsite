@@ -81,7 +81,7 @@ export default function SettingsPage() {
         <div className="rounded-lg border border-ink-800 bg-ink-900/40 overflow-hidden mb-6">
           <div className="flex items-center gap-2 px-5 py-4 border-b border-ink-800">
             <User size={14} className="text-ink-500" />
-            <h2 className="text-sm font-medium text-white">Profile</h2>
+            <h2 className="text-sm font-medium text-ink-50">Profile</h2>
           </div>
           <form onSubmit={saveName} className="p-5 space-y-4">
             <div>
@@ -98,7 +98,7 @@ export default function SettingsPage() {
                 type="text"
                 value={fullName}
                 onChange={e => setFullName(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-lg border border-ink-700 bg-ink-900 text-white text-sm placeholder:text-ink-500 focus:outline-none focus:border-signal-500/60 focus:ring-1 focus:ring-signal-500/20"
+                className="w-full px-3.5 py-2.5 rounded-lg border border-ink-700 bg-ink-900 text-ink-50 text-sm placeholder:text-ink-500 focus:outline-none focus:border-signal-500/60 focus:ring-1 focus:ring-signal-500/20"
                 placeholder="Your name"
               />
             </div>
@@ -120,7 +120,7 @@ export default function SettingsPage() {
         <div className="rounded-lg border border-ink-800 bg-ink-900/40 overflow-hidden mb-6">
           <div className="flex items-center gap-2 px-5 py-4 border-b border-ink-800">
             <Lock size={14} className="text-ink-500" />
-            <h2 className="text-sm font-medium text-white">Change Password</h2>
+            <h2 className="text-sm font-medium text-ink-50">Change Password</h2>
           </div>
           <form onSubmit={savePassword} className="p-5 space-y-4">
             {(["next", "confirm"] as const).map((field) => (
@@ -133,7 +133,7 @@ export default function SettingsPage() {
                   type="password"
                   value={pwForm[field]}
                   onChange={e => setPwForm(p => ({ ...p, [field]: e.target.value }))}
-                  className="w-full px-3.5 py-2.5 rounded-lg border border-ink-700 bg-ink-900 text-white text-sm placeholder:text-ink-500 focus:outline-none focus:border-signal-500/60 focus:ring-1 focus:ring-signal-500/20"
+                  className="w-full px-3.5 py-2.5 rounded-lg border border-ink-700 bg-ink-900 text-ink-50 text-sm placeholder:text-ink-500 focus:outline-none focus:border-signal-500/60 focus:ring-1 focus:ring-signal-500/20"
                   placeholder="••••••••"
                   minLength={8}
                 />
@@ -145,7 +145,7 @@ export default function SettingsPage() {
             <button
               type="submit"
               disabled={pwSaving || !pwForm.next || !pwForm.confirm}
-              className="inline-flex items-center gap-2 border border-ink-700 text-ink-300 text-sm font-medium px-4 py-2 rounded-lg hover:border-ink-500 hover:text-white transition-colors disabled:opacity-60"
+              className="inline-flex items-center gap-2 border border-ink-700 text-ink-300 text-sm font-medium px-4 py-2 rounded-lg hover:border-ink-500 hover:text-ink-50 transition-colors disabled:opacity-60"
             >
               <Lock size={13} />
               {pwSaving ? "Updating…" : "Update password"}

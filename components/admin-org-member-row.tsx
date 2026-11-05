@@ -52,7 +52,7 @@ export function AdminOrgMemberRow({ orgId, member }: { orgId: string; member: Me
               : <User size={12} className="text-ink-500" />}
           </div>
           <div>
-            <p className="text-sm text-white font-medium">{member.name ?? "—"}</p>
+            <p className="text-sm text-ink-50 font-medium">{member.name ?? "—"}</p>
             <p className="text-xs text-ink-500">{member.email ?? member.user_id.slice(0, 20) + "…"}</p>
           </div>
         </div>
