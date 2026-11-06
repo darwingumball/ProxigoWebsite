@@ -5,7 +5,9 @@ import { CheckCircle2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { SERVICES, TIMELINES, BUDGETS } from "@/lib/services";
+import { SERVICES, OTHER_INTERESTS, TIMELINES, BUDGETS } from "@/lib/services";
+
+const INTERESTS = [...SERVICES.map((s) => s.name), ...OTHER_INTERESTS];
 
 const SELECT_CLASS =
   "w-full rounded-md border border-ink-700 bg-ink-900 px-3.5 py-2.5 text-sm text-ink-50 focus:outline-none focus:border-signal-500 focus:ring-1 focus:ring-signal-500/30";
@@ -70,13 +72,13 @@ export function ProjectForm() {
       <Input id="companyName" name="companyName" label="Company" value={form.companyName} onChange={update} required autoComplete="organization" />
 
       <fieldset>
-        <legend className="text-sm text-ink-300 mb-2">What do you need help with?</legend>
+        <legend className="text-sm text-ink-300 mb-2">What are you interested in?</legend>
         <div className="grid sm:grid-cols-2 gap-2">
-          {SERVICES.map((s) => {
-            const on = services.includes(s.name);
+          {INTERESTS.map((name) => {
+            const on = services.includes(name);
             return (
               <label
-                key={s.id}
+                key={name}
                 className={cn(
                   "flex items-center gap-3 rounded-md border px-3.5 py-3 text-sm cursor-pointer transition-colors",
                   on ? "border-signal-500 bg-signal-950 text-ink-50" : "border-ink-700 text-ink-300 hover:border-ink-500"
@@ -85,10 +87,10 @@ export function ProjectForm() {
                 <input
                   type="checkbox"
                   checked={on}
-                  onChange={() => toggleService(s.name)}
+                  onChange={() => toggleService(name)}
                   className="accent-signal-500 w-4 h-4"
                 />
-                {s.name}
+                {name}
               </label>
             );
           })}

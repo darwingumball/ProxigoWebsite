@@ -11,9 +11,9 @@ import { Logo } from "@/components/logo";
 import type { User } from "@supabase/supabase-js";
 
 const NAV_LINKS = [
+  { href: "/#platform", label: "Platform" },
   { href: "/services", label: "Services" },
-  { href: "/platform", label: "Platform" },
-  { href: "/about", label: "About" },
+  { href: "/#company", label: "Company" },
   { href: "/docs", label: "Docs" },
 ];
 

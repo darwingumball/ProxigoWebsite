@@ -17,9 +17,9 @@ const plexMono = IBM_Plex_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://proxigo.ai"),
-  title: { default: "Proxigo | Cloud architecture, integrations, and operations software", template: "%s | Proxigo" },
+  title: { default: "Proxigo | Operations platform and engineering contractors", template: "%s | Proxigo" },
   description:
-    "Proxigo is a small, independent engineering firm. We review, fix, and build AWS backends, integrate the systems you already run, and build our own operations platform.",
+    "Proxigo builds Proxigo Desktop, a map-based operations platform, and works as independent engineering contractors on features, computer vision, and product completion.",
   icons: {
     icon: "/favicon.png",
     apple: "/favicon.png",

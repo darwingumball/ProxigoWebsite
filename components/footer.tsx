@@ -9,13 +9,14 @@ const LINKS = {
     { href: "/services#engagements", label: "How we engage" },
   ],
   Products: [
-    { href: "/platform", label: "Proxigo Desktop" },
+    { href: "/#platform", label: "Proxigo Desktop" },
+    { href: "/#license", label: "Platform licensing" },
     ...PRODUCTS.map((p) => ({ href: p.href, label: p.name })),
     { href: "/integrations", label: "Macula integrations" },
     { href: "/pricing", label: "Macula pricing" },
   ],
   Company: [
-    { href: "/about", label: "About" },
+    { href: "/#company", label: "About" },
     { href: "/contact", label: "Contact" },
     { href: "/support", label: "Customer support" },
     { href: "/docs", label: "Documentation" },
@@ -31,7 +32,7 @@ export function Footer() {
           <div className="col-span-2 md:col-span-1">
             <Logo className="mb-4" />
             <p className="text-sm text-ink-400 leading-relaxed max-w-xs">
-              Independent engineering for cloud backends, integrations, and field operations software.
+              Operations software, and the engineers to build on it.
             </p>
           </div>
 

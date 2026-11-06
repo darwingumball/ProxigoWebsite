@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Check } from "lucide-react";
 import { buttonClasses } from "@/components/ui/button-classes";
-import { SERVICES, ENGAGEMENTS, PROCESS } from "@/lib/services";
+import { SERVICES, ENGAGEMENTS, PROCESS, SCENARIOS } from "@/lib/services";
 
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "Architecture reviews, AWS backend engineering, systems integration, and contract engineering from a small, independent team.",
+    "Independent engineering contractors for feature development, computer vision, product completion, and AWS backends, working inside your platform.",
 };
 
 const FAQ = [
@@ -17,7 +17,11 @@ const FAQ = [
   },
   {
     q: "Do you only work on AWS?",
-    a: "Most of our work is on AWS, and that is where we are strongest. Integration work often touches other platforms and APIs, which is normal. If your core infrastructure is elsewhere, ask and we will tell you honestly whether we are the right fit.",
+    a: "Our backend work is strongest on AWS. Feature and computer vision work happens in whatever stack your product already uses. If your infrastructure is elsewhere, ask and we will tell you honestly whether we are the right fit.",
+  },
+  {
+    q: "Can you sign an NDA and work under our contractor agreement?",
+    a: "Yes. We work as independent contractors under your agreement or ours, and sign an NDA before seeing code or data.",
   },
   {
     q: "How big is the team?",
@@ -38,11 +42,11 @@ export default function ServicesPage() {
     <>
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 sm:pt-36 pb-16">
         <h1 className="type-title text-ink-50 max-w-4xl mb-6">
-          Engineering services for teams that need it done properly.
+          Independent engineers who finish what your roadmap started.
         </h1>
         <p className="type-lead text-ink-300 max-w-2xl">
-          Four ways we work with companies: reviewing what you have, building what you need, connecting what you
-          run, and adding engineers when you are short.
+          We work as contractors inside your platform: new features, computer vision, and products taken to 100% and
+          integrated with what you already run. Your repositories, your release process, your IP.
         </p>
         <nav aria-label="Services" className="mt-10 flex flex-wrap gap-x-6 gap-y-2">
           {SERVICES.map((s, i) => (
@@ -80,8 +84,28 @@ export default function ServicesPage() {
         </section>
       ))}
 
+      {/* Scenarios */}
+      <section className="bg-ink-900 border-y border-ink-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 grid lg:grid-cols-[1fr_2fr] gap-12">
+          <div>
+            <h2 className="type-section text-ink-50 mb-4">Where we usually start</h2>
+            <p className="text-ink-400 leading-relaxed max-w-sm">
+              Most contracts begin with one of these. If yours is different, that is fine too.
+            </p>
+          </div>
+          <dl className="divide-y divide-ink-800 border-y border-ink-800">
+            {SCENARIOS.map(({ problem, response }) => (
+              <div key={problem} className="grid md:grid-cols-2 gap-x-10 gap-y-2 py-6">
+                <dt className="font-medium text-ink-50 leading-snug">{problem}</dt>
+                <dd className="text-ink-400 leading-relaxed">{response}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </section>
+
       {/* Process */}
-      <section id="process" className="scroll-mt-20 bg-ink-900 border-y border-ink-800">
+      <section id="process" className="scroll-mt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
           <h2 className="type-section text-ink-50 mb-12">How a project runs</h2>
           <ol className="grid sm:grid-cols-2 lg:grid-cols-4 gap-x-10 gap-y-10">

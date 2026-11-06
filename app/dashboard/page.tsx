@@ -211,7 +211,7 @@ export default async function DashboardPage() {
           ))}
 
           <Link
-            href="/platform"
+            href="/#platform"
             className="mt-4 flex items-center justify-between gap-4 rounded-lg border border-dashed border-ink-700 px-5 py-4 text-sm text-ink-400 hover:text-ink-50 hover:border-ink-500"
           >
             More products are coming to the Proxigo platform
@@ -252,7 +252,7 @@ export default async function DashboardPage() {
             <p className="text-sm text-ink-400 mb-4">
               Download maps, configure modules, and install firmware updates.
             </p>
-            <Link href="/platform#download" className={buttonClasses({ variant: "secondary", size: "sm" })}>
+            <Link href="/#download" className={buttonClasses({ variant: "secondary", size: "sm" })}>
               <Download size={14} /> Get the app
             </Link>
           </section>

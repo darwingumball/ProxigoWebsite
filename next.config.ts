@@ -34,7 +34,9 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
-      { source: "/desktop", destination: "/platform", permanent: true },
+      { source: "/desktop", destination: "/#platform", permanent: true },
+      { source: "/platform", destination: "/#platform", permanent: true },
+      { source: "/about", destination: "/#company", permanent: true },
     ];
   },
   async headers() {

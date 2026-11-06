@@ -1,5 +1,5 @@
-// Consulting offer. The home page, /services, and the /contact form all read
-// from here so service names stay consistent.
+// Engineering contract offer. /services, the home page, and the /contact form
+// all read from here so service names stay consistent.
 
 export interface Service {
   id: string;
@@ -11,55 +11,55 @@ export interface Service {
 
 export const SERVICES: Service[] = [
   {
-    id: "architecture-review",
-    name: "Architecture review",
-    summary: "Find out what is slowing you down, costing too much, or one bad day from an outage.",
+    id: "features",
+    name: "Feature development",
+    summary: "Roadmap features built and shipped inside your product.",
     detail:
-      "A fixed-scope assessment of the systems you run today: AWS accounts, services, data stores, deployment, and how they hold up under load. You get a written report with findings ranked by impact and a plan your team can act on with or without us.",
+      "You have a backlog and not enough engineers for it. We take a feature from spec to production in your codebase, following your review, testing, and release process. Each feature ships with tests and documentation your team can maintain.",
     deliverables: [
-      "Current-state architecture diagram",
-      "Cost, reliability, and security findings, ranked",
-      "Scaling bottlenecks and failure points",
-      "A phased remediation plan with effort estimates",
+      "Frontend, backend, and API work in your repositories",
+      "Tests and CI checks alongside every change",
+      "Release through your existing deploy pipeline",
+      "Written notes your team can maintain from",
     ],
   },
   {
-    id: "aws-backend",
-    name: "AWS backend engineering",
-    summary: "Fix the architecture you have, or design and build something new.",
+    id: "computer-vision",
+    name: "Computer vision",
+    summary: "Camera and image data turned into something your product can act on.",
     detail:
-      "We design and build backends on AWS: APIs, containers or serverless, databases, queues and event pipelines, with infrastructure as code and CI/CD from day one. Migrations are staged so production keeps running while we change it.",
+      "Detection, tracking, measurement, and visual positioning, from dataset to deployed model. We built the vision stack behind Macula, our own GPS-free positioning module, so we know what it takes to run models on real cameras, at the edge or in the cloud.",
     deliverables: [
+      "Data collection, labeling plan, and evaluation set",
+      "Model training and accuracy reports against your data",
+      "Edge deployment (Jetson, embedded) or cloud inference on AWS",
+      "Integration of results into your app, API, or dashboard",
+    ],
+  },
+  {
+    id: "product-completion",
+    name: "Product completion",
+    summary: "A half-built product taken to finished and running in your platform.",
+    detail:
+      "Prototypes stall at 80%. We take the product the rest of the way: the missing features, the edge cases, auth and billing, deployment, monitoring, and the integration into your existing platform. You get a product your customers can use, not another demo.",
+    deliverables: [
+      "Gap review: what is left between the prototype and launch",
+      "The missing features, hardening, and security work",
+      "Integration into your platform, accounts, and data",
+      "Production deployment, monitoring, and handover",
+    ],
+  },
+  {
+    id: "cloud-integrations",
+    name: "AWS backends and integrations",
+    summary: "Fix, extend, or build the backend and connect the systems around it.",
+    detail:
+      "We review the AWS architecture you run, fix what is slow, fragile, or expensive, and build what is missing. When systems need to share data, we connect them through your existing APIs with integrations that are versioned and monitored.",
+    deliverables: [
+      "Architecture review with findings ranked by impact",
       "APIs and services on ECS, Lambda, or EC2",
-      "Data stores: RDS/Aurora, DynamoDB, S3",
-      "Infrastructure as code (Terraform or CDK)",
-      "CI/CD, monitoring, alerting, and runbooks",
-    ],
-  },
-  {
-    id: "integrations",
-    name: "Integrations",
-    summary: "Connect the systems that should already be talking to each other.",
-    detail:
-      "We work with your existing APIs and infrastructure, not around them. Third-party platforms, internal services, field devices, and data feeds get connected through integrations that are versioned, monitored, and documented.",
-    deliverables: [
-      "API integrations and webhooks",
-      "Data pipelines and syncs between systems",
-      "Auth and SSO between platforms",
-      "Field device and telemetry ingestion",
-    ],
-  },
-  {
-    id: "contract-engineering",
-    name: "Contract engineering",
-    summary: "Senior engineers who join your team for a defined scope.",
-    detail:
-      "When you need capacity rather than a project, we work as independent contractors inside your repositories, cloud accounts, and processes. You direct the work; we bring the experience to get it done without hand-holding.",
-    deliverables: [
-      "Feature and platform work in your codebase",
-      "Code review and pairing with your engineers",
-      "On-call and incident support by arrangement",
-      "Documentation and handover as we go",
+      "Infrastructure as code (Terraform or CDK) and CI/CD",
+      "API integrations, webhooks, and data syncs",
     ],
   },
 ];
@@ -68,45 +68,48 @@ export const ENGAGEMENTS = [
   {
     name: "Assessment",
     terms: "Fixed scope, fixed fee",
-    desc: "A bounded review with a written report and plan. The usual starting point if you are not sure where the problems are.",
+    desc: "A short review of your code, architecture, or prototype with a written plan. The usual start when the scope is not clear yet.",
   },
   {
     name: "Project",
     terms: "Milestone-based",
-    desc: "Scoped from an assessment or your own spec, priced per milestone, delivered in your accounts and repositories.",
+    desc: "A feature, model, or product scoped in writing and priced per milestone. Delivered in your accounts and repositories.",
   },
   {
     name: "Retainer",
     terms: "Monthly hours",
-    desc: "Ongoing engineering capacity for teams that need contractors on call for a roadmap rather than a single project.",
+    desc: "A block of engineering hours each month for teams that need contractors on a roadmap rather than a single project.",
   },
 ];
 
 export const PROCESS = [
-  { title: "Scoping call", desc: "A short call about what you run, what is breaking, and what you need. No preparation required." },
+  { title: "Scoping call", desc: "A short call about your product, your platform, and what needs to ship. No preparation required." },
   { title: "Written proposal", desc: "Scope, approach, timeline, and price in writing, so you know exactly what you are agreeing to." },
-  { title: "Build in the open", desc: "We work in your accounts and repositories with weekly written updates and working software at each milestone." },
-  { title: "Handover", desc: "Documentation, runbooks, and a walkthrough. Your team owns everything we built." },
+  { title: "Build in your repos", desc: "We work in your accounts and repositories, with weekly written updates and working software at each milestone." },
+  { title: "Handover", desc: "Documentation, runbooks, and a walkthrough. Your team owns the code and the IP." },
 ];
 
 export const SCENARIOS = [
   {
-    problem: "Your backend grew up on one server and it is starting to fall over at peak.",
-    response: "We split out the parts under load, move them onto managed AWS services, and migrate without a big-bang cutover.",
+    problem: "A feature your customers keep asking for has sat on the roadmap for two quarters.",
+    response: "We scope it with your team, build it in your codebase, and ship it through your release process.",
   },
   {
-    problem: "Your AWS bill grew faster than your customer count.",
-    response: "We find the waste: idle capacity, chatty services, the wrong storage classes, and fix it in order of savings.",
+    problem: "You have camera data and an idea for what it could tell you, but no one on staff who has shipped a vision model.",
+    response: "We run a short feasibility test on your data first, so you know the achievable accuracy before committing to a build.",
   },
   {
-    problem: "Two systems that should share data rely on someone exporting a spreadsheet.",
-    response: "We build an integration against the APIs you already have, with retries, monitoring, and an audit trail.",
+    problem: "A prototype works in demos but is not ready for paying customers.",
+    response: "We list the gap to launch, then close it: hardening, auth, billing, deployment, and monitoring.",
   },
   {
-    problem: "There is a feature on the roadmap and nobody free to build it.",
-    response: "We join your team as contractors for that scope, work your way, and leave it documented.",
+    problem: "Your backend is slowing down or getting expensive as you grow.",
+    response: "We find the bottleneck or the waste, fix it in order of impact, and migrate without a big-bang cutover.",
   },
 ];
+
+// Extra choices on the contact form that are not engineering services.
+export const OTHER_INTERESTS = ["Licensing Proxigo Desktop"];
 
 export const TIMELINES = ["As soon as possible", "Within 1–3 months", "3–6 months out", "Just exploring"];
 export const BUDGETS = ["Under $10k", "$10k–$25k", "$25k–$75k", "$75k+", "Not sure yet"];

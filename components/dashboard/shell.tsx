@@ -34,7 +34,7 @@ const ACCOUNT_NAV: NavItem[] = [
 const HELP_NAV: NavItem[] = [
   { href: "/dashboard/support",  label: "Support",          icon: LifeBuoy },
   { href: "/docs",               label: "Documentation",    icon: BookOpen, external: true },
-  { href: "/platform#download",  label: "Download Desktop", icon: Download, external: true },
+  { href: "/#download",  label: "Download Desktop", icon: Download, external: true },
 ];
 
 function NavLink({ href, label, icon: Icon, active }: NavItem & { active: boolean }) {
@@ -109,7 +109,7 @@ export function DashboardShell({ account, children }: { account: Account; childr
             </div>
           ))}
           <Link
-            href="/platform"
+            href="/#platform"
             className="flex items-center gap-2.5 px-2.5 py-2 rounded text-sm text-ink-400 hover:text-ink-50 hover:bg-ink-900"
           >
             <Plus size={15} /> Explore products
