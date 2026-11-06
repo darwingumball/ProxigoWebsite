@@ -4,7 +4,10 @@ import { ProjectForm } from "@/components/project-form";
 // Building blocks for the framed-grid marketing layout: full-bleed bands with
 // a ruled centre column, boxed cells, and the shared contact block.
 
+// Spacing roles. CELL pads content cells; HEAD pads the header row that opens
+// a section, so every section starts with its title at the top.
 export const CELL = "p-6 sm:p-8";
+export const HEAD = "px-6 sm:px-8 pt-12 pb-10 sm:pt-16 sm:pb-12 border-b border-ink-800";
 
 export function Band({
   id,
@@ -42,8 +45,8 @@ export function PageIntro({
       <div className="plus-field h-16 sm:h-24 border-b border-ink-800" aria-hidden />
       <div className={cn("grid", aside && "lg:grid-cols-[1.25fr_1fr] lg:divide-x divide-ink-800")}>
         <div className="px-6 sm:px-8 py-12 sm:py-16">
-          <p className="bracket">{label}</p>
-          <h1 className={cn(display ? "type-display" : "type-title", "text-ink-50 mt-6 mb-6 max-w-3xl")}>{title}</h1>
+          <p className={cn("bracket", display && "text-lg! sm:text-xl! text-ink-50!")}>{label}</p>
+          <h1 className={cn(display ? "type-display" : "type-title", "text-ink-50 mt-5 mb-6 max-w-3xl")}>{title}</h1>
           {children}
         </div>
         {aside}
@@ -112,21 +115,22 @@ export function ContactBand({
   lead?: string;
 }) {
   return (
-    <Band id="contact" dark className="grid lg:grid-cols-2 lg:divide-x divide-ink-800">
-      <div className={cn(CELL, "flex")}>
-        <div className="chamfer plus-field bg-ink-900 w-full min-h-64 lg:min-h-0 flex flex-col justify-end p-8 [--cut:20px]">
-          <p className="tag mb-3">Direct line</p>
+    <Band id="contact" dark className="grid lg:grid-cols-[1fr_1.4fr] lg:divide-x divide-ink-800">
+      <div className="flex flex-col">
+        <div className="px-6 sm:px-8 pt-12 sm:pt-16 pb-10">
+          <p className="bracket">We reply within one business day</p>
+          <h2 className="type-section text-ink-50 mt-5 mb-4">{title}</h2>
+          <p className="text-ink-300 leading-relaxed max-w-md">{lead}</p>
+        </div>
+        <div className={cn(CELL, "border-t border-ink-800")}>
           <p className="type-cell text-ink-50 mb-2">You talk to the engineers doing the work.</p>
           <p className="text-ink-400">
-            No account managers. Write to{" "}
-            <span className="text-ink-50">support@proxigo.ai</span> if you prefer email.
+            No account managers. Prefer email? <span className="text-ink-50">support@proxigo.ai</span>
           </p>
         </div>
+        <div className="plus-field flex-1 min-h-24 border-t border-ink-800 hidden lg:block" aria-hidden />
       </div>
-      <div className={cn(CELL, "py-12 sm:py-16")}>
-        <p className="bracket">We reply within one business day</p>
-        <h2 className="type-section text-ink-50 mt-6 mb-4">{title}</h2>
-        <p className="text-ink-300 leading-relaxed mb-10 max-w-lg">{lead}</p>
+      <div className={cn(CELL, "pt-12 sm:pt-16 border-t border-ink-800 lg:border-t-0")}>
         <ProjectForm />
       </div>
     </Band>

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Band, Cell, CELL, ContactBand, PageIntro, StepShape } from "@/components/framed";
+import { Band, Cell, CELL, ContactBand, HEAD, PageIntro, StepShape } from "@/components/framed";
 import { SERVICES, ENGAGEMENTS, PROCESS } from "@/lib/services";
 
 export const metadata: Metadata = {
@@ -61,8 +61,8 @@ export default function ServicesPage() {
 
       {/* Process */}
       <Band dark>
-        <div className={cn(CELL, "border-b border-ink-800")}>
-          <h2 className="type-section text-ink-50">How a project runs</h2>
+        <div className={HEAD}>
+          <h2 className="type-title text-ink-50">How a project runs</h2>
         </div>
         <ol className="cells sm:grid-cols-2 lg:grid-cols-4">
           {PROCESS.map((p, i) => (
@@ -89,8 +89,8 @@ export default function ServicesPage() {
 
       {/* FAQ */}
       <Band className="grid lg:grid-cols-[1fr_2fr] lg:divide-x divide-ink-800">
-        <div className={CELL}>
-          <h2 className="type-section text-ink-50">Questions</h2>
+        <div className={cn(CELL, "pt-12 sm:pt-16")}>
+          <h2 className="type-title text-ink-50">Questions</h2>
         </div>
         <div>
           {FAQ.map(({ q, a }) => (

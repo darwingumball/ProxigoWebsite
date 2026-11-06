@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { AppPreview } from "@/components/app-preview";
 import { OpsGlobe } from "@/components/ops-globe";
 import { ProductDemo } from "@/components/product-demo";
-import { Band, Cell, CELL, ContactBand, PageIntro } from "@/components/framed";
+import { Band, Cell, CELL, ContactBand, HEAD, PageIntro } from "@/components/framed";
 import { buttonClasses } from "@/components/ui/button-classes";
 import { cn } from "@/lib/utils";
 import { SERVICES, BACKGROUND } from "@/lib/services";
@@ -44,8 +44,11 @@ export default function Home() {
 
       {/* Platform */}
       <Band id="platform">
-        <div className={cn(CELL, "border-b border-ink-800")}>
+        <div className={cn(HEAD, "grid lg:grid-cols-2 gap-x-8 gap-y-4")}>
           <h2 className="type-title text-ink-50">Proxigo Desktop</h2>
+          <p className="type-lead text-ink-400 max-w-lg">
+            The operations platform we build and run. Clients use it as is, or we extend it for them.
+          </p>
         </div>
         <div className="cells sm:grid-cols-2 lg:grid-cols-4">
           {CAPABILITIES.map((c) => (
@@ -64,10 +67,10 @@ export default function Home() {
       </Band>
 
       {/* License */}
-      <Band id="license" className={cn(CELL, "py-12 sm:py-16 grid lg:grid-cols-2 gap-8 lg:items-end")}>
+      <Band id="license" className={cn(HEAD, "border-b-0 grid lg:grid-cols-2 gap-x-8 gap-y-6")}>
         <div>
           <p className="bracket">Opening soon</p>
-          <h2 className="type-section text-ink-50 mt-6">License the platform instead of building one.</h2>
+          <h2 className="type-title text-ink-50 mt-5">License the platform instead of building one.</h2>
         </div>
         <div>
           <p className="text-ink-400 leading-relaxed mb-6 max-w-md">
@@ -85,7 +88,7 @@ export default function Home() {
 
       {/* Company */}
       <Band id="company" dark>
-        <div className={cn(CELL, "py-12 sm:py-16 border-b border-ink-800 grid lg:grid-cols-2 gap-8 lg:items-end")}>
+        <div className={cn(HEAD, "grid lg:grid-cols-2 gap-x-8 gap-y-4")}>
           <h2 className="type-title text-ink-50">A small team from security and AI.</h2>
           <p className="type-lead text-ink-300 max-w-lg">
             We build our own software and hardware, and contract for companies that need to ship faster than
@@ -101,8 +104,8 @@ export default function Home() {
 
       {/* Engineering */}
       <Band className="grid lg:grid-cols-[1fr_2fr] lg:divide-x divide-ink-800">
-        <div className={CELL}>
-          <h2 className="type-section text-ink-50 mb-6">Engineers for hire</h2>
+        <div className={cn(CELL, "pt-12 sm:pt-16")}>
+          <h2 className="type-title text-ink-50 mb-6">Engineers for hire</h2>
           <Link href="/services" className="tag hover:text-ink-50">
             How contracting works <ArrowRight size={12} />
           </Link>

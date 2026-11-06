@@ -168,13 +168,13 @@ body:has(> .theme-light) { background-color: #eff0f1; }
   & > * { background-color: var(--color-ink-950); }
 }
 
-/* "■ 01" marker above a cell title. */
+/* "■ label" marker above a cell title. */
 .tag {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
   font-family: var(--font-mono);
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--color-ink-500);
@@ -189,7 +189,7 @@ body:has(> .theme-light) { background-color: #eff0f1; }
 /* "[ SERVICES ]" section label. */
 .bracket {
   font-family: var(--font-mono);
-  font-size: 0.6875rem;
+  font-size: 0.8125rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--color-ink-300);
