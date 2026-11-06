@@ -211,7 +211,7 @@ export default async function DashboardPage() {
           ))}
 
           <Link
-            href="/#platform"
+            href="/products"
             className="mt-4 flex items-center justify-between gap-4 rounded-lg border border-dashed border-ink-700 px-5 py-4 text-sm text-ink-400 hover:text-ink-50 hover:border-ink-500"
           >
             More products are coming to the Proxigo platform

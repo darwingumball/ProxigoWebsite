@@ -11,7 +11,7 @@ import type { User } from "@supabase/supabase-js";
 
 const NAV_LINKS = [
   { href: "/services", label: "Engineering" },
-  { href: "/#platform", label: "Platform" },
+  { href: "/products", label: "Products" },
   { href: "/#company", label: "Company" },
   { href: "/docs", label: "Docs" },
 ];
@@ -70,7 +70,7 @@ export function Nav() {
                 Sign in
               </Link>
               <Link href="/contact" className={cn(cell, "bg-brand-600 text-white hover:bg-brand-700")}>
-                Contact
+                Book a call
               </Link>
             </>
           )}
@@ -100,7 +100,7 @@ export function Nav() {
             ))}
             {!user && (
               <Link href="/contact" className="px-5 py-4 font-mono text-sm uppercase tracking-[0.08em] bg-brand-600 text-white">
-                Contact
+                Book a call
               </Link>
             )}
           </div>

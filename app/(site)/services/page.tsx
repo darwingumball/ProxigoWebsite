@@ -32,10 +32,10 @@ const FAQ = [
 export default function ServicesPage() {
   return (
     <>
-      <PageIntro label="Services" title="Engineering">
+      <PageIntro label="Engineering" title="Contract engineers for product and AWS teams">
         <p className="type-lead text-ink-300 max-w-xl">
-          Independent contractors with security and AI backgrounds. We take on the work your team has no time
-          for, inside your codebase and your AWS accounts.
+          Independent contractors with security and AI backgrounds, working inside your codebase and AWS
+          accounts. Assessments are a fixed fee.
         </p>
       </PageIntro>
 

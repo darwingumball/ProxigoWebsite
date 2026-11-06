@@ -49,9 +49,9 @@ const FULL_SPECS = [
 
 
 const ECOSYSTEM = [
-  { title: "Proxigo Desktop",      href: "/#platform",    desc: "Onboarding, module config, and satellite map preloading on Windows, macOS, and Linux. Connect over USB-C and configure in minutes." },
+  { title: "Proxigo Desktop",      href: "/products#desktop",   desc: "Onboarding, module config, and satellite map preloading on Windows, macOS, and Linux. Connect over USB-C and configure in minutes." },
   { title: "MAVLink integration",  href: "/integrations", desc: "Outputs standard MAVLink VISION_POSITION_ESTIMATE messages. Compatible with ArduPilot, PX4, and Betaflight." },
-  { title: "OTA firmware updates", href: "/#platform",    desc: "Push updates to your module over Wi-Fi from Proxigo Desktop. Never take your drone apart for an update." },
+  { title: "OTA firmware updates", href: "/products#desktop",   desc: "Push updates to your module over Wi-Fi from Proxigo Desktop. Never take your drone apart for an update." },
 ];
 
 function SpecGroup({ group, items }: { group: string; items: string[][] }) {

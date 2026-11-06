@@ -10,7 +10,7 @@ export function buttonClasses({
   size = "md",
 }: { variant?: ButtonVariant; size?: ButtonSize } = {}) {
   return cn(
-    "chamfer inline-flex items-center justify-center font-medium whitespace-nowrap transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer",
+    "chamfer inline-flex items-center justify-center font-medium whitespace-nowrap transition-[background-color,color,transform] duration-150 active:translate-y-px disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer",
     {
       "bg-brand-600 text-white hover:bg-brand-700 active:bg-brand-700": variant === "primary",
       "bg-ink-800 text-ink-100 hover:bg-ink-700 hover:text-ink-50": variant === "secondary",

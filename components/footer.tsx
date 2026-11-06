@@ -9,7 +9,8 @@ const LINKS = {
     { href: "/services#engagements", label: "How we engage" },
   ],
   Products: [
-    { href: "/#platform", label: "Proxigo Desktop" },
+    { href: "/products", label: "All products" },
+    { href: "/products#desktop", label: "Proxigo Desktop" },
     { href: "/#license", label: "Platform licensing" },
     ...PRODUCTS.map((p) => ({ href: p.href, label: p.name })),
     { href: "/integrations", label: "Macula integrations" },

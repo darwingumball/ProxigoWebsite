@@ -68,7 +68,7 @@ export function Cell({
   className?: string;
 }) {
   return (
-    <div className={cn(CELL, className)}>
+    <div className={cn(CELL, "transition-colors duration-200 group-hover:bg-ink-900", className)}>
       {label && <p className="tag mb-4">{label}</p>}
       <h3 className="type-cell text-ink-50 mb-3">{title}</h3>
       {children && <div className="text-ink-400 leading-relaxed">{children}</div>}

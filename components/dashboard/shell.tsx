@@ -109,7 +109,7 @@ export function DashboardShell({ account, children }: { account: Account; childr
             </div>
           ))}
           <Link
-            href="/#platform"
+            href="/products"
             className="flex items-center gap-2.5 px-2.5 py-2 rounded text-sm text-ink-400 hover:text-ink-50 hover:bg-ink-900"
           >
             <Plus size={15} /> Explore products

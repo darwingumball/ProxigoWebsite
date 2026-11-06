@@ -21,7 +21,7 @@ export default function Home() {
       <PageIntro
         display
         label="Proxigo AI"
-        title="Operations software, and the engineers to build on it."
+        title="Operations software and contract engineers for growing companies"
         aside={
           <div className="plus-field flex items-center justify-center p-6 sm:p-10 border-t border-ink-800 lg:border-t-0">
             <OpsGlobe className="max-w-md w-full" />
@@ -29,16 +29,16 @@ export default function Home() {
         }
       >
         <p className="type-lead text-ink-300 max-w-lg mb-10">
-          We build Proxigo Desktop, a platform that puts your whole operation on one live globe, and take on
-          engineering contracts for the work your roadmap cannot staff.
+          Proxigo Desktop puts every site and device on one live globe, on macOS, Windows, and Linux. Our
+          engineers also take on feature, AWS, and cost work as contractors.
         </p>
         <div className="flex flex-wrap gap-3">
-          <Link href="/services" className={buttonClasses({ size: "lg" })}>
-            Engineering services <ArrowRight size={16} />
+          <Link href="/contact" className={buttonClasses({ size: "lg" })}>
+            Book a call <ArrowRight size={16} />
           </Link>
-          <a href="#license" className={buttonClasses({ variant: "secondary", size: "lg" })}>
-            License the platform
-          </a>
+          <Link href="/products" className={buttonClasses({ variant: "secondary", size: "lg" })}>
+            See the products
+          </Link>
         </div>
       </PageIntro>
 
@@ -46,9 +46,14 @@ export default function Home() {
       <Band id="platform">
         <div className={cn(HEAD, "grid lg:grid-cols-2 gap-x-8 gap-y-4")}>
           <h2 className="type-title text-ink-50">Proxigo Desktop</h2>
-          <p className="type-lead text-ink-400 max-w-lg">
-            The operations platform we build and run. Clients use it as is, or we extend it for them.
-          </p>
+          <div>
+            <p className="type-lead text-ink-400 max-w-lg mb-5">
+              The operations platform we build and run. Clients use it as is, or we extend it for them.
+            </p>
+            <Link href="/products#desktop" className="tag hover:text-ink-50">
+              See Proxigo Desktop <ArrowRight size={12} />
+            </Link>
+          </div>
         </div>
         <div className="cells sm:grid-cols-2 lg:grid-cols-4">
           {CAPABILITIES.map((c) => (
@@ -107,7 +112,7 @@ export default function Home() {
         <div className={cn(CELL, "pt-12 sm:pt-16")}>
           <h2 className="type-title text-ink-50 mb-6">Engineers for hire</h2>
           <Link href="/services" className="tag hover:text-ink-50">
-            How contracting works <ArrowRight size={12} />
+            See engineering services <ArrowRight size={12} />
           </Link>
         </div>
         <ul className="border-t border-ink-800 lg:border-t-0">
@@ -122,7 +127,7 @@ export default function Home() {
         </ul>
       </Band>
 
-      <ContactBand title="License it, or have us build it." lead="An engineer reads every message and replies within one business day." />
+      <ContactBand title="License it, or have us build it." />
     </>
   );
 }
