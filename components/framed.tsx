@@ -52,21 +52,21 @@ export function PageIntro({
   );
 }
 
-/** Numbered cell: "■ 01", an uppercase title, and body copy. */
+/** Boxed cell: optional "■ label", an uppercase title, and body copy. */
 export function Cell({
-  n,
+  label,
   title,
   children,
   className,
 }: {
-  n?: number | string;
+  label?: string;
   title: React.ReactNode;
   children?: React.ReactNode;
   className?: string;
 }) {
   return (
     <div className={cn(CELL, className)}>
-      {n !== undefined && <p className="tag mb-4">{typeof n === "number" ? String(n).padStart(2, "0") : n}</p>}
+      {label && <p className="tag mb-4">{label}</p>}
       <h3 className="type-cell text-ink-50 mb-3">{title}</h3>
       {children && <div className="text-ink-400 leading-relaxed">{children}</div>}
     </div>
@@ -106,7 +106,7 @@ export function StepShape({ step }: { step: number }) {
 
 export function ContactBand({
   title = "Tell us what is stuck.",
-  lead = "A feature that keeps slipping, a bill that keeps growing, or a goal with no owner. A few sentences is enough. An engineer reads every message.",
+  lead = "A few sentences is enough. An engineer reads every message and replies within one business day.",
 }: {
   title?: string;
   lead?: string;

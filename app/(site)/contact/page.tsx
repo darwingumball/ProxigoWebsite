@@ -15,8 +15,7 @@ export default function ContactPage() {
     <>
       <PageIntro label="Contact" title="Tell us what is stuck.">
         <p className="type-lead text-ink-300 max-w-xl">
-          A few sentences is plenty. An engineer, not a salesperson, reads every message and replies within one
-          business day.
+          A few sentences is plenty. An engineer replies within one business day.
         </p>
       </PageIntro>
 
@@ -25,8 +24,8 @@ export default function ContactPage() {
           <div className={cn(CELL, "border-b border-ink-800")}>
             <h2 className="tag">What happens next</h2>
           </div>
-          {PROCESS.slice(0, 2).map(({ title, desc }, i) => (
-            <Cell key={title} n={i + 1} title={title} className="border-b border-ink-800">{desc}</Cell>
+          {PROCESS.slice(0, 2).map(({ title, desc }) => (
+            <Cell key={title} title={title} className="border-b border-ink-800">{desc}</Cell>
           ))}
           <p className={cn(CELL, "text-sm text-ink-400")}>
             Existing customer with a product question? Use{" "}
