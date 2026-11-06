@@ -69,13 +69,14 @@ export async function POST(req: Request) {
     });
 
     if (insertErr) {
-      return NextResponse.json({ error: insertErr.message }, { status: 500 });
+      console.error("[modules/register]", insertErr.message);
+      return NextResponse.json({ error: "Could not register the module. Please try again." }, { status: 500 });
     }
 
     return NextResponse.json({ ok: true });
   } catch (err) {
     const msg = err instanceof Error ? err.message : "Internal error";
     console.error("[modules/register]", msg);
-    return NextResponse.json({ error: msg }, { status: 500 });
+    return NextResponse.json({ error: "Internal error" }, { status: 500 });
   }
 }

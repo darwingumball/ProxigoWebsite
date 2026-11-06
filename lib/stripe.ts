@@ -48,3 +48,9 @@ export const HARDWARE = {
   priceId: process.env.STRIPE_MODULE_PRICE_ID!,
   amountCents: 49900,
 } as const;
+
+/** Monthly km² included in a plan. Enterprise is unmetered; JSON can't carry Infinity, so it reports 0 as before. */
+export function km2Included(plan: string | null | undefined): number {
+  const km = plan && plan in PLANS ? PLANS[plan as PlanId].kmIncluded : 0;
+  return Number.isFinite(km) ? km : 0;
+}

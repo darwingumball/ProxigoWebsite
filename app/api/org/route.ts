@@ -1,12 +1,7 @@
-import { createClient } from "@/lib/supabase/server";
-import { createBearerClient, extractBearerToken } from "@/lib/supabase/bearer";
+import { createServiceClient } from "@/lib/supabase/service";
+import { getUserFromRequest } from "@/lib/supabase/bearer";
 import { rateLimit, getIp } from "@/lib/rate-limit";
 import { NextResponse } from "next/server";
-
-async function getSupabase(req: Request) {
-  const token = extractBearerToken(req);
-  return token ? createBearerClient(token) : createClient();
-}
 
 /**
  * PATCH /api/org
@@ -17,8 +12,7 @@ export async function PATCH(req: Request) {
   const { success } = rateLimit(`org:${getIp(req)}`, 20, 60 * 1000);
   if (!success) return NextResponse.json({ error: "Rate limit exceeded" }, { status: 429 });
 
-  const supabase = await getSupabase(req);
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getUserFromRequest(req);
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const body = await req.json() as { user_id?: string; km2_allowance?: number | null };
@@ -29,7 +23,9 @@ export async function PATCH(req: Request) {
     }
   }
 
-  // Verify caller is an admin in the org that contains the target user
+  // org_members RLS recurses on itself, so read with the service role and
+  // check the caller's admin role here instead.
+  const supabase = createServiceClient();
   const { data: callerMembership } = await supabase
     .from("org_members")
     .select("org_id, role")

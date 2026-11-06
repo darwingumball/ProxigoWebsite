@@ -1,19 +1,11 @@
-import { createClient } from "@/lib/supabase/server";
+import { requireAdminApi } from "@/lib/admin";
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
-async function requireAdminApi() {
-  const auth = await createClient();
-  const { data: { user } } = await auth.auth.getUser();
-  if (!user) return false;
-  const { data: p } = await auth.from("profiles").select("is_admin").eq("id", user.id).single();
-  return !!p?.is_admin;
-}
-
 // POST /api/admin/org/invite — send a Proxigo signup invitation to a prospective client
 export async function POST(req: Request) {
-  const isAdmin = await requireAdminApi();
-  if (!isAdmin) return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  const auth = await requireAdminApi(req);
+  if (auth instanceof NextResponse) return auth;
 
   const { email, orgName } = await req.json() as { email?: string; orgName?: string };
   if (!email?.trim()) return NextResponse.json({ error: "email required" }, { status: 400 });

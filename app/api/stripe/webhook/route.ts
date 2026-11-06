@@ -1,5 +1,5 @@
-import { getStripe } from "@/lib/stripe";
-import { createClient } from "@/lib/supabase/server";
+import { getStripe, HARDWARE } from "@/lib/stripe";
+import { createServiceClient } from "@/lib/supabase/service";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import type Stripe from "stripe";
@@ -16,7 +16,9 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
   }
 
-  const supabase = await createClient();
+  // Stripe calls carry no user session, so writes need the service role.
+  const supabase = createServiceClient();
+  let error: { message: string } | null = null;
 
   switch (event.type) {
     case "checkout.session.completed": {
@@ -39,27 +41,27 @@ export async function POST(req: Request) {
           // Receipt URL is cosmetic — don't fail the webhook
         }
 
-        await supabase.from("orders").insert({
+        ({ error } = await supabase.from("orders").upsert({
           user_id: userId,
           stripe_session_id: session.id,
           stripe_payment_intent: session.payment_intent,
-          product_name: "Macula VPS Module — Pre-order",
-          amount_cents: session.amount_total ?? 29900,
+          product_name: HARDWARE.name,
+          amount_cents: session.amount_total ?? HARDWARE.amountCents,
           currency: session.currency ?? "usd",
           status: "paid",
           receipt_url: receiptUrl,
-        });
+        }, { onConflict: "stripe_session_id" }));
       } else if (session.mode === "subscription") {
         // Subscription purchase — activate plan
         const planId = session.metadata?.plan_id;
         if (planId) {
-          await supabase
+          ({ error } = await supabase
             .from("profiles")
             .update({
               plan: planId,
               stripe_subscription_id: session.subscription as string,
             })
-            .eq("id", userId);
+            .eq("id", userId));
         }
       }
       break;
@@ -70,13 +72,13 @@ export async function POST(req: Request) {
       const userId = sub.metadata?.supabase_user_id;
       const planId = sub.metadata?.plan_id;
       if (userId) {
-        await supabase
+        ({ error } = await supabase
           .from("profiles")
           .update({
             plan: sub.status === "active" ? planId : null,
             stripe_subscription_id: sub.id,
           })
-          .eq("id", userId);
+          .eq("id", userId));
       }
       break;
     }
@@ -85,10 +87,10 @@ export async function POST(req: Request) {
       const sub = event.data.object as Stripe.Subscription;
       const userId = sub.metadata?.supabase_user_id;
       if (userId) {
-        await supabase
+        ({ error } = await supabase
           .from("profiles")
           .update({ plan: null, stripe_subscription_id: null })
-          .eq("id", userId);
+          .eq("id", userId));
       }
       break;
     }
@@ -96,13 +98,19 @@ export async function POST(req: Request) {
     case "charge.refunded": {
       const charge = event.data.object as Stripe.Charge;
       if (charge.payment_intent) {
-        await supabase
+        ({ error } = await supabase
           .from("orders")
           .update({ status: "refunded" })
-          .eq("stripe_payment_intent", charge.payment_intent);
+          .eq("stripe_payment_intent", charge.payment_intent as string));
       }
       break;
     }
+  }
+
+  if (error) {
+    // A non-2xx makes Stripe retry the event.
+    console.error("[stripe webhook]", event.type, error.message);
+    return NextResponse.json({ error: "Failed to record event" }, { status: 500 });
   }
 
   return NextResponse.json({ received: true });

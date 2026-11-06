@@ -1,6 +1,7 @@
 import { createServiceClient } from "@/lib/supabase/service";
 import { getUserFromRequest } from "@/lib/supabase/bearer";
 import { rateLimit, getIp } from "@/lib/rate-limit";
+import { km2Included } from "@/lib/stripe";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
@@ -29,7 +30,6 @@ export async function GET(req: Request) {
   const profile = profileResult.data;
   const modules = modulesResult.data ?? [];
   const personalKm2Used = (personalUsageResult.data ?? []).reduce((sum, r) => sum + Number(r.km2 ?? 0), 0);
-  const planLimits: Record<string, number> = { starter: 500, pro: 2500 };
 
   let org = null;
   if (membershipResult.data) {
@@ -77,7 +77,7 @@ export async function GET(req: Request) {
   }
 
   const personalPlan = profile?.plan ?? null;
-  const personalKm2Limit = personalPlan ? (planLimits[personalPlan] ?? 0) : 0;
+  const personalKm2Limit = km2Included(personalPlan);
 
   return NextResponse.json({
     user_id: user.id,

@@ -57,7 +57,10 @@ export async function POST(req: Request) {
   const { error } = await svc
     .from("org_members")
     .insert({ org_id: org.id, user_id: targetProfile.id, role: "member" });
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (error) {
+    console.error("[organizations/invite]", error.message);
+    return NextResponse.json({ error: "Could not add the member. Please try again." }, { status: 500 });
+  }
 
   // Send welcome email (non-fatal)
   try {

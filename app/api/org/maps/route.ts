@@ -2,6 +2,11 @@ import { createServiceClient } from "@/lib/supabase/service";
 import { getUserFromRequest } from "@/lib/supabase/bearer";
 import { NextResponse } from "next/server";
 
+function serverError(error: { message: string }) {
+  console.error("[org/maps]", error.message);
+  return NextResponse.json({ error: "Internal error" }, { status: 500 });
+}
+
 async function getAuthUser(req: Request) {
   return getUserFromRequest(req);
 }
@@ -31,7 +36,7 @@ export async function GET(req: Request) {
     .eq("org_id", membership.org_id)
     .order("created_at", { ascending: false });
 
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (error) return serverError(error);
   return NextResponse.json(data ?? []);
 }
 
@@ -74,7 +79,7 @@ export async function POST(req: Request) {
     .select()
     .single();
 
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (error) return serverError(error);
   return NextResponse.json(data);
 }
 
@@ -103,6 +108,6 @@ export async function DELETE(req: Request) {
   }
 
   const { error } = await svc.from("org_map_regions").delete().eq("id", id);
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (error) return serverError(error);
   return NextResponse.json({ ok: true });
 }

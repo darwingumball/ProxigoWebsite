@@ -1,22 +1,13 @@
-import { createClient } from "@/lib/supabase/server";
-import { createServiceClient } from "@/lib/supabase/service";
+import { requireAdminApi } from "@/lib/admin";
 import { NextResponse } from "next/server";
 
 const VALID_PLANS = ["starter", "pro", "enterprise"];
 
-async function requireAdminApi() {
-  const auth = await createClient();
-  const { data: { user } } = await auth.auth.getUser();
-  if (!user) return null;
-  const { data: p } = await auth.from("profiles").select("is_admin").eq("id", user.id).single();
-  if (!p?.is_admin) return null;
-  return createServiceClient();
-}
-
 // POST /api/admin/org — create a new org with an owner
 export async function POST(req: Request) {
-  const svc = await requireAdminApi();
-  if (!svc) return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  const auth = await requireAdminApi(req);
+  if (auth instanceof NextResponse) return auth;
+  const { svc } = auth;
 
   const { name, ownerEmail, plan, km2_limit } = await req.json() as {
     name?: string; ownerEmail?: string; plan?: string; km2_limit?: number;
@@ -47,8 +38,9 @@ export async function POST(req: Request) {
 
 // PATCH /api/admin/org — update org settings
 export async function PATCH(req: Request) {
-  const svc = await requireAdminApi();
-  if (!svc) return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  const auth = await requireAdminApi(req);
+  if (auth instanceof NextResponse) return auth;
+  const { svc } = auth;
 
   const { orgId, name, plan, km2_limit } = await req.json() as {
     orgId?: string; name?: string; plan?: string; km2_limit?: number;

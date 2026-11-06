@@ -1,20 +1,11 @@
-import { createClient } from "@/lib/supabase/server";
-import { createServiceClient } from "@/lib/supabase/service";
+import { requireAdminApi } from "@/lib/admin";
 import { NextResponse } from "next/server";
-
-async function requireAdminApi() {
-  const auth = await createClient();
-  const { data: { user } } = await auth.auth.getUser();
-  if (!user) return null;
-  const { data: p } = await auth.from("profiles").select("is_admin").eq("id", user.id).single();
-  if (!p?.is_admin) return null;
-  return createServiceClient();
-}
 
 // POST — add a member to an org by email
 export async function POST(req: Request) {
-  const svc = await requireAdminApi();
-  if (!svc) return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  const auth = await requireAdminApi(req);
+  if (auth instanceof NextResponse) return auth;
+  const { svc } = auth;
 
   const { orgId, email, role } = await req.json() as { orgId?: string; email?: string; role?: string };
   if (!orgId || !email?.trim()) return NextResponse.json({ error: "orgId and email required" }, { status: 400 });
@@ -36,8 +27,9 @@ export async function POST(req: Request) {
 
 // PATCH — update a member's km2_allowance
 export async function PATCH(req: Request) {
-  const svc = await requireAdminApi();
-  if (!svc) return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  const auth = await requireAdminApi(req);
+  if (auth instanceof NextResponse) return auth;
+  const { svc } = auth;
 
   const { orgId, userId, km2_allowance } = await req.json() as {
     orgId?: string; userId?: string; km2_allowance?: number | null;
@@ -53,8 +45,9 @@ export async function PATCH(req: Request) {
 
 // DELETE — remove a member from an org
 export async function DELETE(req: Request) {
-  const svc = await requireAdminApi();
-  if (!svc) return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  const auth = await requireAdminApi(req);
+  if (auth instanceof NextResponse) return auth;
+  const { svc } = auth;
 
   const { orgId, userId } = await req.json() as { orgId?: string; userId?: string };
   if (!orgId || !userId) return NextResponse.json({ error: "orgId and userId required" }, { status: 400 });

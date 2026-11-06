@@ -17,3 +17,8 @@ export function formatKm2(km2: number): string {
   if (km2 >= 1000) return `${(km2 / 1000).toFixed(1)}k km²`;
   return `${km2.toFixed(1)} km²`;
 }
+
+/** Post-login redirect target: same-site paths only, so ?next= can't send users off-site. */
+export function safeNext(next: string | null): string {
+  return next?.startsWith("/") && !next.startsWith("//") && !next.startsWith("/\\") ? next : "/dashboard";
+}

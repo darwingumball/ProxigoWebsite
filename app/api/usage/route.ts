@@ -1,6 +1,7 @@
 import { createServiceClient } from "@/lib/supabase/service";
 import { getUserFromRequest } from "@/lib/supabase/bearer";
 import { rateLimit, getIp } from "@/lib/rate-limit";
+import { km2Included } from "@/lib/stripe";
 import { NextResponse } from "next/server";
 
 /**
@@ -115,8 +116,7 @@ export async function GET(req: Request) {
     .gte("created_at", startOfMonth.toISOString());
 
   const totalKm2 = (usageRows ?? []).reduce((sum, r) => sum + (r.km2 ?? 0), 0);
-  const limits: Record<string, number> = { starter: 500, pro: 2500 };
-  const limit = profile?.plan ? (limits[profile.plan] ?? 0) : 0;
+  const limit = km2Included(profile?.plan);
 
   return NextResponse.json({
     plan:          profile?.plan ?? null,

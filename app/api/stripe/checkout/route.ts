@@ -81,6 +81,6 @@ export async function POST(req: Request) {
   } catch (err) {
     const message = err instanceof Error ? err.message : "Internal error";
     console.error("[checkout]", message);
-    return NextResponse.json({ error: message }, { status: 500 });
+    return NextResponse.json({ error: "Could not start checkout. Please try again." }, { status: 500 });
   }
 }

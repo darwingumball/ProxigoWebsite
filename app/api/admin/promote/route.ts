@@ -1,30 +1,18 @@
-import { createClient } from "@/lib/supabase/server";
-import { createServiceClient } from "@/lib/supabase/service";
+import { requireAdminApi } from "@/lib/admin";
 import { NextResponse } from "next/server";
 
 // POST /api/admin/promote  { userId: string, grant: boolean }
 // Only existing admins can call this.
 export async function POST(req: Request) {
-  const authClient = await createClient();
-  const { data: { user } } = await authClient.auth.getUser();
-  if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-
-  const { data: caller } = await authClient
-    .from("profiles")
-    .select("is_admin")
-    .eq("id", user.id)
-    .single();
-
-  if (!caller?.is_admin) {
-    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
-  }
+  const auth = await requireAdminApi(req);
+  if (auth instanceof NextResponse) return auth;
 
   const { userId, grant } = await req.json() as { userId?: string; grant?: boolean };
   if (!userId || typeof grant !== "boolean") {
     return NextResponse.json({ error: "Missing userId or grant" }, { status: 400 });
   }
 
-  const service = createServiceClient();
+  const service = auth.svc;
   const { error } = await service
     .from("profiles")
     .update({ is_admin: grant })
