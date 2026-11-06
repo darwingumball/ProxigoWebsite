@@ -68,9 +68,9 @@ const SECTIONS = [
 export default function DocsPage() {
   return (
     <>
-      <section className="pt-32 sm:pt-40 pb-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-4xl sm:text-6xl font-semibold text-ink-50 tracking-tight mb-5">Documentation</h1>
-        <p className="text-ink-300 text-lg max-w-2xl">
+      <section className="pt-28 sm:pt-36 pb-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 className="type-title text-ink-50 mb-5">Documentation</h1>
+        <p className="type-lead text-ink-300 max-w-2xl">
           Setup, configuration, and integration guides for Proxigo Desktop and the Macula VPS Module.
         </p>
       </section>
@@ -97,7 +97,7 @@ export default function DocsPage() {
       <section className="border-t border-ink-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div>
-            <h2 className="text-2xl font-semibold text-ink-50 mb-2">Can&apos;t find what you need?</h2>
+            <h2 className="type-section text-ink-50 mb-2">Can&apos;t find what you need?</h2>
             <p className="text-ink-400 max-w-md">
               The documentation is still being written. Open a support ticket and we&apos;ll help directly.
             </p>

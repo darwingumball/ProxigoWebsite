@@ -14,10 +14,10 @@ export default async function SupportPage() {
   const { data: { user } } = await supabase.auth.getUser();
 
   return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 sm:pt-40 pb-24 grid lg:grid-cols-[1fr_1.4fr] gap-12 lg:gap-20">
+    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 sm:pt-36 pb-24 grid lg:grid-cols-[1fr_1.4fr] gap-12 lg:gap-20">
       <div>
-        <h1 className="text-4xl sm:text-5xl font-semibold text-ink-50 tracking-tight mb-5">Support</h1>
-        <p className="text-lg text-ink-300 leading-relaxed mb-10">
+        <h1 className="type-title text-ink-50 mb-5">Support</h1>
+        <p className="type-lead text-ink-300 mb-10">
           We&apos;re a small team. We read every ticket and typically respond within one business day.
         </p>
 

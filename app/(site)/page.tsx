@@ -9,12 +9,12 @@ export default function Home() {
   return (
     <>
       {/* ── Hero ── */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 sm:pt-40 pb-20">
-        <h1 className="hero-a1 text-4xl sm:text-6xl lg:text-7xl font-semibold text-ink-50 leading-[1.02] tracking-tight max-w-5xl">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 sm:pt-36 pb-20">
+        <h1 className="type-display hero-a1 text-ink-50 max-w-5xl">
           Cloud backends and integrations, built by the engineers who ship them.
         </h1>
         <div className="hero-a2 mt-10 grid lg:grid-cols-[1fr_auto] gap-8 items-end">
-          <p className="text-lg sm:text-xl text-ink-300 leading-relaxed max-w-2xl">
+          <p className="type-lead text-ink-300 max-w-2xl">
             Proxigo is a small, independent engineering firm. We review, fix, and build AWS architecture for growing
             companies, and connect it to the systems and APIs you already run.
           </p>
@@ -48,7 +48,7 @@ export default function Home() {
       <section className="bg-ink-900 border-y border-ink-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 grid lg:grid-cols-[1fr_2fr] gap-12">
           <div>
-            <h2 className="text-3xl sm:text-4xl font-semibold text-ink-50 tracking-tight mb-4">Sound familiar?</h2>
+            <h2 className="type-section text-ink-50 mb-4">Sound familiar?</h2>
             <p className="text-ink-400 leading-relaxed max-w-sm">
               Most engagements start with one of these. If yours is different, that is fine too.
             </p>
@@ -69,10 +69,10 @@ export default function Home() {
         <OpsGlobe className="max-w-xl w-full mx-auto" />
         <div>
           <p className="text-sm font-medium text-signal-400 mb-4">Proxigo Desktop</p>
-          <h2 className="text-3xl sm:text-4xl font-semibold text-ink-50 tracking-tight mb-5">
+          <h2 className="type-section text-ink-50 mb-5">
             Your whole operation, on one map.
           </h2>
-          <p className="text-lg text-ink-300 leading-relaxed mb-6">
+          <p className="type-lead text-ink-300 mb-6">
             Our own desktop platform gives a global, map-based view of sites, devices, and data feeds. When your
             operations span locations, we extend it with integrations into your systems, so the people running the
             work see the same picture as the people planning it.
@@ -93,7 +93,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
             <div>
-              <h2 className="text-3xl sm:text-4xl font-semibold text-ink-50 tracking-tight mb-3">How we engage</h2>
+              <h2 className="type-section text-ink-50 mb-3">How we engage</h2>
               <p className="text-ink-400 max-w-xl leading-relaxed">
                 We take on a small number of clients at a time and work directly with your team. You talk to the
                 engineers doing the work, not an account manager.
@@ -119,7 +119,7 @@ export default function Home() {
       <section className="border-t border-ink-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 grid lg:grid-cols-[1fr_2fr] gap-10">
           <div>
-            <h2 className="text-2xl font-semibold text-ink-50 tracking-tight mb-3">Our products</h2>
+            <h2 className="type-section text-ink-50 mb-3">Our products</h2>
             <p className="text-ink-400 leading-relaxed">
               Software and hardware we build and maintain ourselves, and bring into client work where they fit.
             </p>
@@ -151,10 +151,10 @@ export default function Home() {
       <section className="theme-dark bg-ink-950">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 flex flex-col lg:flex-row lg:items-end justify-between gap-10">
           <div className="max-w-2xl">
-            <h2 className="text-4xl sm:text-5xl font-semibold text-ink-50 tracking-tight mb-4">
+            <h2 className="type-section text-ink-50 mb-4">
               Tell us what you&apos;re building.
             </h2>
-            <p className="text-lg text-ink-300 leading-relaxed">
+            <p className="type-lead text-ink-300">
               A short call is enough to tell whether we are a fit. If we are not, we will say so and point you to
               someone who is.
             </p>

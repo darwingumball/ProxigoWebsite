@@ -41,8 +41,8 @@ export default async function DocPage({ params }: Props) {
       <p className="text-xs text-ink-500 mb-6">{section?.section}</p>
 
       {/* Title */}
-      <h1 className="text-4xl font-bold text-ink-50 tracking-tight mb-3">{page.title}</h1>
-      <p className="text-ink-400 text-lg leading-relaxed mb-10">{page.description}</p>
+      <h1 className="type-title text-ink-50 mb-3">{page.title}</h1>
+      <p className="type-lead text-ink-400 mb-10">{page.description}</p>
 
       {/* Coming soon placeholder */}
       <div className="rounded-lg border border-ink-800 bg-ink-900/30 p-8 flex flex-col items-center text-center gap-4">

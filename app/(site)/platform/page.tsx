@@ -41,13 +41,13 @@ const CAPABILITIES = [
 export default function PlatformPage() {
   return (
     <>
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 sm:pt-40 pb-20 grid lg:grid-cols-[1.1fr_1fr] gap-12 lg:gap-16 items-center">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 sm:pt-36 pb-20 grid lg:grid-cols-[1.1fr_1fr] gap-12 lg:gap-16 items-center">
         <div>
           <p className="text-sm font-medium text-signal-400 mb-4">Proxigo Desktop</p>
-          <h1 className="text-4xl sm:text-6xl font-semibold text-ink-50 tracking-tight leading-[1.03] mb-6">
+          <h1 className="type-title text-ink-50 mb-6">
             See the whole operation. Connect the rest.
           </h1>
-          <p className="text-lg text-ink-300 leading-relaxed mb-8 max-w-xl">
+          <p className="type-lead text-ink-300 mb-8 max-w-xl">
             Proxigo Desktop is our operations platform: a global map view of everything you run, connected to the
             systems you already use. It is built for teams expanding across sites, and we extend it with
             integrations built for your stack.
@@ -80,7 +80,7 @@ export default function PlatformPage() {
       <section className="theme-dark bg-ink-950">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
-            <h2 className="text-3xl font-semibold text-ink-50 tracking-tight max-w-lg">
+            <h2 className="type-section text-ink-50 max-w-lg">
               The desktop app, up close.
             </h2>
             <p className="text-ink-400 max-w-md">
@@ -96,7 +96,7 @@ export default function PlatformPage() {
       {/* Integrations as a service */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 grid lg:grid-cols-[1fr_1.4fr] gap-12">
         <div>
-          <h2 className="text-3xl font-semibold text-ink-50 tracking-tight mb-4">Your systems, on the platform</h2>
+          <h2 className="type-section text-ink-50 mb-4">Your systems, on the platform</h2>
           <p className="text-ink-400 leading-relaxed">
             Most deployments need data the platform does not have yet. Our engineering team builds those
             connections as part of the engagement, against your APIs and infrastructure.
@@ -111,7 +111,7 @@ export default function PlatformPage() {
             <li key={title} className="grid grid-cols-[2.5rem_1fr] gap-3 py-5 border-b border-ink-800">
               <span className="font-mono text-sm text-ink-400 pt-1">{String(i + 1).padStart(2, "0")}</span>
               <div>
-                <p className="text-lg font-medium text-ink-50">{title}</p>
+                <p className="type-lead font-medium text-ink-50">{title}</p>
                 <p className="text-ink-400 leading-relaxed">{desc}</p>
               </div>
             </li>
@@ -123,7 +123,7 @@ export default function PlatformPage() {
       <section className="bg-ink-900 border-y border-ink-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 grid lg:grid-cols-[1fr_2fr] gap-10">
           <div>
-            <h2 className="text-2xl font-semibold text-ink-50 tracking-tight mb-3">Runs on the platform</h2>
+            <h2 className="type-section text-ink-50 mb-3">Runs on the platform</h2>
             <p className="text-ink-400 leading-relaxed">
               Products install into Proxigo Desktop as modules and share the same account and map.
             </p>
@@ -161,7 +161,7 @@ export default function PlatformPage() {
       {/* Download */}
       <section id="download" className="scroll-mt-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 grid lg:grid-cols-[1fr_2fr] gap-10">
         <div>
-          <h2 className="text-2xl font-semibold text-ink-50 tracking-tight mb-3">Download Proxigo Desktop</h2>
+          <h2 className="type-section text-ink-50 mb-3">Download Proxigo Desktop</h2>
           <p className="text-ink-400 leading-relaxed mb-4">
             Builds are provided to clients and Macula owners at launch.
           </p>

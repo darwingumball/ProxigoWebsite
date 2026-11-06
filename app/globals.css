@@ -114,6 +114,34 @@
 
 body:has(> .theme-light) { background-color: #fbfaf7; }
 
+/*
+ * Type roles. Pages use these instead of raw size utilities so the scale
+ * stays consistent. Display and titles scale gently with the viewport and
+ * cap well below poster size; body copy never drops under 16px.
+ */
+@utility type-display {
+  font-size: clamp(2rem, 1.55rem + 1.9vw, 3.25rem);
+  line-height: 1.08;
+  letter-spacing: -0.022em;
+  font-weight: 600;
+}
+@utility type-title {
+  font-size: clamp(1.875rem, 1.6rem + 1.2vw, 2.625rem);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+}
+@utility type-section {
+  font-size: clamp(1.5rem, 1.35rem + 0.65vw, 1.875rem);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  font-weight: 600;
+}
+@utility type-lead {
+  font-size: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+  line-height: 1.65;
+}
+
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 

@@ -74,15 +74,15 @@ export default function ProductPage() {
   return (
     <>
       {/* ── Hero ── */}
-      <section className="pt-32 sm:pt-40 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="pt-28 sm:pt-36 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Text */}
           <div>
             <p className="text-sm text-signal-400 mb-4">Macula VPS module · Runs on Proxigo Desktop</p>
-            <h1 className="text-4xl sm:text-6xl font-semibold text-ink-50 tracking-tight leading-[1.02] mb-6">
+            <h1 className="type-title text-ink-50 mb-6">
               Position without GPS.
             </h1>
-            <p className="text-lg text-ink-300 leading-relaxed mb-8">
+            <p className="type-lead text-ink-300 mb-8">
               Macula mounts to the bottom of any drone and delivers continuous, sub-meter-accurate
               position estimates using only a downward-facing camera and our onboard vision models.
             </p>
@@ -105,7 +105,7 @@ export default function ProductPage() {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
             <div>
-              <h2 className="text-3xl font-semibold text-ink-50 tracking-tight mb-4">Fits any drone in minutes</h2>
+              <h2 className="type-section text-ink-50 mb-4">Fits any drone in minutes</h2>
               <p className="text-ink-400 leading-relaxed">
                 The included universal M3 bracket fits standard 30.5mm and 20mm mounting patterns.
                 A single XT30 power cable and UART connection to your flight controller is all it takes.
@@ -161,7 +161,7 @@ export default function ProductPage() {
 
       {/* ── Full specs ── */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
-        <h2 className="text-3xl font-semibold text-ink-50 tracking-tight mb-10">Full specifications</h2>
+        <h2 className="type-section text-ink-50 mb-10">Full specifications</h2>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-10">
           {FULL_SPECS.map((spec) => (
             <SpecGroup key={spec.group} group={spec.group} items={spec.items} />
@@ -171,7 +171,7 @@ export default function ProductPage() {
 
       {/* ── Ecosystem ── */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-28">
-        <h2 className="text-3xl font-semibold text-ink-50 tracking-tight mb-10">Part of the Proxigo platform</h2>
+        <h2 className="type-section text-ink-50 mb-10">Part of the Proxigo platform</h2>
         <div className="grid md:grid-cols-3 gap-8">
           {ECOSYSTEM.map(({ title, href, desc }) => (
             <Link key={title} href={href} className="group border-t border-ink-700 pt-5">

@@ -27,18 +27,18 @@ const VALUES = [
 export default function AboutPage() {
   return (
     <>
-      <section className="pt-32 sm:pt-40 pb-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-4xl sm:text-6xl font-semibold text-ink-50 tracking-tight leading-[1.04] mb-8 max-w-4xl">
+      <section className="pt-28 sm:pt-36 pb-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 className="type-title text-ink-50 mb-8 max-w-4xl">
           An engineering firm that also ships its own products.
         </h1>
-        <p className="text-lg sm:text-xl text-ink-300 leading-relaxed max-w-2xl">
+        <p className="type-lead text-ink-300 max-w-2xl">
           Proxigo AI is a small, independent team. We take on architecture, AWS backend, and integration work for
           growing companies as contractors, and we build our own operations software and hardware alongside it.
         </p>
       </section>
 
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 grid lg:grid-cols-[1fr_2fr] gap-10 border-t border-ink-800 pt-12">
-        <h2 className="text-2xl font-semibold text-ink-50">Why we work this way</h2>
+        <h2 className="type-section text-ink-50">Why we work this way</h2>
         <div className="space-y-4">
           <p className="max-w-xl text-ink-300 leading-relaxed">
             Plenty of companies have a backend that grew faster than anyone planned, or systems that need to talk
@@ -54,7 +54,7 @@ export default function AboutPage() {
       </section>
 
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
-        <h2 className="text-2xl font-semibold text-ink-50 mb-8">How we work</h2>
+        <h2 className="type-section text-ink-50 mb-8">How we work</h2>
         <div className="grid sm:grid-cols-3 gap-x-10 gap-y-10">
           {VALUES.map(({ title, desc }) => (
             <div key={title} className="border-t-2 border-ink-50 pt-5">
@@ -68,7 +68,7 @@ export default function AboutPage() {
       <section className="theme-dark bg-ink-950">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 flex flex-col md:flex-row md:items-center justify-between gap-8">
           <div>
-            <h2 className="text-3xl font-semibold text-ink-50 tracking-tight mb-2">Want to talk to the team?</h2>
+            <h2 className="type-section text-ink-50 mb-2">Want to talk to the team?</h2>
             <p className="text-ink-300">Projects, partnerships, or press. We read every message ourselves.</p>
           </div>
           <Link href="/contact" className={buttonClasses({ size: "lg" })}>

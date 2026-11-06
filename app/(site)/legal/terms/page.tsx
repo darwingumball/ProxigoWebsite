@@ -27,7 +27,7 @@ export default function TermsOfServicePage() {
   return (
     <section className="pt-32 pb-28 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
       <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-signal-500 mb-4">Legal</p>
-      <h1 className="text-4xl font-bold text-ink-50 tracking-tight mb-3">Terms of Service</h1>
+      <h1 className="type-title text-ink-50 mb-3">Terms of Service</h1>
       <p className="text-sm text-ink-500 mb-10">Last updated: August 24, 2026</p>
 
       <div className="rounded-lg border border-ink-800 bg-ink-900/30 p-6 mb-12">

@@ -36,11 +36,11 @@ const FAQ = [
 export default function ServicesPage() {
   return (
     <>
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 sm:pt-40 pb-16">
-        <h1 className="text-4xl sm:text-6xl font-semibold text-ink-50 tracking-tight leading-[1.04] max-w-4xl mb-6">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 sm:pt-36 pb-16">
+        <h1 className="type-title text-ink-50 max-w-4xl mb-6">
           Engineering services for teams that need it done properly.
         </h1>
-        <p className="text-lg sm:text-xl text-ink-300 leading-relaxed max-w-2xl">
+        <p className="type-lead text-ink-300 max-w-2xl">
           Four ways we work with companies: reviewing what you have, building what you need, connecting what you
           run, and adding engineers when you are short.
         </p>
@@ -59,10 +59,10 @@ export default function ServicesPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 grid lg:grid-cols-[1fr_1.4fr_1fr] gap-10">
             <div>
               <span className="font-mono text-sm text-ink-400">{String(i + 1).padStart(2, "0")}</span>
-              <h2 className="text-2xl sm:text-3xl font-semibold text-ink-50 tracking-tight mt-2">{s.name}</h2>
+              <h2 className="type-section text-ink-50 mt-2">{s.name}</h2>
             </div>
             <div>
-              <p className="text-lg text-ink-50 leading-snug mb-4">{s.summary}</p>
+              <p className="type-lead text-ink-50 mb-4">{s.summary}</p>
               <p className="text-ink-400 leading-relaxed">{s.detail}</p>
             </div>
             <div>
@@ -83,7 +83,7 @@ export default function ServicesPage() {
       {/* Process */}
       <section id="process" className="scroll-mt-20 bg-ink-900 border-y border-ink-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-          <h2 className="text-3xl sm:text-4xl font-semibold text-ink-50 tracking-tight mb-12">How a project runs</h2>
+          <h2 className="type-section text-ink-50 mb-12">How a project runs</h2>
           <ol className="grid sm:grid-cols-2 lg:grid-cols-4 gap-x-10 gap-y-10">
             {PROCESS.map(({ title, desc }, i) => (
               <li key={title} className="border-t-2 border-ink-50 pt-5">
@@ -98,7 +98,7 @@ export default function ServicesPage() {
 
       {/* Engagements */}
       <section id="engagements" className="scroll-mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-        <h2 className="text-3xl sm:text-4xl font-semibold text-ink-50 tracking-tight mb-3">Engagement models</h2>
+        <h2 className="type-section text-ink-50 mb-3">Engagement models</h2>
         <p className="text-ink-400 leading-relaxed max-w-xl mb-10">
           Pick the shape that fits. Many clients start with an assessment and move to a project or retainer.
         </p>
@@ -127,7 +127,7 @@ export default function ServicesPage() {
       {/* FAQ */}
       <section className="border-t border-ink-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 grid lg:grid-cols-[1fr_2fr] gap-10">
-          <h2 className="text-3xl font-semibold text-ink-50 tracking-tight">Questions</h2>
+          <h2 className="type-section text-ink-50">Questions</h2>
           <div className="border-t border-ink-800">
             {FAQ.map(({ q, a }) => (
               <details key={q} className="group border-b border-ink-800">
@@ -144,7 +144,7 @@ export default function ServicesPage() {
 
       <section className="theme-dark bg-ink-950">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 flex flex-col md:flex-row md:items-center justify-between gap-8">
-          <h2 className="text-3xl sm:text-4xl font-semibold text-ink-50 tracking-tight max-w-xl">
+          <h2 className="type-section text-ink-50 max-w-xl">
             Start with a scoping call.
           </h2>
           <Link href="/contact" className={buttonClasses({ size: "lg" })}>

@@ -33,11 +33,11 @@ export default function IntegrationsPage() {
   return (
     <>
       {/* Hero */}
-      <section className="pt-32 sm:pt-40 pb-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-4xl sm:text-5xl font-semibold text-ink-50 tracking-tight mb-5 max-w-3xl">
+      <section className="pt-28 sm:pt-36 pb-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 className="type-title text-ink-50 mb-5 max-w-3xl">
           Plug into anything. No lock-in.
         </h1>
-        <p className="text-lg text-ink-300 leading-relaxed mb-8 max-w-2xl">
+        <p className="type-lead text-ink-300 mb-8 max-w-2xl">
           The Macula VPS Module speaks MAVLink 2, UART, and USB out of the box. Drop it into PX4, ArduPilot, a
           custom autopilot, or any embedded system in minutes. No custom firmware, no proprietary SDK required.
         </p>
@@ -96,7 +96,7 @@ export default function IntegrationsPage() {
       {/* Compatible platforms */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 grid lg:grid-cols-[1fr_2fr] gap-10">
         <div>
-          <h2 className="text-2xl font-semibold text-ink-50 tracking-tight mb-3">Works with your stack</h2>
+          <h2 className="type-section text-ink-50 mb-3">Works with your stack</h2>
           <p className="text-sm text-ink-400">
             Running something not listed?{" "}
             <Link href="/support#contact" className="text-signal-400 hover:text-signal-300">Ask us.</Link>
@@ -117,7 +117,7 @@ export default function IntegrationsPage() {
       {/* Developer tools */}
       <section className="border-y border-ink-800 bg-ink-900/40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <h2 className="text-2xl font-semibold text-ink-50 tracking-tight mb-3">Built for engineers</h2>
+          <h2 className="type-section text-ink-50 mb-3">Built for engineers</h2>
           <p className="text-ink-400 mb-10 max-w-lg">
             Open message formats, local APIs, and full protocol docs. Build exactly what you need.
           </p>
@@ -135,7 +135,7 @@ export default function IntegrationsPage() {
       {/* CTA */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
-          <h2 className="text-2xl font-semibold text-ink-50 mb-2">Ready to integrate?</h2>
+          <h2 className="type-section text-ink-50 mb-2">Ready to integrate?</h2>
           <p className="text-ink-400 max-w-md">
             Start with the documentation, or talk to our engineering team about custom deployments.
           </p>
