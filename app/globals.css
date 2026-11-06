@@ -2,7 +2,7 @@
 
 /*
  * Proxigo palette
- *  ink    — warm graphite neutrals. 500 is the dimmest step allowed for text
+ *  ink    — cool graphite neutrals. 500 is the dimmest step allowed for text
  *           (≥ 4.5:1 on ink-950 and ink-900); 600+ are for borders and fills only.
  *  signal — accent orange for text, rules, and highlights. 500 is the logo
  *           orange in every theme; the light theme inverts the rest so
@@ -10,17 +10,17 @@
  *  brand  — fixed logo oranges for filled buttons with white labels.
  */
 @theme {
-  --color-ink-50:  #f6f5f2;
-  --color-ink-100: #ecebe6;
-  --color-ink-200: #d9d7cf;
-  --color-ink-300: #bdbab0;
-  --color-ink-400: #a19e93;
-  --color-ink-500: #8a877c;
-  --color-ink-600: #5e5c55;
-  --color-ink-700: #403f3a;
-  --color-ink-800: #2a2926;
-  --color-ink-900: #1a1a18;
-  --color-ink-950: #0f0f0e;
+  --color-ink-50:  #fafafa;
+  --color-ink-100: #eff0f1;
+  --color-ink-200: #e0e1e3;
+  --color-ink-300: #c3c4c8;
+  --color-ink-400: #a3a3a4;
+  --color-ink-500: #8b8c8d;
+  --color-ink-600: #5d5e61;
+  --color-ink-700: #464749;
+  --color-ink-800: #2f3032;
+  --color-ink-900: #1f2023;
+  --color-ink-950: #18191b;
 
   --color-signal-50:  #fff7ed;
   --color-signal-100: #ffedd5;
@@ -40,7 +40,7 @@
   --color-brand-600: #c2410c;
   --color-brand-700: #9a3412;
 
-  --font-sans: var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-host-grotesk), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-plex-mono), ui-monospace, "SFMono-Regular", monospace;
 
   --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
@@ -53,17 +53,17 @@
  * is inverted the same way (signal-400/300 are the darker, link-weight steps). The dashboard and admin stay on the dark defaults.
  */
 .theme-light {
-  --color-ink-50:  #111110;
-  --color-ink-100: #1c1b19;
-  --color-ink-200: #2b2a27;
-  --color-ink-300: #3f3e3a;
-  --color-ink-400: #55534e;
-  --color-ink-500: #6b6963;
-  --color-ink-600: #a8a6a0;
-  --color-ink-700: #cfcdc7;
-  --color-ink-800: #e4e2dc;
-  --color-ink-900: #f1f0ec;
-  --color-ink-950: #fbfaf7;
+  --color-ink-50:  #141517;
+  --color-ink-100: #1f2023;
+  --color-ink-200: #2a2b2e;
+  --color-ink-300: #393a3d;
+  --color-ink-400: #4f5053;
+  --color-ink-500: #636467;
+  --color-ink-600: #8f9093;
+  --color-ink-700: #b9babd;
+  --color-ink-800: #d3d4d7;
+  --color-ink-900: #e6e7e9;
+  --color-ink-950: #eff0f1;
 
   --color-signal-50:  #2a0e05;
   --color-signal-100: #431407;
@@ -84,17 +84,17 @@
 
 /* Restores the dark palette inside a light page, e.g. for app screenshots. */
 .theme-dark {
-  --color-ink-50:  #f6f5f2;
-  --color-ink-100: #ecebe6;
-  --color-ink-200: #d9d7cf;
-  --color-ink-300: #bdbab0;
-  --color-ink-400: #a19e93;
-  --color-ink-500: #8a877c;
-  --color-ink-600: #5e5c55;
-  --color-ink-700: #403f3a;
-  --color-ink-800: #2a2926;
-  --color-ink-900: #1a1a18;
-  --color-ink-950: #0f0f0e;
+  --color-ink-50:  #fafafa;
+  --color-ink-100: #eff0f1;
+  --color-ink-200: #e0e1e3;
+  --color-ink-300: #c3c4c8;
+  --color-ink-400: #a3a3a4;
+  --color-ink-500: #8b8c8d;
+  --color-ink-600: #5d5e61;
+  --color-ink-700: #464749;
+  --color-ink-800: #2f3032;
+  --color-ink-900: #1f2023;
+  --color-ink-950: #18191b;
 
   --color-signal-50:  #fff7ed;
   --color-signal-100: #ffedd5;
@@ -112,35 +112,106 @@
   color: var(--color-ink-100);
 }
 
-body:has(> .theme-light) { background-color: #fbfaf7; }
+body:has(> .theme-light) { background-color: #eff0f1; }
 
 /*
- * Type roles. Pages use these instead of raw size utilities so the scale
- * stays consistent. Display and titles scale gently with the viewport and
- * cap well below poster size; body copy never drops under 16px.
+ * Type roles. Headings are uppercase grotesk at regular weight, tight and
+ * flat, in the style of engineering drawings. Body copy never drops under 16px.
  */
 @utility type-display {
-  font-size: clamp(2rem, 1.55rem + 1.9vw, 3.25rem);
-  line-height: 1.08;
-  letter-spacing: -0.022em;
-  font-weight: 600;
+  font-size: clamp(2.25rem, 1.75rem + 2vw, 3.5rem);
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+  font-weight: 400;
+  text-transform: uppercase;
 }
 @utility type-title {
-  font-size: clamp(1.875rem, 1.6rem + 1.2vw, 2.625rem);
-  line-height: 1.12;
-  letter-spacing: -0.02em;
-  font-weight: 600;
+  font-size: clamp(2rem, 1.55rem + 1.8vw, 3.25rem);
+  line-height: 1;
+  letter-spacing: -0.028em;
+  font-weight: 400;
+  text-transform: uppercase;
 }
 @utility type-section {
-  font-size: clamp(1.5rem, 1.35rem + 0.65vw, 1.875rem);
-  line-height: 1.2;
+  font-size: clamp(1.5rem, 1.25rem + 1vw, 2.25rem);
+  line-height: 1.05;
+  letter-spacing: -0.022em;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+@utility type-cell {
+  font-size: clamp(1.125rem, 1.05rem + 0.3vw, 1.375rem);
+  line-height: 1.15;
   letter-spacing: -0.015em;
-  font-weight: 600;
+  font-weight: 400;
+  text-transform: uppercase;
 }
 @utility type-lead {
   font-size: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
-  line-height: 1.65;
+  line-height: 1.6;
 }
+
+/*
+ * Framed grid. Every band is full-bleed; .frame is the centred column with
+ * hairline rules on both sides, and .cells draws 1px rules between children
+ * (the gap shows the border colour through).
+ */
+@utility frame {
+  max-width: 80rem;
+  margin-inline: auto;
+  border-inline: 1px solid var(--color-ink-800);
+}
+@utility cells {
+  display: grid;
+  gap: 1px;
+  background-color: var(--color-ink-800);
+  & > * { background-color: var(--color-ink-950); }
+}
+
+/* "■ 01" marker above a cell title. */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-ink-500);
+}
+.tag::before {
+  content: "";
+  width: 0.4375rem;
+  height: 0.4375rem;
+  background: var(--color-brand-500);
+}
+
+/* "[ SERVICES ]" section label. */
+.bracket {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-ink-300);
+}
+.bracket::before { content: "[\00a0\00a0"; color: var(--color-ink-50); font-weight: 600; }
+.bracket::after  { content: "\00a0\00a0]"; color: var(--color-ink-50); font-weight: 600; }
+
+/* Decorative field of small crosses for empty cells and the top strip. */
+.plus-field {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpath d='M12 8.5v7M8.5 12h7' stroke='%23a3a4a8' stroke-opacity='.55'/%3E%3C/svg%3E");
+}
+.theme-dark .plus-field {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpath d='M12 8.5v7M8.5 12h7' stroke='%235d5e61' stroke-opacity='.7'/%3E%3C/svg%3E");
+}
+
+/* Cut corners for buttons and framed images. Clip-path also clips the focus
+   ring, so focused chamfered controls draw an inset outline instead. */
+.chamfer {
+  --cut: 8px;
+  clip-path: polygon(var(--cut) 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, var(--cut) 100%, 0 calc(100% - var(--cut)), 0 var(--cut));
+}
+.chamfer:focus-visible { outline: 2px solid currentColor; outline-offset: -5px; }
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }

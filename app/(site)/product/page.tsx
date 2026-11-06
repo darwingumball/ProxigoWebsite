@@ -74,7 +74,7 @@ export default function ProductPage() {
   return (
     <>
       {/* ── Hero ── */}
-      <section className="pt-28 sm:pt-36 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="pt-12 sm:pt-16 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Text */}
           <div>

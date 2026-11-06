@@ -9,8 +9,9 @@ import { SERVICES, OTHER_INTERESTS, TIMELINES, BUDGETS } from "@/lib/services";
 
 const INTERESTS = [...SERVICES.map((s) => s.name), ...OTHER_INTERESTS];
 
-const SELECT_CLASS =
-  "w-full rounded-md border border-ink-700 bg-ink-900 px-3.5 py-2.5 text-sm text-ink-50 focus:outline-none focus:border-signal-500 focus:ring-1 focus:ring-signal-500/30";
+// Underlined fields, matching the framed-grid site style.
+const FIELD =
+  "w-full rounded-none border-0 border-b border-ink-700 bg-transparent px-0 py-2.5 text-base text-ink-50 placeholder:text-ink-500 focus:outline-none focus:ring-0 focus:border-signal-400";
 
 const BLANK = { name: "", email: "", companyName: "", timeline: "", budget: "", message: "", website: "" };
 
@@ -65,11 +66,11 @@ export function ProjectForm() {
 
   return (
     <form onSubmit={submit} className="space-y-6">
-      <div className="grid sm:grid-cols-2 gap-4">
-        <Input id="name" name="name" label="Your name" value={form.name} onChange={update} required autoComplete="name" />
-        <Input id="email" name="email" type="email" label="Work email" value={form.email} onChange={update} required autoComplete="email" />
+      <div className="grid sm:grid-cols-2 gap-x-6 gap-y-6">
+        <Input className={FIELD} id="name" name="name" label="Your name" value={form.name} onChange={update} required autoComplete="name" />
+        <Input className={FIELD} id="email" name="email" type="email" label="Work email" value={form.email} onChange={update} required autoComplete="email" />
       </div>
-      <Input id="companyName" name="companyName" label="Company" value={form.companyName} onChange={update} required autoComplete="organization" />
+      <Input className={FIELD} id="companyName" name="companyName" label="Company" value={form.companyName} onChange={update} required autoComplete="organization" />
 
       <fieldset>
         <legend className="text-sm text-ink-300 mb-2">What are you interested in?</legend>
@@ -80,7 +81,7 @@ export function ProjectForm() {
               <label
                 key={name}
                 className={cn(
-                  "flex items-center gap-3 rounded-md border px-3.5 py-3 text-sm cursor-pointer transition-colors",
+                  "flex items-center gap-3 border px-3.5 py-3 text-sm cursor-pointer transition-colors",
                   on ? "border-signal-500 bg-signal-950 text-ink-50" : "border-ink-700 text-ink-300 hover:border-ink-500"
                 )}
               >
@@ -97,17 +98,17 @@ export function ProjectForm() {
         </div>
       </fieldset>
 
-      <div className="grid sm:grid-cols-2 gap-4">
+      <div className="grid sm:grid-cols-2 gap-x-6 gap-y-6">
         <div className="flex flex-col gap-1.5">
           <label htmlFor="timeline" className="text-sm text-ink-300">Timeline</label>
-          <select id="timeline" name="timeline" value={form.timeline} onChange={update} className={SELECT_CLASS}>
+          <select id="timeline" name="timeline" value={form.timeline} onChange={update} className={FIELD}>
             <option value="">Select…</option>
             {TIMELINES.map((t) => <option key={t}>{t}</option>)}
           </select>
         </div>
         <div className="flex flex-col gap-1.5">
           <label htmlFor="budget" className="text-sm text-ink-300">Budget <span className="text-ink-500">(optional)</span></label>
-          <select id="budget" name="budget" value={form.budget} onChange={update} className={SELECT_CLASS}>
+          <select id="budget" name="budget" value={form.budget} onChange={update} className={FIELD}>
             <option value="">Select…</option>
             {BUDGETS.map((b) => <option key={b}>{b}</option>)}
           </select>
@@ -125,7 +126,7 @@ export function ProjectForm() {
           value={form.message}
           onChange={update}
           placeholder="What you run today, what is not working, and what you would like to be true in six months."
-          className="w-full rounded-md border border-ink-700 bg-ink-900 px-3.5 py-2.5 text-sm text-ink-50 placeholder:text-ink-500 focus:outline-none focus:border-signal-500 focus:ring-1 focus:ring-signal-500/30 resize-y"
+          className={cn(FIELD, "resize-y")}
         />
       </div>
 
@@ -133,7 +134,7 @@ export function ProjectForm() {
       <input type="text" name="website" value={form.website} onChange={update} tabIndex={-1} autoComplete="off" aria-hidden="true" style={{ display: "none" }} />
 
       {error && (
-        <p className="rounded-md border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-800" role="alert">{error}</p>
+        <p className="border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-800" role="alert">{error}</p>
       )}
 
       <Button type="submit" size="lg" disabled={loading}>

@@ -1,181 +1,185 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { ArrowRight, Check } from "lucide-react";
-import { buttonClasses } from "@/components/ui/button-classes";
-import { SERVICES, ENGAGEMENTS, PROCESS, SCENARIOS } from "@/lib/services";
+import { Check } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Band, Cell, CELL, ContactBand, PageIntro, StepShape } from "@/components/framed";
+import { SERVICES, ENGAGEMENTS, PROCESS, PROBLEMS, BACKGROUND } from "@/lib/services";
 
 export const metadata: Metadata = {
-  title: "Services",
+  title: "Engineering",
   description:
-    "Independent engineering contractors for feature development, computer vision, product completion, and AWS backends, working inside your platform.",
+    "Independent engineers who own roadmap features, fix AWS architecture, and cut platform cost and latency. Security and AI backgrounds, with a focus on computer vision.",
 };
 
 const FAQ = [
   {
-    q: "Who owns the code and infrastructure?",
+    q: "Who owns the code and IP?",
     a: "You do. We work in your cloud accounts and repositories from the start, so there is nothing to transfer at the end.",
-  },
-  {
-    q: "Do you only work on AWS?",
-    a: "Our backend work is strongest on AWS. Feature and computer vision work happens in whatever stack your product already uses. If your infrastructure is elsewhere, ask and we will tell you honestly whether we are the right fit.",
   },
   {
     q: "Can you sign an NDA and work under our contractor agreement?",
     a: "Yes. We work as independent contractors under your agreement or ours, and sign an NDA before seeing code or data.",
   },
   {
-    q: "How big is the team?",
-    a: "Deliberately small. That keeps senior engineers on every engagement and means we take on a limited number of clients at once.",
+    q: "Do you only work on AWS?",
+    a: "Architecture and cost work is strongest on AWS. Feature work happens in whatever stack your product already uses. If your infrastructure is elsewhere, ask and we will tell you honestly whether we are the right fit.",
   },
   {
-    q: "Can you work alongside our engineers?",
-    a: "Yes. Most engagements do. We follow your code review, branching, and deployment practices rather than bringing our own.",
+    q: "Do you take on computer vision projects?",
+    a: "Yes, alongside the main services. Our AI background is in computer vision, from datasets and training to models running at the edge or on AWS.",
+  },
+  {
+    q: "How big is the team?",
+    a: "Deliberately small. Senior engineers do the work on every engagement, and we take on a limited number of clients at once.",
   },
   {
     q: "What does an engagement cost?",
-    a: "Assessments are a fixed fee agreed before we start. Projects are priced per milestone from a written scope. Retainers are a monthly block of hours. The proposal you receive after the scoping call has the number in it.",
+    a: "Assessments are a fixed fee agreed before we start. Projects are priced per milestone from a written scope. Retainers are a monthly block of hours. The proposal after the scoping call has the number in it.",
   },
 ];
 
 export default function ServicesPage() {
   return (
     <>
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 sm:pt-36 pb-16">
-        <h1 className="type-title text-ink-50 max-w-4xl mb-6">
-          Independent engineers who finish what your roadmap started.
-        </h1>
-        <p className="type-lead text-ink-300 max-w-2xl">
-          We work as contractors inside your platform: new features, computer vision, and products taken to 100% and
-          integrated with what you already run. Your repositories, your release process, your IP.
+      <PageIntro label="Services" title="Engineering">
+        <p className="type-lead text-ink-300 max-w-xl">
+          We own the features that sit on your roadmap, fix the AWS architecture underneath them, and bring the
+          platform bill down. Independent contractors with security and AI backgrounds.
         </p>
-        <nav aria-label="Services" className="mt-10 flex flex-wrap gap-x-6 gap-y-2">
+      </PageIntro>
+
+      <Band>
+        <h2 className="sr-only">Services</h2>
+        <div className="cells sm:grid-cols-2 lg:grid-cols-4">
           {SERVICES.map((s, i) => (
-            <a key={s.id} href={`#${s.id}`} className="text-ink-300 hover:text-signal-400">
-              <span className="font-mono text-sm text-ink-500 mr-1.5">{String(i + 1).padStart(2, "0")}</span>
-              {s.name}
+            <a key={s.id} href={`#${s.id}`} className="group">
+              <Cell n={i + 1} title={<span className="group-hover:text-signal-400 transition-colors">{s.name}</span>}>
+                {s.summary}
+              </Cell>
             </a>
           ))}
-        </nav>
-      </section>
-
-      {SERVICES.map((s, i) => (
-        <section key={s.id} id={s.id} className="scroll-mt-20 border-t border-ink-800">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 grid lg:grid-cols-[1fr_1.4fr_1fr] gap-10">
-            <div>
-              <span className="font-mono text-sm text-ink-400">{String(i + 1).padStart(2, "0")}</span>
-              <h2 className="type-section text-ink-50 mt-2">{s.name}</h2>
-            </div>
-            <div>
-              <p className="type-lead text-ink-50 mb-4">{s.summary}</p>
-              <p className="text-ink-400 leading-relaxed">{s.detail}</p>
-            </div>
-            <div>
-              <h3 className="text-sm font-medium text-ink-300 mb-3">What you get</h3>
-              <ul className="space-y-2.5">
-                {s.deliverables.map((d) => (
-                  <li key={d} className="flex gap-2.5 text-ink-300">
-                    <Check size={16} className="text-signal-400 mt-1 shrink-0" />
-                    {d}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </section>
-      ))}
-
-      {/* Scenarios */}
-      <section className="bg-ink-900 border-y border-ink-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 grid lg:grid-cols-[1fr_2fr] gap-12">
-          <div>
-            <h2 className="type-section text-ink-50 mb-4">Where we usually start</h2>
-            <p className="text-ink-400 leading-relaxed max-w-sm">
-              Most contracts begin with one of these. If yours is different, that is fine too.
-            </p>
-          </div>
-          <dl className="divide-y divide-ink-800 border-y border-ink-800">
-            {SCENARIOS.map(({ problem, response }) => (
-              <div key={problem} className="grid md:grid-cols-2 gap-x-10 gap-y-2 py-6">
-                <dt className="font-medium text-ink-50 leading-snug">{problem}</dt>
-                <dd className="text-ink-400 leading-relaxed">{response}</dd>
-              </div>
-            ))}
-          </dl>
         </div>
-      </section>
+      </Band>
 
       {/* Process */}
-      <section id="process" className="scroll-mt-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-          <h2 className="type-section text-ink-50 mb-12">How a project runs</h2>
-          <ol className="grid sm:grid-cols-2 lg:grid-cols-4 gap-x-10 gap-y-10">
-            {PROCESS.map(({ title, desc }, i) => (
-              <li key={title} className="border-t-2 border-ink-50 pt-5">
-                <span className="font-mono text-sm text-ink-400">Step {i + 1}</span>
-                <h3 className="text-lg font-semibold text-ink-50 mt-2 mb-2">{title}</h3>
-                <p className="text-ink-400 leading-relaxed">{desc}</p>
-              </li>
-            ))}
-          </ol>
+      <Band dark>
+        <div className="cells lg:grid-cols-4">
+          <div className={cn(CELL, "lg:col-span-2 py-12")}>
+            <p className="tag mb-6">Process</p>
+            <h2 className="type-section text-ink-50 mb-4 max-w-md">From first call to measured result.</h2>
+            <p className="text-ink-400 max-w-sm">Four steps, the same on every engagement.</p>
+          </div>
+          {PROCESS.slice(0, 2).map((p, i) => (
+            <Step key={p.title} i={i} {...p} />
+          ))}
+          <div className="plus-field hidden lg:block lg:col-span-2" aria-hidden />
+          {PROCESS.slice(2).map((p, i) => (
+            <Step key={p.title} i={i + 2} {...p} />
+          ))}
         </div>
-      </section>
+      </Band>
+
+      {/* Problems */}
+      <Band dark>
+        <div className={cn(CELL, "py-12 sm:py-16 border-b border-ink-800")}>
+          <h2 className="type-title text-ink-50 max-w-3xl">We get called in when the roadmap is stuck.</h2>
+        </div>
+        {PROBLEMS.map((p) => (
+          <div key={p.title} className={cn(CELL, "grid md:grid-cols-2 gap-x-10 gap-y-3 border-b border-ink-800 last:border-b-0")}>
+            <div>
+              <p className="tag mb-2">{p.label}</p>
+              <h3 className="type-cell text-ink-50">{p.title}</h3>
+            </div>
+            <p className="text-ink-400 leading-relaxed md:pt-6">{p.desc}</p>
+          </div>
+        ))}
+      </Band>
+
+      {/* Service detail */}
+      {SERVICES.map((s, i) => (
+        <Band key={s.id} id={s.id} className="cells lg:grid-cols-[1fr_1.4fr_1fr]">
+          <div className={CELL}>
+            <p className="tag mb-4">{String(i + 1).padStart(2, "0")}</p>
+            <h2 className="type-section text-ink-50">{s.name}</h2>
+          </div>
+          <div className={CELL}>
+            <p className="type-lead text-ink-50 mb-4">{s.summary}</p>
+            <p className="text-ink-400 leading-relaxed">{s.detail}</p>
+          </div>
+          <div className={CELL}>
+            <p className="tag mb-4">What you get</p>
+            <ul className="space-y-2.5">
+              {s.deliverables.map((d) => (
+                <li key={d} className="flex gap-2.5 text-ink-300">
+                  <Check size={16} className="text-signal-400 mt-1 shrink-0" />
+                  {d}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Band>
+      ))}
+
+      {/* Background */}
+      <Band>
+        <div className={cn(CELL, "py-12 sm:py-16 border-b border-ink-800")}>
+          <h2 className="type-title text-ink-50">Who you would work with</h2>
+        </div>
+        <div className="cells md:grid-cols-3">
+          {BACKGROUND.map((b) => (
+            <Cell key={b.title} n={b.label} title={b.title} className="py-10">
+              {b.desc}
+            </Cell>
+          ))}
+        </div>
+      </Band>
 
       {/* Engagements */}
-      <section id="engagements" className="scroll-mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-        <h2 className="type-section text-ink-50 mb-3">Engagement models</h2>
-        <p className="text-ink-400 leading-relaxed max-w-xl mb-10">
-          Pick the shape that fits. Many clients start with an assessment and move to a project or retainer.
-        </p>
-        <div className="overflow-x-auto">
-          <table className="w-full text-left">
-            <thead>
-              <tr className="border-b-2 border-ink-50 text-sm text-ink-400">
-                <th className="font-normal py-3 pr-6">Model</th>
-                <th className="font-normal py-3 pr-6">Pricing</th>
-                <th className="font-normal py-3">Best for</th>
-              </tr>
-            </thead>
-            <tbody>
-              {ENGAGEMENTS.map((e) => (
-                <tr key={e.name} className="border-b border-ink-800 align-top">
-                  <td className="py-5 pr-6 text-lg font-semibold text-ink-50 whitespace-nowrap">{e.name}</td>
-                  <td className="py-5 pr-6 font-mono text-sm text-signal-400 whitespace-nowrap">{e.terms}</td>
-                  <td className="py-5 text-ink-300 leading-relaxed min-w-[16rem]">{e.desc}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+      <Band id="engagements">
+        <div className={cn(CELL, "border-b border-ink-800")}>
+          <p className="tag">Engagement models</p>
         </div>
-      </section>
+        <div className="cells md:grid-cols-3">
+          {ENGAGEMENTS.map((e) => (
+            <Cell key={e.name} title={e.name}>
+              <p className="font-mono text-sm text-signal-400 -mt-1 mb-3">{e.terms}</p>
+              {e.desc}
+            </Cell>
+          ))}
+        </div>
+      </Band>
 
       {/* FAQ */}
-      <section className="border-t border-ink-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 grid lg:grid-cols-[1fr_2fr] gap-10">
+      <Band className="grid lg:grid-cols-[1fr_2fr] lg:divide-x divide-ink-800">
+        <div className={CELL}>
           <h2 className="type-section text-ink-50">Questions</h2>
-          <div className="border-t border-ink-800">
-            {FAQ.map(({ q, a }) => (
-              <details key={q} className="group border-b border-ink-800">
-                <summary className="flex items-center justify-between gap-4 py-5 cursor-pointer list-none text-lg font-medium text-ink-50 [&::-webkit-details-marker]:hidden">
-                  {q}
-                  <span className="text-ink-400 text-2xl leading-none group-open:rotate-45 transition-transform" aria-hidden>+</span>
-                </summary>
-                <p className="text-ink-300 leading-relaxed pb-6 max-w-2xl">{a}</p>
-              </details>
-            ))}
-          </div>
         </div>
-      </section>
+        <div>
+          {FAQ.map(({ q, a }) => (
+            <details key={q} className="group border-b border-ink-800 last:border-b-0">
+              <summary className={cn(CELL, "py-5 flex items-center justify-between gap-4 cursor-pointer list-none text-lg text-ink-50 [&::-webkit-details-marker]:hidden")}>
+                {q}
+                <span className="text-ink-400 text-2xl leading-none group-open:rotate-45 transition-transform" aria-hidden>+</span>
+              </summary>
+              <p className="text-ink-300 leading-relaxed px-6 sm:px-8 pb-6 max-w-2xl">{a}</p>
+            </details>
+          ))}
+        </div>
+      </Band>
 
-      <section className="theme-dark bg-ink-950">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 flex flex-col md:flex-row md:items-center justify-between gap-8">
-          <h2 className="type-section text-ink-50 max-w-xl">
-            Start with a scoping call.
-          </h2>
-          <Link href="/contact" className={buttonClasses({ size: "lg" })}>
-            Book a call <ArrowRight size={16} />
-          </Link>
-        </div>
-      </section>
+      <ContactBand />
     </>
+  );
+}
+
+function Step({ i, title, desc }: { i: number; title: string; desc: string }) {
+  return (
+    <div className={cn(CELL, "flex flex-col gap-8")}>
+      <p className="tag">{String(i + 1).padStart(2, "0")}</p>
+      <StepShape step={i} />
+      <div>
+        <h3 className="type-cell text-ink-50 mb-2">{title}</h3>
+        <p className="text-ink-400 leading-relaxed">{desc}</p>
+      </div>
+    </div>
   );
 }

@@ -14,7 +14,7 @@ export default async function SupportPage() {
   const { data: { user } } = await supabase.auth.getUser();
 
   return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 sm:pt-36 pb-24 grid lg:grid-cols-[1fr_1.4fr] gap-12 lg:gap-20">
+    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 sm:pt-16 pb-24 grid lg:grid-cols-[1fr_1.4fr] gap-12 lg:gap-20">
       <div>
         <h1 className="type-title text-ink-50 mb-5">Support</h1>
         <p className="type-lead text-ink-300 mb-10">

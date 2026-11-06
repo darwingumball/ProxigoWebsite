@@ -115,7 +115,7 @@ export default function PricingPage() {
   return (
     <>
       {/* Hero */}
-      <section className="pt-28 sm:pt-36 pb-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="pt-12 sm:pt-16 pb-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 className="type-title text-ink-50 mb-5 max-w-2xl">
           Macula pricing
         </h1>

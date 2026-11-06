@@ -22,7 +22,7 @@ const SECTIONS = [
 
 export default function PrivacyPolicyPage() {
   return (
-    <section className="pt-32 pb-28 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="pt-12 pb-28 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
       <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-signal-500 mb-4">Legal</p>
       <h1 className="type-title text-ink-50 mb-3">Privacy Policy</h1>
       <p className="text-sm text-ink-500 mb-10">Last updated: August 24, 2026</p>
